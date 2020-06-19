@@ -17,7 +17,7 @@ class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Ana
 
     override fun analyze(takenImage: ImageProxy) {
         val mediaImage: Image? = takenImage.image
-        val rawValue: String = "0"
+        var rawValue: String = "0"
 
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, takenImage.imageInfo.rotationDegrees)
@@ -26,17 +26,16 @@ class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Ana
             val result = scanner.process(image)
                 .addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
-                        val rawValue = barcode.rawValue // Valor del código de barras
+                        rawValue = barcode.rawValue.toString() // Valor del código de barras
                         Log.d("Codigo de barras: ", rawValue)
+                        listener(rawValue)
                     }
                     takenImage.close()
                 }
                 .addOnFailureListener {
+                    listener(rawValue)
                     takenImage.close()
                 }
-        } else {
-            Log.d("mediaImage ", "es null")
         }
-        listener (rawValue)
     }
 }

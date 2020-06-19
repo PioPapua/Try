@@ -14,11 +14,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import kotlinx.android.synthetic.main.activity_camera_picture_taker.*
 import java.util.concurrent.ExecutorService
 typealias BarcodeListener = (barcode: String) -> Unit
+typealias TextListener = (text: String) -> Unit
 
 class CameraPictureTaker : AppCompatActivity() {
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
-    private var imageAnalyzer: ImageAnalysis? = null
+    private var barcodeAnalyzer: ImageAnalysis? = null
+    private var textAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private lateinit var cameraExecutor: ExecutorService
 
@@ -64,6 +66,10 @@ class CameraPictureTaker : AppCompatActivity() {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
+            // Select back camera
+            val cameraSelector = CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+
             preview = Preview.Builder()
                 .build()
 
@@ -71,20 +77,30 @@ class CameraPictureTaker : AppCompatActivity() {
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build()
 
-            imageAnalyzer = ImageAnalysis.Builder()
+            barcodeAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { image ->
-                        Log.d(TAG, "Barcode number: $image")
+                    it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcode ->
+                        Toast.makeText(this,
+                            "Código de barras: ${barcode}. Enfoque la tabla de información nutricional.",
+                            Toast.LENGTH_LONG).show()
+                        analyze(cameraProvider, cameraSelector, imageCapture, textAnalyzer, preview)
                     })
                 }
 
-            // Select back camera
-            val cameraSelector = CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+            textAnalyzer = ImageAnalysis.Builder()
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, TextAnalyzer { text ->
+                        val textoCapturado: String? = text
 
-            analyze (cameraProvider, cameraSelector, imageCapture, imageAnalyzer, preview)
+                        Log.d("Texto capturado en UI: ", text)
+                    })
+                }
+
+            analyze (cameraProvider, cameraSelector, imageCapture, barcodeAnalyzer, preview)
 
         }, ContextCompat.getMainExecutor(this))
     }
