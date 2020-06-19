@@ -1,5 +1,6 @@
 package com.example.atry
 
+import android.annotation.SuppressLint
 import android.media.Image
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
@@ -15,6 +16,7 @@ class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Ana
         .setBarcodeFormats(Barcode.FORMAT_EAN_13)
         .build()
 
+    @SuppressLint("UnsafeExperimentalUsageError")
     override fun analyze(takenImage: ImageProxy) {
         val mediaImage: Image? = takenImage.image
         var rawValue: String = "0"

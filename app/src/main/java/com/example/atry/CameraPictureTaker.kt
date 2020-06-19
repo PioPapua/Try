@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.Manifest
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.Gravity
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,16 +15,20 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import kotlinx.android.synthetic.main.activity_camera_picture_taker.*
 import java.util.concurrent.ExecutorService
+
 typealias BarcodeListener = (barcode: String) -> Unit
 typealias TextListener = (text: String) -> Unit
 
 class CameraPictureTaker : AppCompatActivity() {
     private var preview: Preview? = null
-    private var imageCapture: ImageCapture? = null
+    private var barcodeImageCapture: ImageCapture? = null
+    private var textImageCapture: ImageCapture? = null
     private var barcodeAnalyzer: ImageAnalysis? = null
     private var textAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private lateinit var cameraExecutor: ExecutorService
+    var barcode: String? = null
+    var textRecognized: String? = null
 
     companion object {
         private const val TAG = "CameraXBasic"
@@ -61,6 +67,7 @@ class CameraPictureTaker : AppCompatActivity() {
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        scan_button.visibility = View.GONE
 
         cameraProviderFuture.addListener(Runnable {
             // Used to bind the lifecycle of cameras to the lifecycle owner
@@ -73,19 +80,29 @@ class CameraPictureTaker : AppCompatActivity() {
             preview = Preview.Builder()
                 .build()
 
-            imageCapture = ImageCapture.Builder()
+            barcodeImageCapture = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
+
+            textImageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
                 .build()
 
             barcodeAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcode ->
-                        Toast.makeText(this,
-                            "Código de barras: ${barcode}. Enfoque la tabla de información nutricional.",
-                            Toast.LENGTH_LONG).show()
-                        analyze(cameraProvider, cameraSelector, imageCapture, textAnalyzer, preview)
+                    it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcodeNumber ->
+                        var toast = Toast.makeText(this,
+                            "Código de barras: ${barcodeNumber}. Enfoque la tabla de información nutricional.",
+                            Toast.LENGTH_LONG)
+                            toast.setGravity(Gravity.TOP, 0, 0)
+                            toast.show()
+                            scan_button.visibility = View.VISIBLE
+                            scan_button.setOnClickListener {
+                                analyze(cameraProvider, cameraSelector, textImageCapture, textAnalyzer, preview)
+                            }
+                            barcode = barcodeNumber
                     })
                 }
 
@@ -94,13 +111,16 @@ class CameraPictureTaker : AppCompatActivity() {
                 .build()
                 .also {
                     it.setAnalyzer(cameraExecutor, TextAnalyzer { text ->
-                        val textoCapturado: String? = text
-
                         Log.d("Texto capturado en UI: ", text)
+                        if (text.length > 10) {
+                            cameraExecutor.shutdown()
+                        }
+                        textRecognized = text
+                        onImageProcessFinished()
                     })
                 }
 
-            analyze (cameraProvider, cameraSelector, imageCapture, barcodeAnalyzer, preview)
+            analyze (cameraProvider, cameraSelector, barcodeImageCapture, barcodeAnalyzer, preview)
 
         }, ContextCompat.getMainExecutor(this))
     }
@@ -126,5 +146,9 @@ class CameraPictureTaker : AppCompatActivity() {
         } catch(exc: Exception) {
             Log.e("TAG", "Use case binding failed", exc)
         }
+    }
+
+    private fun onImageProcessFinished() {
+        //TODO Call next fragment to process text and display form.
     }
 }
