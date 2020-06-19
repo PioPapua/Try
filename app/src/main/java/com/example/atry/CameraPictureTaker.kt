@@ -11,10 +11,6 @@ import androidx.core.content.ContextCompat
 import java.util.concurrent.Executors
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import com.google.mlkit.vision.barcode.Barcode
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.common.InputImage
 import kotlinx.android.synthetic.main.activity_camera_picture_taker.*
 import java.util.concurrent.ExecutorService
 typealias BarcodeListener = (barcode: String) -> Unit
@@ -43,10 +39,6 @@ class CameraPictureTaker : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
-
-        // Setup the listener for take photo button
-        camera_capture_button.setOnClickListener { takePhoto() }
-
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
@@ -72,7 +64,6 @@ class CameraPictureTaker : AppCompatActivity() {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            // Preview
             preview = Preview.Builder()
                 .build()
 
@@ -93,89 +84,31 @@ class CameraPictureTaker : AppCompatActivity() {
             val cameraSelector = CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
-            try {
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
+            analyze (cameraProvider, cameraSelector, imageCapture, imageAnalyzer, preview)
 
-                // Bind use cases to camera
-                camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, imageCapture, imageAnalyzer, preview)
-                preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
-            }
         }, ContextCompat.getMainExecutor(this))
-    }
-
-    private fun takePhoto() {
-        // Get a stable reference of the modifiable image capture use case
-        val imageCapture = imageCapture ?: return
-
-        //Setup image capture listener which is triggered after photo has been taken
-        imageCapture.takePicture(ContextCompat.getMainExecutor(this), object :
-            ImageCapture.OnImageCapturedCallback() {
-            override fun onCaptureSuccess(image: ImageProxy) {
-                Log.d("ImageProxyOnCaptureSuc", image.toString())
-                val msg = "Photo capture succeeded"
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, msg)
-            }
-
-            override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-            }
-        })
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
-}
 
+    private fun analyze (cameraProvider: ProcessCameraProvider,
+                         cameraSelector: CameraSelector,
+                         imageCapture: ImageCapture?,
+                         imageAnalyzer: ImageAnalysis?,
+                         preview: Preview?) {
+        try {
+            // Unbind use cases before rebinding
+            cameraProvider.unbindAll()
 
-private class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Analyzer {
-
-    val options = BarcodeScannerOptions.Builder()
-        .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-        .build()
-
-    override fun analyze(takenImage: ImageProxy) {
-
-        Log.d("takenImage: ", takenImage.toString())
-
-        val mediaImage = takenImage.image
-        val rawValue: String = "0"
-
-        if (mediaImage != null) {
-            val image = InputImage.fromMediaImage(mediaImage, takenImage.imageInfo.rotationDegrees)
-            val scanner = BarcodeScanning.getClient()
-            Log.d("Media Image: ", image.toString() + ". Scanner: " + scanner.toString())
-
-            val result = scanner.process(image)
-                .addOnSuccessListener { barcodes ->
-                    for (barcode in barcodes) {
-                        val rawValue = barcode.rawValue
-//                        val bounds = barcode.boundingBox
-//                        val corners = barcode.cornerPoints
-//                        val valueType = barcode.valueType
-//
-//                        when (valueType) {
-//                            Barcode.TYPE_PRODUCT-> {
-//                                val displayValue = barcode.displayValue.toString()
-//                                val barcodeString = barcode.toString()
-//                            }
-//                        }
-                        Log.d("Codigo de barras: ", rawValue)
-                    }
-                }
-                .addOnFailureListener {
-                    Log.d("Codigo de barras: nulo", it.toString())
-                }
-        } else {
-            Log.d("mediaImage ", "es null")
+            // Bind use cases to camera
+            camera = cameraProvider.bindToLifecycle(
+                this, cameraSelector, imageCapture, imageAnalyzer, preview)
+            preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
+        } catch(exc: Exception) {
+            Log.e("TAG", "Use case binding failed", exc)
         }
-        listener (rawValue)
-        takenImage.close()
     }
 }
