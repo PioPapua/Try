@@ -6,14 +6,6 @@ import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {
 
-    private val _username = MutableLiveData<String>()
-    val username: LiveData<String>
-        get() = _username
-
-    private val _password = MutableLiveData<String>()
-    val password: LiveData<String>
-        get() = _password
-
     private val _eventLogin = MutableLiveData<Boolean>()
     val eventLogin: LiveData<Boolean>
         get() =_eventLogin
@@ -22,7 +14,7 @@ class LoginViewModel : ViewModel() {
         _eventLogin.value = false
     }
 
-    fun onLogin() {
+    fun onLogin(pass: String, usr: String) {
         // TODO Authenticate the users
         _eventLogin.value = true
     }
