@@ -2,4 +2,23 @@
     <string name="app_name">Try</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan_image">Escanear imagen</string>
+    <string name="name">Nombre</string>
+    <string name="category">Rubro</string>
+    <string name="category_type">Tipo de Rubro</string>
+    <string name="barcode">Código de barras</string>
+    <string name="portion">Porción</string>
+    <string name="portion_type">Tipo de porción</string>
+    <string name="trademark">Marca</string>
+    <string name="net_weight">Contenido neto</string>
+    <string name="description">Descripción</string>
+    <string name="image_url">URL de imagen</string>
+    <string name="is_food">Es alimento?</string>
+    <string name="hint_category">Aceite, Azúcar, ...</string>
+    <string name="hint_portion">25, 50, 100</string>
+    <string name="hint_trademark">Arcor, Nestlé, ...</string>
+    <string name="hint_net_weight">30 gr, 200 ml, ...</string>
+    <string name="next">Siguiente</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="button_login">Iniciar Sesión</string>
+    <string name="password">Contraseña</string>
 </resources>

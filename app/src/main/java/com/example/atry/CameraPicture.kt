@@ -1,55 +1,159 @@
 package com.example.atry
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.atry.databinding.FragmentCameraPictureBinding
+import kotlinx.android.synthetic.main.fragment_camera_picture.*
+import kotlinx.coroutines.awaitAll
+import java.lang.Thread.sleep
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-/**
- * A simple [Fragment] subclass.
- * Use the [CameraPicture.newInstance] factory method to
- * create an instance of this fragment.
- */
+typealias BarcodeListener = (barcode: String) -> Unit
+typealias TextListener = (text: String) -> Unit
+
 class CameraPicture : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camera_picture, container, false)
-    }
+    private var preview: Preview? = null
+    private var barcodeImageCapture: ImageCapture? = null
+    private var textImageCapture: ImageCapture? = null
+    private var barcodeAnalyzer: ImageAnalysis? = null
+    private var textAnalyzer: ImageAnalysis? = null
+    private var camera: Camera? = null
+    private var imageProcessFinished: Boolean = false
+    private lateinit var cameraExecutor: ExecutorService
+    var barcode: String? = null
+    var textRecognized: String? = null
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CameraPicture.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                CameraPicture().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+        private const val REQUEST_CODE_PERMISSIONS = 200
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        val binding: FragmentCameraPictureBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_camera_picture, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        checkCameraPermissions()
+    }
+
+    private fun checkCameraPermissions() {
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            requestPermissions(
+                CameraPicture.REQUIRED_PERMISSIONS,
+                CameraPicture.REQUEST_CODE_PERMISSIONS
+            )
+        }
+        cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+
+private fun startCamera() {
+    var notInformed: Boolean = true
+    val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+    scan_button.visibility = View.GONE
+
+    cameraProviderFuture.addListener(Runnable {
+        // Used to bind the lifecycle of cameras to the lifecycleOwner
+        val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+        // Select back camera
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+
+        preview = Preview.Builder()
+            .build()
+
+        barcodeImageCapture = ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .build()
+
+        textImageCapture = ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+            .build()
+
+        barcodeAnalyzer = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+            .also {
+                it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcodeNumber ->
+
+                    scan_button.visibility = View.VISIBLE
+                    scan_button.setOnClickListener {
+                        analyze(cameraProvider, cameraSelector, textImageCapture, textAnalyzer, preview)
                     }
-                }
+                    if (barcodeNumber.length == 13 && notInformed) {
+                        val toast = Toast.makeText(activity,
+                            "Código de barras: ${barcodeNumber}. Enfoque la tabla de información nutricional.",
+                            Toast.LENGTH_SHORT)
+                        toast.setGravity(Gravity.TOP, 0, 0)
+                        toast.show()
+                        notInformed = false
+                        barcode = barcodeNumber
+                    }
+                })
+            }
+
+        textAnalyzer = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+            .also {
+                it.setAnalyzer(cameraExecutor, TextAnalyzer { text ->
+                    Log.d("Texto capturado en UI: ", text)
+                    if (text.length > 10) {
+                        cameraExecutor.shutdown()
+                        textRecognized = text
+                        this.findNavController().navigate(R.id.action_cameraPicture_to_product)
+                    }
+                })
+            }
+
+        analyze (cameraProvider, cameraSelector, barcodeImageCapture, barcodeAnalyzer, preview)
+
+    }, ContextCompat.getMainExecutor(requireContext()))
+}
+
+private fun allPermissionsGranted() = CameraPicture.REQUIRED_PERMISSIONS.all {
+    ContextCompat.checkSelfPermission(
+        requireContext(), it) == PackageManager.PERMISSION_GRANTED
+}
+
+private fun analyze (cameraProvider: ProcessCameraProvider,
+                     cameraSelector: CameraSelector,
+                     imageCapture: ImageCapture?,
+                     imageAnalyzer: ImageAnalysis?,
+                     preview: Preview?) {
+    try {
+        // Unbind use cases before rebinding
+        cameraProvider.unbindAll()
+
+        // Bind use cases to camera
+        camera = cameraProvider.bindToLifecycle(
+            this, cameraSelector, imageCapture, imageAnalyzer, preview)
+        preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
+        } catch(exc: Exception) {
+        Log.e("TAG", "Use case binding failed", exc)
+        }
     }
 }

@@ -4,10 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/cameraPictureTaker">
-    <activity
-        android:id="@+id/cameraPictureTaker"
-        android:name="com.example.atry.CameraPictureTaker"
-        android:label="activity_camera_picture_taker"
-        tools:layout="@layout/activity_camera_picture_taker" />
+    app:startDestination="@id/login">
+    <fragment
+        android:id="@+id/cameraPicture"
+        android:name="com.example.atry.CameraPicture"
+        android:label="fragment_camera_picture"
+        tools:layout="@layout/fragment_camera_picture" >
+        <action
+            android:id="@+id/action_cameraPicture_to_product"
+            app:destination="@id/product" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.atry.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_cameraPicture"
+            app:destination="@id/cameraPicture" />
+    </fragment>
+    <fragment
+        android:id="@+id/product"
+        android:name="com.example.atry.Product"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" />
 </navigation>

@@ -17,8 +17,6 @@
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="image_recognition" />
 
-        <activity android:name=".CameraPictureTaker"></activity>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
