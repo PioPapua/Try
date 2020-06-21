@@ -14,12 +14,9 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.atry.databinding.FragmentCameraPictureBinding
 import kotlinx.android.synthetic.main.fragment_camera_picture.*
-import kotlinx.coroutines.awaitAll
-import java.lang.Thread.sleep
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

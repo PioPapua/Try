@@ -5,6 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="ProductViewModel"
+            type="com.example.atry.ProductViewModel" />
+        <variable
             name="ProductBinding"
             type="com.example.atry.Product" />
     </data>
@@ -101,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/image_url"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
         app:layout_constraintEnd_toStartOf="@+id/edit_image_url"
         app:layout_constraintTop_toBottomOf="@+id/text_description" />
 
@@ -115,6 +118,8 @@
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.name}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onNameChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/edit_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_name"
@@ -129,7 +134,9 @@
         android:ems="10"
         android:hint="@string/hint_category"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_barcode"
+        android:text="@{ProductViewModel.category}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onCategoryChange(e)}"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_category_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_category"
         app:layout_constraintTop_toBottomOf="@+id/edit_name" />
@@ -141,9 +148,11 @@
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.barcode}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onBarcodeChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/edit_portion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_barcode" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_category_type" />
 
     <EditText
         android:id="@+id/edit_portion"
@@ -153,6 +162,8 @@
         android:ems="10"
         android:hint="@string/hint_portion"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.portion}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onPortionChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/spinner_portion_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_barcode" />
@@ -166,6 +177,8 @@
         android:ems="10"
         android:hint="@string/hint_trademark"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.trademark}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onTrademarkChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/edit_net_weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_trademark"
@@ -180,6 +193,8 @@
         android:ems="10"
         android:hint="@string/hint_net_weight"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.netWeight}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onNetWeightChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/edit_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_net_weight"
@@ -193,6 +208,8 @@
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="@{ProductViewModel.description}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onDescriptionChange(e)}"
         app:layout_constraintBottom_toTopOf="@+id/edit_image_url"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_description"
@@ -206,27 +223,32 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        android:text="@{ProductViewModel.imageUrl}"
+        android:afterTextChanged="@{(e) -> ProductViewModel.onImageUrlChange(e)}"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_is_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
         android:text="@string/is_food"
+        android:checked="@{ProductViewModel.isFood()}"
+        android:onClick="@{() -> ProductViewModel.onIsFoodChange()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_image_url" />
 
     <Spinner
-        android:id="@+id/spinner_barcode"
+        android:id="@+id/spinner_category_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
+        android:entries="@array/category_types"
         app:layout_constraintBottom_toTopOf="@+id/edit_barcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_category_type"
@@ -238,6 +260,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
+        android:entries="@array/portion_types"
         app:layout_constraintBottom_toTopOf="@+id/edit_trademark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_portion_type"
@@ -249,9 +272,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/next"
-        app:layout_constraintBaseline_toBaselineOf="@+id/checkBox"
+        android:onClick="@{() -> ProductViewModel.onNextButtonClicked()}"
+        app:layout_constraintBaseline_toBaselineOf="@+id/checkBox_is_food"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkBox" />
+        app:layout_constraintStart_toEndOf="@+id/checkBox_is_food" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Try</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan_image">Escanear imagen</string>
@@ -21,4 +22,17 @@
     <string name="username">Nombre de usuario</string>
     <string name="button_login">Iniciar Sesión</string>
     <string name="password">Contraseña</string>
+
+    <string-array name="category_types">
+        <item>Alimentación</item>
+        <item>Cosmética</item>
+        <item>Limpieza</item>
+    </string-array>
+
+    <string-array name="portion_types">
+        <item>g</item>
+        <item>mg</item>
+        <item>l</item>
+        <item>ml</item>
+    </string-array>
 </resources>
