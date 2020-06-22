@@ -14,6 +14,7 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.atry.databinding.FragmentCameraPictureBinding
 import kotlinx.android.synthetic.main.fragment_camera_picture.*
@@ -24,6 +25,7 @@ typealias BarcodeListener = (barcode: String) -> Unit
 typealias TextListener = (text: String) -> Unit
 
 class CameraPicture : Fragment() {
+    private lateinit var viewModel: ProductViewModel
 
     private var preview: Preview? = null
     private var barcodeImageCapture: ImageCapture? = null
@@ -31,10 +33,9 @@ class CameraPicture : Fragment() {
     private var barcodeAnalyzer: ImageAnalysis? = null
     private var textAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
-    private var imageProcessFinished: Boolean = false
+    private var barcode: String? = null
+    private var textRecognized: String? = null
     private lateinit var cameraExecutor: ExecutorService
-    var barcode: String? = null
-    var textRecognized: String? = null
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 200
@@ -46,6 +47,7 @@ class CameraPicture : Fragment() {
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val binding: FragmentCameraPictureBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_camera_picture, container, false)
+        viewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         return binding.root
     }
 
@@ -121,7 +123,9 @@ private fun startCamera() {
                     if (text.length > 10) {
                         cameraExecutor.shutdown()
                         textRecognized = text
-                        this.findNavController().navigate(R.id.action_cameraPicture_to_product)
+                        Log.d("Tag: ", "Barcode: ${barcode.toString()}")
+                        val action = CameraPictureDirections.actionCameraPictureToProduct(barcode!!)
+                        this.findNavController().navigate(action)
                     }
                 })
             }

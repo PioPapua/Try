@@ -23,9 +23,9 @@ class ProductViewModel : ViewModel() {
     private val _portion = MutableLiveData<String>()
     val portion: LiveData<String>
         get() = _portion
-    private val _portion_type = MutableLiveData<String>()
+    private val _portionType = MutableLiveData<String>()
     val portionType: LiveData<String>
-        get() = _portion_type
+        get() = _portionType
     private val _trademark = MutableLiveData<String>()
     val trademark: LiveData<String>
         get() = _trademark
@@ -44,6 +44,12 @@ class ProductViewModel : ViewModel() {
 
     init {
         _isFood.value = false
+        Log.d("TAG: ", "Ingreso al Init")
+    }
+
+    fun onBarcodeReceived(barcode: String) {
+        Log.d("TAG: ", "Barcode ViewModel: $barcode")
+        _barcode.value = barcode
     }
 
     // Update data when user introduces an edition in Layout
@@ -51,42 +57,46 @@ class ProductViewModel : ViewModel() {
         // TODO Keep values to update DB. Call to next view.
     }
     fun onNameChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Nombre: ${e}")
+        Log.d("TAG: ", "Valor de Nombre: $e")
         _name.value = e?.toString()
     }
     fun onCategoryChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Categoría: ${e}")
+        Log.d("TAG: ", "Valor de Categoría: $e")
         _category.value = e?.toString()
     }
+//    fun onCategoryTypeChange(item: String) {
+//        Log.d("TAG: ", "Valor de Tipo de Categoría: $item")
+//
+//    }
     fun onBarcodeChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Código de barras: ${e}")
+        Log.d("TAG: ", "Valor de Código de barras: $e")
         _barcode.value = e?.toString()
     }
     fun onPortionChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Porción: ${e}")
+        Log.d("TAG: ", "Valor de Porción: $e")
         _portion.value = e?.toString()
     }
 //    fun onPortionTypeChange(parent: AdapterView<>, view: View, pos: Int, id: Long){
 //        parent.setSelection(pos)
 //    }
     fun onTrademarkChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Marca: ${e}")
+        Log.d("TAG: ", "Valor de Marca: $e")
         _trademark.value = e?.toString()
     }
     fun onNetWeightChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Peso Neto: ${e}")
+        Log.d("TAG: ", "Valor de Peso Neto: $e")
         _netWeight.value = e?.toString()
     }
     fun onDescriptionChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Descripción: ${e}")
+        Log.d("TAG: ", "Valor de Descripción: $e")
         _description.value = e?.toString()
     }
     fun onImageUrlChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Url de Imagen: ${e}")
+        Log.d("TAG: ", "Valor de Url de Imagen: $e")
         _imageUrl.value = e?.toString()
     }
     fun onIsFoodChange(){
         _isFood.value = _isFood.value?.not()
-        Log.d("TAG: ", "Valor de Es alimento: ${_isFood.value}")
+        Log.d("TAG: ", "Valor de Es alimento: $_isFood.value")
     }
 }
