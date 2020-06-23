@@ -119,11 +119,9 @@ private fun startCamera() {
             .build()
             .also {
                 it.setAnalyzer(cameraExecutor, TextAnalyzer { text ->
-                    Log.d("Texto capturado en UI: ", text)
                     if (text.length > 10) {
                         cameraExecutor.shutdown()
                         textRecognized = text
-                        Log.d("Tag: ", "Barcode: ${barcode.toString()}")
                         val action = CameraPictureDirections.actionCameraPictureToProduct(barcode!!)
                         this.findNavController().navigate(action)
                     }

@@ -1,13 +1,14 @@
 package com.example.atry
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.atry.databinding.FragmentProductBinding
 
 
@@ -32,10 +33,20 @@ class Product : Fragment() {
         binding.productViewModel = viewModel
         binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
 
-        // TODO Jump to next view -> view.findNavController().navigate(R.id.action_product_to_x)
-        // onClickListener moved to xml through binding
+        binding.buttonNext.setOnClickListener{
+            viewModel.onNextButtonClicked()
+        }
+
+        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
+                navigationClicked()
+                viewModel.onNavigationCompleted()
+            }
+        })
         return binding.root
     }
 
-    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+    private fun navigationClicked () {
+        view?.findNavController()?.navigate(R.id.action_product_to_packaging)
+    }
 }

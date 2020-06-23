@@ -22,11 +22,49 @@
     <string name="username">Nombre de usuario</string>
     <string name="button_login">Iniciar Sesión</string>
     <string name="password">Contraseña</string>
+    <string name="text_product">Producto</string>
+    <string name="text_packaging">Envase</string>
+    <string name="returnable">Retornable</string>
+    <string name="reusable">Reutilizable</string>
+    <string name="recyclable">Reciclable</string>
+    <string name="compostable">Compostable</string>
+    <string name="raw_materials_recycled">Materias primas recicladas</string>
+    <string name="certificated">Certificación de origen de materias primas</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>
         <item>Cosmética</item>
         <item>Limpieza</item>
+    </string-array>
+    <string-array name="returnable">
+        <item>Retornable reutilizable</item>
+        <item>Retornable reciclable</item>
+        <item>Potencialmente retornable</item>
+        <item>No retornable</item>
+    </string-array>
+    <string-array name="reusable">
+        <item>Muy reutilizable</item>
+        <item>Poco reutilizable</item>
+        <item>No reutilizable o raramente reutilizable</item>
+    </string-array>
+    <string-array name="recyclable">
+        <item>Reciclable fácil</item>
+        <item>Reciclable difícil</item>
+        <item>No reciclable</item>
+        <item>Tratamiento especial</item>
+    </string-array>
+    <string-array name="compostable">
+        <item>Compostable</item>
+        <item>No compostable</item>
+    </string-array>
+    <string-array name="rawMaterialsRecycled">
+        <item>Altamente recicladas</item>
+        <item>Recicladas parcialmente</item>
+        <item>No recicladas</item>
+    </string-array>
+    <string-array name="certificated">
+        <item>Certificada</item>
+        <item>No certificada</item>
     </string-array>
 
     <string-array name="portion_types">

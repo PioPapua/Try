@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/login"
         android:name="com.example.atry.Login"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_login_to_cameraPicture"
@@ -27,11 +27,19 @@
     <fragment
         android:id="@+id/product"
         android:name="com.example.atry.Product"
-        android:label="fragment_product"
+        android:label="Product"
         tools:layout="@layout/fragment_product" >
         <argument
             android:name="barcode"
             app:argType="string"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_product_to_packaging"
+            app:destination="@id/packaging" />
     </fragment>
+    <fragment
+        android:id="@+id/packaging"
+        android:name="com.example.atry.Packaging"
+        android:label="Packaging"
+        tools:layout="@layout/fragment_packaging" />
 </navigation>

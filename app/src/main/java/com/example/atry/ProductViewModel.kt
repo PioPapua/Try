@@ -42,9 +42,14 @@ class ProductViewModel : ViewModel() {
     val isFood: LiveData<Boolean>
         get() = _isFood
 
+    private val _onNextButtonClicked = MutableLiveData<Boolean>()
+    val onNextButtonClicked: LiveData<Boolean>
+        get() = _onNextButtonClicked
+
     init {
         _isFood.value = false
         Log.d("TAG: ", "Ingreso al Init")
+        _onNextButtonClicked.value = false
     }
 
     fun onBarcodeReceived(barcode: String) {
@@ -53,9 +58,6 @@ class ProductViewModel : ViewModel() {
     }
 
     // Update data when user introduces an edition in Layout
-    fun onNextButtonClicked(){
-        // TODO Keep values to update DB. Call to next view.
-    }
     fun onNameChange(e: Editable?){
         Log.d("TAG: ", "Valor de Nombre: $e")
         _name.value = e?.toString()
@@ -98,5 +100,14 @@ class ProductViewModel : ViewModel() {
     fun onIsFoodChange(){
         _isFood.value = _isFood.value?.not()
         Log.d("TAG: ", "Valor de Es alimento: $_isFood.value")
+    }
+
+    fun onNavigationCompleted(){
+        _onNextButtonClicked.value = false
+    }
+
+    fun onNextButtonClicked() {
+        _onNextButtonClicked.value = true
+        // TODO Keep values to update DB. Call to next view.
     }
 }

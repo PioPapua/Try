@@ -2,7 +2,6 @@ package com.example.atry
 
 import android.annotation.SuppressLint
 import android.media.Image
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.barcode.Barcode
@@ -29,7 +28,6 @@ class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Ana
                 .addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
                         rawValue = barcode.rawValue.toString() // Valor del código de barras
-                        Log.d("Codigo de barras: ", rawValue)
                         listener(rawValue)
                     }
                     takenImage.close()
