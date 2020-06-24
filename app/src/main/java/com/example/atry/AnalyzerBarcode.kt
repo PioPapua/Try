@@ -9,7 +9,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
-class BarcodeAnalyzer(private val listener: BarcodeListener) : ImageAnalysis.Analyzer {
+class AnalyzerBarcode(private val listener: BarcodeListener) : ImageAnalysis.Analyzer {
 
     val options = BarcodeScannerOptions.Builder()
         .setBarcodeFormats(Barcode.FORMAT_EAN_13)

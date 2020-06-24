@@ -41,5 +41,23 @@
         android:id="@+id/packaging"
         android:name="com.example.atry.Packaging"
         android:label="Packaging"
-        tools:layout="@layout/fragment_packaging" />
+        tools:layout="@layout/fragment_packaging" >
+        <action
+            android:id="@+id/action_packaging_to_manufacturer"
+            app:destination="@id/manufacturer" />
+    </fragment>
+    <fragment
+        android:id="@+id/manufacturer"
+        android:name="com.example.atry.Manufacturer"
+        android:label="Manufacturer"
+        tools:layout="@layout/fragment_manufacturer" >
+        <action
+            android:id="@+id/action_manufacturer_to_user"
+            app:destination="@id/user" />
+    </fragment>
+    <fragment
+        android:id="@+id/user"
+        android:name="com.example.atry.User"
+        android:label="User"
+        tools:layout="@layout/fragment_user" />
 </navigation>

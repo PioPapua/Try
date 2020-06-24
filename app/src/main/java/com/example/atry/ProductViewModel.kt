@@ -48,12 +48,10 @@ class ProductViewModel : ViewModel() {
 
     init {
         _isFood.value = false
-        Log.d("TAG: ", "Ingreso al Init")
         _onNextButtonClicked.value = false
     }
 
     fun onBarcodeReceived(barcode: String) {
-        Log.d("TAG: ", "Barcode ViewModel: $barcode")
         _barcode.value = barcode
     }
 
@@ -63,7 +61,6 @@ class ProductViewModel : ViewModel() {
         _name.value = e?.toString()
     }
     fun onCategoryChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Categoría: $e")
         _category.value = e?.toString()
     }
 //    fun onCategoryTypeChange(item: String) {
@@ -71,30 +68,24 @@ class ProductViewModel : ViewModel() {
 //
 //    }
     fun onBarcodeChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Código de barras: $e")
         _barcode.value = e?.toString()
     }
     fun onPortionChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Porción: $e")
         _portion.value = e?.toString()
     }
 //    fun onPortionTypeChange(parent: AdapterView<>, view: View, pos: Int, id: Long){
 //        parent.setSelection(pos)
 //    }
     fun onTrademarkChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Marca: $e")
         _trademark.value = e?.toString()
     }
     fun onNetWeightChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Peso Neto: $e")
         _netWeight.value = e?.toString()
     }
     fun onDescriptionChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Descripción: $e")
         _description.value = e?.toString()
     }
     fun onImageUrlChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Url de Imagen: $e")
         _imageUrl.value = e?.toString()
     }
     fun onIsFoodChange(){

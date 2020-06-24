@@ -9,28 +9,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.atry.databinding.FragmentProductBinding
+import com.example.atry.databinding.FragmentUserBinding
 
-
-class Product : Fragment() {
-    private lateinit var viewModel: ProductViewModel
+class User : Fragment() {
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle? ): View? {
-        // Inflate the layout for this fragment
-        val binding: FragmentProductBinding = DataBindingUtil.inflate(
+                              savedInstanceState: Bundle?): View? {
+        val binding: FragmentUserBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_product,
+            R.layout.fragment_user,
             container,
             false
         )
 
-        val args = ProductArgs.fromBundle(requireArguments()) // Get the barcode string in args.barcode
-
-        viewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        viewModel.onBarcodeReceived(args.barcode)
-
-        binding.productViewModel = viewModel
+        viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        binding.userViewModel = viewModel
         binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
@@ -43,6 +37,6 @@ class Product : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_product_to_packaging)
+        view?.findNavController()?.navigate(R.id.action_packaging_to_manufacturer)
     }
 }

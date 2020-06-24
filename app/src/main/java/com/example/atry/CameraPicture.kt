@@ -96,7 +96,7 @@ private fun startCamera() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
             .also {
-                it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcodeNumber ->
+                it.setAnalyzer(cameraExecutor, AnalyzerBarcode { barcodeNumber ->
 
                     scan_button.visibility = View.VISIBLE
                     scan_button.setOnClickListener {
@@ -118,7 +118,7 @@ private fun startCamera() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
             .also {
-                it.setAnalyzer(cameraExecutor, TextAnalyzer { text ->
+                it.setAnalyzer(cameraExecutor, AnalyzerText { text ->
                     if (text.length > 10) {
                         cameraExecutor.shutdown()
                         textRecognized = text

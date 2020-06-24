@@ -8,7 +8,7 @@ import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 
-class TextAnalyzer(private val listener: TextListener) : ImageAnalysis.Analyzer {
+class AnalyzerText(private val listener: TextListener) : ImageAnalysis.Analyzer {
 
     @SuppressLint("UnsafeExperimentalUsageError")
     override fun analyze(takenImage: ImageProxy) {

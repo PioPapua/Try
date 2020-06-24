@@ -30,6 +30,10 @@
     <string name="compostable">Compostable</string>
     <string name="raw_materials_recycled">Materias primas recicladas</string>
     <string name="certificated">Certificación de origen de materias primas</string>
+    <string name="manufacturer">Fabricante</string>
+    <string name="business_name">Razón Social</string>
+    <string name="surname">Apellido</string>
+    <string name="user">Usuario</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>
