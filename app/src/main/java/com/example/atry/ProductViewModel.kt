@@ -63,19 +63,20 @@ class ProductViewModel : ViewModel() {
     fun onCategoryChange(e: Editable?){
         _category.value = e?.toString()
     }
-//    fun onCategoryTypeChange(item: String) {
-//        Log.d("TAG: ", "Valor de Tipo de Categoría: $item")
-//
-//    }
+    fun onCategoryTypeChange(item: String) {
+        Log.d("TAG: ", "Valor de Tipo de Categoría: $item")
+        _categoryType.value = item
+    }
     fun onBarcodeChange(e: Editable?){
         _barcode.value = e?.toString()
     }
     fun onPortionChange(e: Editable?){
         _portion.value = e?.toString()
     }
-//    fun onPortionTypeChange(parent: AdapterView<>, view: View, pos: Int, id: Long){
-//        parent.setSelection(pos)
-//    }
+    fun onPortionTypeChange(item: String) {
+        Log.d("TAG: ", "Valor de Tipo de Porción: $item")
+        _portionType.value = item
+    }
     fun onTrademarkChange(e: Editable?){
         _trademark.value = e?.toString()
     }
@@ -90,7 +91,6 @@ class ProductViewModel : ViewModel() {
     }
     fun onIsFoodChange(){
         _isFood.value = _isFood.value?.not()
-        Log.d("TAG: ", "Valor de Es alimento: $_isFood.value")
     }
 
     fun onNavigationCompleted(){
@@ -99,6 +99,12 @@ class ProductViewModel : ViewModel() {
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
-        // TODO Keep values to update DB. Call to next view.
+        // TODO Keep values to update DB.
+    }
+    fun noCategoryTypeSelected(){
+        // TODO
+    }
+    fun noPortionTypeSelected(){
+        // TODO
     }
 }
