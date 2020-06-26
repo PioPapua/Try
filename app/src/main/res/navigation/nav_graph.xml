@@ -59,5 +59,14 @@
         android:id="@+id/user"
         android:name="com.example.atry.User"
         android:label="User"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_user_to_ingredients"
+            app:destination="@id/ingredients" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredients"
+        android:name="com.example.atry.Ingredients"
+        android:label="Ingredients"
+        tools:layout="@layout/fragment_ingredients" />
 </navigation>

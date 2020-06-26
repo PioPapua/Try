@@ -1,6 +1,7 @@
 package com.example.atry
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ class User : Fragment() {
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
+                Log.d("TAG: ", "captura onNextButtonClicked")
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
@@ -37,6 +39,7 @@ class User : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_packaging_to_manufacturer)
+        Log.d("TAG: ", "Ingresa a navigationClicked")
+        view?.findNavController()?.navigate(R.id.action_user_to_ingredients)
     }
 }

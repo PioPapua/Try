@@ -1,5 +1,6 @@
 package com.example.atry
 
+import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,14 @@ class UserViewModel : ViewModel() {
 
     init {
         _onNextButtonClicked.value = false
+    }
+
+    fun onUserNameChange(e: Editable?){
+        _userName.value = e?.toString()
+    }
+
+    fun onUserSurnameChange(e: Editable?){
+        _userSurname.value = e?.toString()
     }
 
     fun onNavigationCompleted(){

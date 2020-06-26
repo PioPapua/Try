@@ -34,6 +34,9 @@
     <string name="business_name">Razón Social</string>
     <string name="surname">Apellido</string>
     <string name="user">Usuario</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="id">Id</string>
+    <string name="warning">Con advertencia</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>
