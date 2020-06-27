@@ -24,7 +24,7 @@ interface IngredientDatabaseDao {
     fun clear()
 
     @Query("SELECT * FROM ingrediente ORDER BY id DESC")
-    fun getAllNights(): LiveData<List<Ingredient>>
+    fun getAllIngredients(): LiveData<List<Ingredient>>
 
     @Query("SELECT * FROM ingrediente ORDER BY id DESC LIMIT 1")
     fun getLastIngredient(): Ingredient?

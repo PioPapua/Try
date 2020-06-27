@@ -62,11 +62,24 @@
         tools:layout="@layout/fragment_user" >
         <action
             android:id="@+id/action_user_to_ingredients"
-            app:destination="@id/ingredients" />
+            app:destination="@id/ingredientsTable" />
     </fragment>
     <fragment
-        android:id="@+id/ingredients"
-        android:name="com.example.atry.Ingredients"
-        android:label="Ingredients"
-        tools:layout="@layout/fragment_ingredients" />
+        android:id="@+id/ingredientsTable"
+        android:name="com.example.atry.IngredientsTable"
+        android:label="IngredientsTable"
+        tools:layout="@layout/fragment_ingredients_table" >
+        <action
+            android:id="@+id/action_ingredientsTable_to_ingredientAdd"
+            app:destination="@id/ingredientAdd" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientAdd"
+        android:name="com.example.atry.IngredientAdd"
+        android:label="IngredientAdd"
+        tools:layout="@layout/fragment_ingredient_add">
+        <action
+            android:id="@+id/action_ingredientAdd_to_ingredientsTable"
+            app:destination="@id/ingredientsTable" />
+    </fragment>
 </navigation>

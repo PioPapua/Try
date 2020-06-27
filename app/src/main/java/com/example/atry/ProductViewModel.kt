@@ -101,10 +101,4 @@ class ProductViewModel : ViewModel() {
         _onNextButtonClicked.value = true
         // TODO Keep values to update DB.
     }
-    fun noCategoryTypeSelected(){
-        // TODO
-    }
-    fun noPortionTypeSelected(){
-        // TODO
-    }
 }

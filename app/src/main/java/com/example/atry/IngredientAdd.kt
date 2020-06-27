@@ -12,45 +12,47 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.atry.databinding.FragmentProductBinding
+import com.example.atry.database.Database
+import com.example.atry.databinding.FragmentIngredientAddBinding
 
 
-class Product : Fragment() {
-    private lateinit var viewModel: ProductViewModel
+class IngredientAdd : Fragment() {
+    private lateinit var viewModel: IngredientAddViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle? ): View? {
-        // Inflate the layout for this fragment
-        val binding: FragmentProductBinding = DataBindingUtil.inflate(
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: FragmentIngredientAddBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_product,
+            R.layout.fragment_ingredient_add,
             container,
             false
         )
 
-        val args = ProductArgs.fromBundle(requireArguments()) // Get the barcode string in args.barcode
+        val application = requireNotNull(this.activity).application
+        val dataSource = Database.getInstance(application).ingredientDatabaseDao
+        val viewModelFactory = IngredientAddViewModelFactory(dataSource, application)
 
-        viewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        viewModel.onBarcodeReceived(args.barcode)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(IngredientAddViewModel::class.java)
+        binding.ingredientAddViewModel = viewModel
+        binding.setLifecycleOwner(this)
 
-        binding.productViewModel = viewModel
-        binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
-
-        // Call to the ViewModel when Spinners are updated
+        // Call to the ViewModel when Spinner is updated
         spinnerAdapterMaker(binding.spinnerCategoryType,
             resources.getStringArray(R.array.category_types),
-                "categoryType")
-        spinnerAdapterMaker(binding.spinnerPortionType,
-            resources.getStringArray(R.array.portion_types),
-            "portionType")
-
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+            "categoryType")
+        viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
-                navigationClicked()
+                onAddButtonClicked()
                 viewModel.onNavigationCompleted()
             }
         })
         return binding.root
+    }
+    private fun onAddButtonClicked () {
+        view?.findNavController()?.navigate(R.id.action_ingredientAdd_to_ingredientsTable)
     }
 
     private fun spinnerAdapterMaker (spinner: Spinner, elements: Array<String>, viewModelElement: String){
@@ -70,13 +72,8 @@ class Product : Fragment() {
             ) {
                 when (viewModelElement) {
                     "categoryType" -> viewModel.onCategoryTypeChange(elements.get(position))
-                    "portionType" -> viewModel.onPortionTypeChange(elements.get(position))
                 }
             }
         }
-    }
-
-    private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_product_to_packaging)
     }
 }

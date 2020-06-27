@@ -15,6 +15,9 @@ data class Ingredient(
     @ColumnInfo(name = "description")
     var description: String = "description",
 
+    @ColumnInfo(name = "informationLink")
+    val informationLink: String = "informationLink",
+
     @ColumnInfo(name = "warning")
     var warning: String = "Warning",
 
