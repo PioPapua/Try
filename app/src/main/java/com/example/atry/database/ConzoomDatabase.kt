@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Ingredient::class], // Define every table on the Database
-    version = 11,
+    version = 12,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {

@@ -6,9 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.IngredientDatabaseDao
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.Observer
 import com.example.atry.database.Ingredient
 import kotlinx.coroutines.*
 import java.io.IOException
+import java.lang.Thread.sleep
 
 class IngredientsTableViewModel (val database: IngredientDatabaseDao, application: Application) : AndroidViewModel(application) {
 
@@ -21,20 +24,13 @@ class IngredientsTableViewModel (val database: IngredientDatabaseDao, applicatio
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private var ingredients : LiveData<List<Ingredient>> = database.getAllIngredients()
+    var ingredients : LiveData<List<Ingredient>> = database.getAllIngredients()
 
     init {
         _onNextButtonClicked.value = false
         _onAddButtonClicked.value = false
-        prueba()
-        Log.d("TAG: ", "ingredientes al comenzar: ${ingredients?.value}")
     }
 
-    private fun prueba() {
-        uiScope.launch {
-            getAllIngredients()
-        }
-    }
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -54,18 +50,5 @@ class IngredientsTableViewModel (val database: IngredientDatabaseDao, applicatio
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
-    }
-
-    private suspend fun getAllIngredients() {
-        withContext(Dispatchers.IO) {
-            try {
-                ingredients = database.getAllIngredients()
-            }
-            catch (e: IOException){
-                e.printStackTrace()
-            }
-            Log.d("TAG: ", "ingredientes al terminar: ${ingredients?.value}")
-            Log.d("TAG: ", "ingrediente con id 1: ${database.get(1)}")
-        }
     }
 }
