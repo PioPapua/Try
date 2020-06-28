@@ -7,10 +7,10 @@
     <data>
         <variable
             name="IngredientsTableViewModel"
-            type="com.example.atry.IngredientsTableViewModel" />
+            type="com.example.atry.ingredientsTable.IngredientsTableViewModel" />
         <variable
             name="IngredientsBinding"
-            type="com.example.atry.IngredientsTable" />
+            type="com.example.atry.ingredientsTable.IngredientsTable" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

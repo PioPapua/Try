@@ -1,14 +1,16 @@
-package com.example.atry
+package com.example.atry.ingredientAdd
 
 import android.app.Application
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.atry.database.Ingredient
 import com.example.atry.database.IngredientDatabaseDao
+import kotlinx.coroutines.*
 
 class IngredientAddViewModel (val database: IngredientDatabaseDao, application: Application) : AndroidViewModel(application) {
+    // Define parameters to communicate with IngredientAdd Fragment/Layout
     private val _name = MutableLiveData<String>()
     val name: LiveData<String>
         get() = _name
@@ -24,30 +26,44 @@ class IngredientAddViewModel (val database: IngredientDatabaseDao, application: 
     private val _warning = MutableLiveData<Boolean>()
     val warning: LiveData<Boolean>
         get() = _warning
-
     private val _onAddButtonClicked = MutableLiveData<Boolean>()
     val onAddButtonClicked: LiveData<Boolean>
         get() = _onAddButtonClicked
+
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         _warning.value = false
         _onAddButtonClicked.value = false
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    private suspend fun insert(ingredient: Ingredient) {
+        withContext(Dispatchers.IO) {
+            database.insert(ingredient)
+        }
+    }
+    private suspend fun update(ingredient: Ingredient) {
+        withContext(Dispatchers.IO) {
+            database.update(ingredient)
+        }
+    }
+
     fun onNameChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Nombre: $e")
         _name.value = e?.toString()
     }
     fun onDescriptionChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Descripción: $e")
         _description.value = e?.toString()
     }
     fun onInformationLinkChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Link de información: $e")
         _informationLink.value = e?.toString()
     }
     fun onCategoryTypeChange(item: String) {
-        Log.d("TAG: ", "Valor de Tipo de Rubro: $item")
         _categoryType.value = item
     }
     fun onWarningChange(){
@@ -59,7 +75,15 @@ class IngredientAddViewModel (val database: IngredientDatabaseDao, application: 
     }
 
     fun onAddButtonClicked() {
+        uiScope.launch {
+            val newIngredient = Ingredient()
+            newIngredient.name = _name.value.toString()
+            newIngredient.description = _description.value.toString()
+            newIngredient.informationLink = _informationLink.value.toString()
+            newIngredient.warning = _warning.value!!
+            newIngredient.categoryType = _categoryType.value.toString()
+            insert(newIngredient)
+        }
         _onAddButtonClicked.value = true
-        // TODO Keep values to update DB.
     }
 }

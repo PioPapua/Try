@@ -17,16 +17,16 @@ interface IngredientDatabaseDao {
     @Update
     fun update(ingredient: Ingredient)
 
-    @Query("SELECT * from ingrediente WHERE id = :key")
+    @Query("SELECT * from ingredient_table WHERE id = :key")
     fun get(key: Long): Ingredient?
 
-    @Query("DELETE FROM ingrediente")
+    @Query("DELETE FROM ingredient_table")
     fun clear()
 
-    @Query("SELECT * FROM ingrediente ORDER BY id DESC")
+    @Query("SELECT * FROM ingredient_table")
     fun getAllIngredients(): LiveData<List<Ingredient>>
 
-    @Query("SELECT * FROM ingrediente ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM ingredient_table ORDER BY id DESC LIMIT 1")
     fun getLastIngredient(): Ingredient?
 
 }

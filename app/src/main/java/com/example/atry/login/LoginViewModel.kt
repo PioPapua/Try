@@ -1,4 +1,4 @@
-package com.example.atry
+package com.example.atry.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

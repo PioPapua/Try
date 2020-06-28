@@ -1,7 +1,6 @@
-package com.example.atry
+package com.example.atry.product
 
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -57,14 +56,12 @@ class ProductViewModel : ViewModel() {
 
     // Update data when user introduces an edition in Layout
     fun onNameChange(e: Editable?){
-        Log.d("TAG: ", "Valor de Nombre: $e")
         _name.value = e?.toString()
     }
     fun onCategoryChange(e: Editable?){
         _category.value = e?.toString()
     }
     fun onCategoryTypeChange(item: String) {
-        Log.d("TAG: ", "Valor de Tipo de Categoría: $item")
         _categoryType.value = item
     }
     fun onBarcodeChange(e: Editable?){
@@ -74,7 +71,6 @@ class ProductViewModel : ViewModel() {
         _portion.value = e?.toString()
     }
     fun onPortionTypeChange(item: String) {
-        Log.d("TAG: ", "Valor de Tipo de Porción: $item")
         _portionType.value = item
     }
     fun onTrademarkChange(e: Editable?){

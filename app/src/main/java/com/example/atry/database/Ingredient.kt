@@ -4,22 +4,22 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Ingrediente")
+@Entity(tableName = "ingredient_table")
 data class Ingredient(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 
     @ColumnInfo(name = "name")
-    val name: String = "name",
+    var name: String = "name",
 
     @ColumnInfo(name = "description")
     var description: String = "description",
 
     @ColumnInfo(name = "informationLink")
-    val informationLink: String = "informationLink",
+    var informationLink: String = "informationLink",
 
     @ColumnInfo(name = "warning")
-    var warning: String = "Warning",
+    var warning: Boolean = false,
 
     @ColumnInfo(name = "categoryType")
     var categoryType: String = "category type"

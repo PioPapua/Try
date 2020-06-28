@@ -1,4 +1,4 @@
-package com.example.atry
+package com.example.atry.ingredientsTable
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.atry.database.Database
+import com.example.atry.R
+import com.example.atry.database.ConzoomDatabase
 import com.example.atry.databinding.FragmentIngredientsTableBinding
 
 class IngredientsTable : Fragment() {
@@ -28,15 +29,19 @@ class IngredientsTable : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = Database.getInstance(application).ingredientDatabaseDao
-        val viewModelFactory = IngredientsTableViewModelFactory(dataSource, application)
+        val dataSource = ConzoomDatabase.getInstance(application).ingredientDatabaseDao
+        val viewModelFactory =
+            IngredientsTableViewModelFactory(
+                dataSource,
+                application
+            )
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(IngredientsTableViewModel::class.java)
         binding.ingredientsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
-            if (nextClicked) {
+        viewModel.onAddButtonClicked.observe(this, Observer { addClicked ->
+            if (addClicked) {
                 additionClicked()
                 viewModel.onAdditionCompleted()
             }

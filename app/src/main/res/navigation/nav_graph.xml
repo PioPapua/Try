@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.example.atry.Login"
+        android:name="com.example.atry.login.Login"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/product"
-        android:name="com.example.atry.Product"
+        android:name="com.example.atry.product.Product"
         android:label="Product"
         tools:layout="@layout/fragment_product" >
         <argument
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/packaging"
-        android:name="com.example.atry.Packaging"
+        android:name="com.example.atry.packaging.Packaging"
         android:label="Packaging"
         tools:layout="@layout/fragment_packaging" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/manufacturer"
-        android:name="com.example.atry.Manufacturer"
+        android:name="com.example.atry.manufacturer.Manufacturer"
         android:label="Manufacturer"
         tools:layout="@layout/fragment_manufacturer" >
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/user"
-        android:name="com.example.atry.User"
+        android:name="com.example.atry.user.User"
         android:label="User"
         tools:layout="@layout/fragment_user" >
         <action
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/ingredientsTable"
-        android:name="com.example.atry.IngredientsTable"
+        android:name="com.example.atry.ingredientsTable.IngredientsTable"
         android:label="IngredientsTable"
         tools:layout="@layout/fragment_ingredients_table" >
         <action
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/ingredientAdd"
-        android:name="com.example.atry.IngredientAdd"
+        android:name="com.example.atry.ingredientAdd.IngredientAdd"
         android:label="IngredientAdd"
         tools:layout="@layout/fragment_ingredient_add">
         <action

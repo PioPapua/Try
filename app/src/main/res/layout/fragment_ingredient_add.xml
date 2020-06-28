@@ -7,10 +7,10 @@
     <data>
         <variable
             name="IngredientAddViewModel"
-            type="com.example.atry.IngredientAddViewModel" />
+            type="com.example.atry.ingredientAdd.IngredientAddViewModel" />
         <variable
             name="IngredientsBinding"
-            type="com.example.atry.IngredientAdd" />
+            type="com.example.atry.ingredientAdd.IngredientAdd" />
     </data>
 
 
@@ -142,6 +142,7 @@
                 android:id="@+id/spinner_category_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:entries="@array/category_types"
                 app:layout_constraintBottom_toTopOf="@+id/radioButton_warning"
                 app:layout_constraintStart_toStartOf="@+id/radioButton_warning"
                 app:layout_constraintTop_toBottomOf="@+id/edit_information_link" />

@@ -1,4 +1,4 @@
-package com.example.atry
+package com.example.atry.user
 
 import android.text.Editable
 import androidx.lifecycle.LiveData

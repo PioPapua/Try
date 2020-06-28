@@ -7,10 +7,10 @@
     <data>
         <variable
             name="ProductViewModel"
-            type="com.example.atry.ProductViewModel" />
+            type="com.example.atry.product.ProductViewModel" />
         <variable
             name="ProductBinding"
-            type="com.example.atry.Product" />
+            type="com.example.atry.product.Product" />
     </data>
 
     <ScrollView
@@ -21,7 +21,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".Product">
+            tools:context=".product.Product">
 
             <TextView
                 android:id="@+id/text_product"

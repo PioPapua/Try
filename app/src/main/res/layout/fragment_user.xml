@@ -6,10 +6,10 @@
     <data>
         <variable
             name="UserViewModel"
-            type="com.example.atry.UserViewModel" />
+            type="com.example.atry.user.UserViewModel" />
         <variable
             name="UserBinding"
-            type="com.example.atry.User" />
+            type="com.example.atry.user.User" />
     </data>
 
     <ScrollView
@@ -23,7 +23,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".User">
+            tools:context=".user.User">
 
             <TextView
                 android:id="@+id/text_user"

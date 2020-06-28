@@ -1,7 +1,6 @@
-package com.example.atry
+package com.example.atry.packaging
 
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,31 +38,24 @@ class PackagingViewModel: ViewModel() {
     }
 
     fun onDescriptionChange(e: Editable?) {
-        Log.d("TAG: ", "Descripción: $e")
         _description.value = e.toString()
     }
     fun onReturnableChange(item: String) {
-        Log.d("TAG: ", "Valor de Retornable: $item")
         _returnable.value = item
     }
     fun onReusableChange(item: String) {
-        Log.d("TAG: ", "Valor de Reutilizable: $item")
         _reusable.value = item
     }
     fun onRecyclableChange(item: String) {
-        Log.d("TAG: ", "Valor de Reciclable: $item")
         _recyclable.value = item
     }
     fun onCompostableChange(item: String) {
-        Log.d("TAG: ", "Valor de Compostable: $item")
         _compostable.value = item
     }
     fun onRawMaterialsRecycledChange(item: String) {
-        Log.d("TAG: ", "Valor de Materias primas: $item")
         _rawMaterialsRecycled.value = item
     }
     fun onCertificatedChange(item: String) {
-        Log.d("TAG: ", "Valor de Certificated: $item")
         _certificated.value = item
     }
 

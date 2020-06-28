@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.atry.databinding.FragmentCameraPictureBinding
+import com.example.atry.product.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_camera_picture.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

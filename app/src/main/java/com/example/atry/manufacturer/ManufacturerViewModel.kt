@@ -1,4 +1,4 @@
-package com.example.atry
+package com.example.atry.manufacturer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.example.atry
+package com.example.atry.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.example.atry.R
 import com.example.atry.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 

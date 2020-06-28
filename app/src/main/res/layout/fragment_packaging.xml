@@ -6,10 +6,10 @@
     <data>
         <variable
             name="PackagingViewModel"
-            type="com.example.atry.PackagingViewModel" />
+            type="com.example.atry.packaging.PackagingViewModel" />
         <variable
             name="PackagingBinding"
-            type="com.example.atry.Packaging" />
+            type="com.example.atry.packaging.Packaging" />
     </data>
 
     <ScrollView
@@ -20,7 +20,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".Packaging">
+            tools:context=".packaging.Packaging">
 
             <TextView
                 android:id="@+id/text_packaging"

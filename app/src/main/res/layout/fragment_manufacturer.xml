@@ -6,10 +6,10 @@
     <data>
         <variable
             name="ManufacturerViewModel"
-            type="com.example.atry.ManufacturerViewModel" />
+            type="com.example.atry.manufacturer.ManufacturerViewModel" />
         <variable
             name="ManufacturerBinding"
-            type="com.example.atry.Manufacturer" />
+            type="com.example.atry.manufacturer.Manufacturer" />
     </data>
 
     <ScrollView
@@ -23,7 +23,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".Manufacturer">
+            tools:context=".manufacturer.Manufacturer">
 
             <TextView
                 android:id="@+id/text_manufacturer"
