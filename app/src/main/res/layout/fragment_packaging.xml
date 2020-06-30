@@ -56,12 +56,10 @@
                     android:id="@+id/text_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/description"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edit_description"
-                    app:layout_constraintEnd_toEndOf="@+id/text_returnable"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_returnable" />
 
                 <EditText
                     android:id="@+id/edit_description"
@@ -84,12 +82,10 @@
                     android:id="@+id/text_returnable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/returnable"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/spinner_returnable"
-                    app:layout_constraintEnd_toEndOf="@+id/text_reusable"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_reusable" />
 
                 <Spinner
                     android:id="@+id/spinner_returnable"
@@ -108,12 +104,10 @@
                     android:id="@+id/text_reusable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/reusable"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/spinner_reusable"
-                    app:layout_constraintEnd_toEndOf="@+id/text_recyclable"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_recyclable" />
 
                 <Spinner
                     android:id="@+id/spinner_reusable"
@@ -132,12 +126,10 @@
                     android:id="@+id/text_recyclable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/recyclable"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/spinner_recyclable"
-                    app:layout_constraintEnd_toEndOf="@+id/text_compostable"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_compostable" />
 
                 <Spinner
                     android:id="@+id/spinner_recyclable"
@@ -156,12 +148,10 @@
                     android:id="@+id/text_compostable"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/compostable"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/spinner_compostable"
-                    app:layout_constraintEnd_toEndOf="@+id/text_raw_materials_recycled"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_raw_materials_recycled" />
 
                 <Spinner
                     android:id="@+id/spinner_compostable"
@@ -180,12 +170,10 @@
                     android:id="@+id/text_raw_materials_recycled"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/raw_materials_recycled"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/spinner_raw_materials_recycled"
-                    app:layout_constraintEnd_toEndOf="@+id/text_certificated"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/text_certificated" />
 
                 <Spinner
                     android:id="@+id/spinner_raw_materials_recycled"

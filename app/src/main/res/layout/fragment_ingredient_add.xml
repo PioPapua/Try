@@ -160,7 +160,7 @@
                 app:layout_constraintStart_toEndOf="@+id/text_warning"
                 tools:layout_editor_absoluteX="172dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
