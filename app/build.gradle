@@ -67,4 +67,7 @@ dependencies {
     // Room
     implementation 'androidx.room:room-runtime:2.2.5'
     kapt 'androidx.room:room-compiler:2.2.5'
+
+    // Design Material
+    implementation "com.google.android.material:material:1.3.0-alpha01"
 }

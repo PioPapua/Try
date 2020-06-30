@@ -40,6 +40,8 @@
     <string name="add">Agregar</string>
     <string name="ingredient">Ingrediente</string>
     <string name="information_link">Link de información</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>

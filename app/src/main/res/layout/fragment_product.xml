@@ -13,317 +13,321 @@
             type="com.example.atry.product.Product" />
     </data>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <androidx.core.widget.NestedScrollView
             android:layout_height="match_parent"
-            tools:context=".product.Product">
+            android:layout_width="match_parent">
 
-            <TextView
-                android:id="@+id/text_product"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/text_product"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/divider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                tools:context=".product.Product">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_product" />
+                <TextView
+                    android:id="@+id/text_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/text_product"
+                    android:textColor="@color/primaryColor"
+                    android:textColorLink="@color/primaryColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                app:layout_constraintBottom_toTopOf="@+id/text_category"
-                app:layout_constraintEnd_toEndOf="@+id/text_category"
-                app:layout_constraintTop_toTopOf="@id/divider" />
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_product" />
 
-            <TextView
-                android:id="@+id/text_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category"
-                app:layout_constraintBottom_toTopOf="@+id/text_category_type"
-                app:layout_constraintEnd_toEndOf="@+id/text_category_type"
-                app:layout_constraintTop_toBottomOf="@+id/text_name" />
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    app:layout_constraintBottom_toTopOf="@+id/text_category"
+                    app:layout_constraintEnd_toEndOf="@+id/text_category"
+                    app:layout_constraintTop_toTopOf="@id/divider" />
 
-            <TextView
-                android:id="@+id/text_category_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category_type"
-                app:layout_constraintBottom_toTopOf="@+id/text_barcode"
-                app:layout_constraintEnd_toEndOf="@+id/text_barcode"
-                app:layout_constraintTop_toBottomOf="@+id/text_category" />
+                <TextView
+                    android:id="@+id/text_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category"
+                    app:layout_constraintBottom_toTopOf="@+id/text_category_type"
+                    app:layout_constraintEnd_toEndOf="@+id/text_category_type"
+                    app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
-            <TextView
-                android:id="@+id/text_barcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/barcode"
-                app:layout_constraintBottom_toTopOf="@+id/text_portion"
-                app:layout_constraintEnd_toEndOf="@+id/text_portion"
-                app:layout_constraintTop_toBottomOf="@+id/text_category_type" />
+                <TextView
+                    android:id="@+id/text_category_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_type"
+                    app:layout_constraintBottom_toTopOf="@+id/text_barcode"
+                    app:layout_constraintEnd_toEndOf="@+id/text_barcode"
+                    app:layout_constraintTop_toBottomOf="@+id/text_category" />
 
-            <TextView
-                android:id="@+id/text_portion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/portion"
-                app:layout_constraintBottom_toTopOf="@+id/text_portion_type"
-                app:layout_constraintEnd_toEndOf="@+id/text_portion_type"
-                app:layout_constraintTop_toBottomOf="@+id/text_barcode" />
+                <TextView
+                    android:id="@+id/text_barcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/barcode"
+                    app:layout_constraintBottom_toTopOf="@+id/text_portion"
+                    app:layout_constraintEnd_toEndOf="@+id/text_portion"
+                    app:layout_constraintTop_toBottomOf="@+id/text_category_type" />
 
-            <TextView
-                android:id="@+id/text_portion_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/portion_type"
-                app:layout_constraintBottom_toTopOf="@+id/text_trademark"
-                app:layout_constraintEnd_toEndOf="@+id/text_trademark"
-                app:layout_constraintTop_toBottomOf="@+id/text_portion" />
+                <TextView
+                    android:id="@+id/text_portion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portion"
+                    app:layout_constraintBottom_toTopOf="@+id/text_portion_type"
+                    app:layout_constraintEnd_toEndOf="@+id/text_portion_type"
+                    app:layout_constraintTop_toBottomOf="@+id/text_barcode" />
 
-            <TextView
-                android:id="@+id/text_trademark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/trademark"
-                app:layout_constraintBottom_toTopOf="@+id/text_net_weight"
-                app:layout_constraintEnd_toEndOf="@+id/text_net_weight"
-                app:layout_constraintTop_toBottomOf="@+id/text_portion_type" />
+                <TextView
+                    android:id="@+id/text_portion_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/portion_type"
+                    app:layout_constraintBottom_toTopOf="@+id/text_trademark"
+                    app:layout_constraintEnd_toEndOf="@+id/text_trademark"
+                    app:layout_constraintTop_toBottomOf="@+id/text_portion" />
 
-            <TextView
-                android:id="@+id/text_net_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/net_weight"
-                app:layout_constraintBottom_toTopOf="@+id/text_description"
-                app:layout_constraintEnd_toEndOf="@+id/text_description"
-                app:layout_constraintTop_toBottomOf="@+id/text_trademark" />
+                <TextView
+                    android:id="@+id/text_trademark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trademark"
+                    app:layout_constraintBottom_toTopOf="@+id/text_net_weight"
+                    app:layout_constraintEnd_toEndOf="@+id/text_net_weight"
+                    app:layout_constraintTop_toBottomOf="@+id/text_portion_type" />
 
-            <TextView
-                android:id="@+id/text_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description"
-                app:layout_constraintBottom_toTopOf="@+id/text_image_url"
-                app:layout_constraintEnd_toEndOf="@+id/text_image_url"
-                app:layout_constraintTop_toBottomOf="@+id/text_net_weight" />
+                <TextView
+                    android:id="@+id/text_net_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/net_weight"
+                    app:layout_constraintBottom_toTopOf="@+id/text_description"
+                    app:layout_constraintEnd_toEndOf="@+id/text_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_trademark" />
 
-            <TextView
-                android:id="@+id/text_image_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="80dp"
-                android:text="@string/image_url"
-                app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
-                app:layout_constraintEnd_toEndOf="@id/checkBox_is_food"
-                app:layout_constraintTop_toBottomOf="@+id/text_description" />
+                <TextView
+                    android:id="@+id/text_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    app:layout_constraintBottom_toTopOf="@+id/text_image_url"
+                    app:layout_constraintEnd_toEndOf="@+id/text_image_url"
+                    app:layout_constraintTop_toBottomOf="@+id/text_net_weight" />
 
-            <EditText
-                android:id="@+id/edit_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onNameChange(e)}"
-                android:ems="10"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.name}"
-                app:layout_constraintBottom_toTopOf="@+id/edit_category"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_name"
-                app:layout_constraintTop_toTopOf="@id/divider" />
+                <TextView
+                    android:id="@+id/text_image_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="80dp"
+                    android:text="@string/image_url"
+                    app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
+                    app:layout_constraintEnd_toEndOf="@id/checkBox_is_food"
+                    app:layout_constraintTop_toBottomOf="@+id/text_description" />
 
-            <EditText
-                android:id="@+id/edit_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onCategoryChange(e)}"
-                android:ems="10"
-                android:hint="@string/hint_category"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.category}"
-                app:layout_constraintBottom_toTopOf="@+id/spinner_category_type"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_category"
-                app:layout_constraintTop_toBottomOf="@+id/edit_name" />
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onNameChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.name}"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_category"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_name"
+                    app:layout_constraintTop_toTopOf="@id/divider" />
 
-            <EditText
-                android:id="@+id/edit_barcode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onBarcodeChange(e)}"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.barcode}"
-                app:layout_constraintBottom_toTopOf="@+id/edit_portion"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_barcode"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_category_type" />
+                <EditText
+                    android:id="@+id/edit_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onCategoryChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/hint_category"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.category}"
+                    app:layout_constraintBottom_toTopOf="@+id/spinner_category_type"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_category"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_name" />
 
-            <EditText
-                android:id="@+id/edit_portion"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onPortionChange(e)}"
-                android:ems="10"
-                android:hint="@string/hint_portion"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.portion}"
-                app:layout_constraintBottom_toTopOf="@+id/spinner_portion_type"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_portion"
-                app:layout_constraintTop_toBottomOf="@+id/edit_barcode" />
+                <EditText
+                    android:id="@+id/edit_barcode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onBarcodeChange(e)}"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.barcode}"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_portion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_barcode"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_category_type" />
 
-            <EditText
-                android:id="@+id/edit_trademark"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onTrademarkChange(e)}"
-                android:ems="10"
-                android:hint="@string/hint_trademark"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.trademark}"
-                app:layout_constraintBottom_toTopOf="@+id/edit_net_weight"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_trademark"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_portion_type" />
+                <EditText
+                    android:id="@+id/edit_portion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onPortionChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/hint_portion"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.portion}"
+                    app:layout_constraintBottom_toTopOf="@+id/spinner_portion_type"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_portion"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_barcode" />
 
-            <EditText
-                android:id="@+id/edit_net_weight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onNetWeightChange(e)}"
-                android:ems="10"
-                android:hint="@string/hint_net_weight"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.netWeight}"
-                app:layout_constraintBottom_toTopOf="@+id/edit_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_net_weight"
-                app:layout_constraintTop_toBottomOf="@+id/edit_trademark" />
+                <EditText
+                    android:id="@+id/edit_trademark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onTrademarkChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/hint_trademark"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.trademark}"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_net_weight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_trademark"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_portion_type" />
 
-            <EditText
-                android:id="@+id/edit_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onDescriptionChange(e)}"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.description}"
-                app:layout_constraintBottom_toTopOf="@+id/edit_image_url"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_description"
-                app:layout_constraintTop_toBottomOf="@+id/edit_net_weight" />
+                <EditText
+                    android:id="@+id/edit_net_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onNetWeightChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/hint_net_weight"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.netWeight}"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_net_weight"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_trademark" />
 
-            <EditText
-                android:id="@+id/edit_image_url"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:afterTextChanged="@{(e) -> ProductViewModel.onImageUrlChange(e)}"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@{ProductViewModel.imageUrl}"
-                app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_image_url"
-                app:layout_constraintTop_toBottomOf="@+id/edit_description" />
+                <EditText
+                    android:id="@+id/edit_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onDescriptionChange(e)}"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.description}"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_image_url"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_description"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_net_weight" />
 
-            <CheckBox
-                android:id="@+id/checkBox_is_food"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginBottom="16dp"
-                android:checked="@{ProductViewModel.isFood()}"
-                android:onClick="@{() -> ProductViewModel.onIsFoodChange()}"
-                android:text="@string/is_food"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/text_image_url"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_image_url" />
+                <EditText
+                    android:id="@+id/edit_image_url"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:afterTextChanged="@{(e) -> ProductViewModel.onImageUrlChange(e)}"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@{ProductViewModel.imageUrl}"
+                    app:layout_constraintBottom_toTopOf="@+id/checkBox_is_food"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_image_url"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_description" />
 
-            <Spinner
-                android:id="@+id/spinner_category_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:entries="@array/category_types"
-                app:layout_constraintBottom_toTopOf="@+id/edit_barcode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_category_type"
-                app:layout_constraintTop_toBottomOf="@+id/edit_category" />
+                <CheckBox
+                    android:id="@+id/checkBox_is_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:checked="@{ProductViewModel.isFood()}"
+                    android:onClick="@{() -> ProductViewModel.onIsFoodChange()}"
+                    android:text="@string/is_food"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/text_image_url"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_image_url" />
 
-            <Spinner
-                android:id="@+id/spinner_portion_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:entries="@array/portion_types"
-                app:layout_constraintBottom_toTopOf="@+id/edit_trademark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_portion_type"
-                app:layout_constraintTop_toBottomOf="@+id/edit_portion" />
+                <Spinner
+                    android:id="@+id/spinner_category_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:entries="@array/category_types"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_barcode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_category_type"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_category" />
 
-            <Button
-                android:id="@+id/button_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:onClick="@{() -> ProductViewModel.onNextButtonClicked()}"
-                android:text="@string/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/edit_image_url"
-                app:layout_constraintTop_toBottomOf="@+id/edit_image_url" />
+                <Spinner
+                    android:id="@+id/spinner_portion_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:entries="@array/portion_types"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_trademark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_portion_type"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_portion" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:onClick="@{() -> ProductViewModel.onNextButtonClicked()}"
+        android:src="@drawable/ic_navigate_next_24px"
+        android:text="@string/next" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
