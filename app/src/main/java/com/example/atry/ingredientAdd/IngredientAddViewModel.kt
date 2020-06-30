@@ -6,10 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.Ingredient
-import com.example.atry.database.IngredientDatabaseDao
+import com.example.atry.database.IngredientDao
 import kotlinx.coroutines.*
 
-class IngredientAddViewModel (val database: IngredientDatabaseDao, application: Application) : AndroidViewModel(application) {
+class IngredientAddViewModel (val database: IngredientDao, application: Application) : AndroidViewModel(application) {
     // Define parameters to communicate with IngredientAdd Fragment/Layout
     private val _name = MutableLiveData<String>()
     val name: LiveData<String>

@@ -9,7 +9,7 @@ import androidx.room.Update
 // Defines methods for using the Ingredient class with Room.
 
 @Dao
-interface IngredientDatabaseDao {
+interface IngredientDao {
 
     @Insert
     fun insert(ingredient: Ingredient)

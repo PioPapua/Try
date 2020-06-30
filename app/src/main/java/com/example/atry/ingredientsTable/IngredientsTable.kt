@@ -1,13 +1,11 @@
 package com.example.atry.ingredientsTable
 
-import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -35,7 +33,7 @@ class IngredientsTable : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = ConzoomDatabase.getInstance(application).ingredientDatabaseDao
+        val dataSource = ConzoomDatabase.getInstance(application).ingredientDao
         val viewModelFactory =
             IngredientsTableViewModelFactory(
                 dataSource,
@@ -50,6 +48,13 @@ class IngredientsTable : Fragment() {
             if (addClicked) {
                 additionClicked()
                 viewModel.onAdditionCompleted()
+            }
+        })
+
+        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
+                navigationClicked()
+                viewModel.onNavigationCompleted()
             }
         })
 
@@ -103,6 +108,6 @@ class IngredientsTable : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_packaging_to_manufacturer)
+        view?.findNavController()?.navigate(R.id.action_ingredientsTable_to_labelsTable)
     }
 }

@@ -42,6 +42,9 @@
     <string name="information_link">Link de información</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="labels">Etiquetas</string>
+    <string name="label">Etiqueta</string>
+    <string name="logo_url">Url de logo</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>

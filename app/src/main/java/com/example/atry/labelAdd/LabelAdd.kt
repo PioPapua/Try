@@ -1,4 +1,4 @@
-package com.example.atry.ingredientAdd
+package com.example.atry.labelAdd
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,40 +14,41 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.atry.R
 import com.example.atry.database.ConzoomDatabase
-import com.example.atry.databinding.FragmentIngredientAddBinding
+import com.example.atry.databinding.FragmentLabelAddBinding
 
 
-class IngredientAdd : Fragment() {
-    private lateinit var viewModel: IngredientAddViewModel
+class LabelAdd : Fragment() {
+    private lateinit var viewModel: LabelAddViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentIngredientAddBinding = DataBindingUtil.inflate(
+        val binding: FragmentLabelAddBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_ingredient_add,
+            R.layout.fragment_label_add,
             container,
             false
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = ConzoomDatabase.getInstance(application).ingredientDao
+        val dataSource = ConzoomDatabase.getInstance(application).labelDao
         val viewModelFactory =
-            IngredientAddViewModelFactory(
+            LabelAddViewModelFactory(
                 dataSource,
                 application
             )
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(IngredientAddViewModel::class.java)
-        binding.ingredientAddViewModel = viewModel
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LabelAddViewModel::class.java)
+        binding.labelAddViewModel = viewModel
         binding.setLifecycleOwner(this)
 
         // Call to the ViewModel when Spinner is updated
         spinnerAdapterMaker(binding.spinnerCategoryType,
             resources.getStringArray(R.array.category_types),
             "categoryType")
+
         viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
                 onAddButtonClicked()
@@ -57,7 +58,7 @@ class IngredientAdd : Fragment() {
         return binding.root
     }
     private fun onAddButtonClicked () {
-        view?.findNavController()?.navigate(R.id.action_ingredientAdd_to_ingredientsTable)
+        view?.findNavController()?.navigate(R.id.action_labelAdd_to_labelsTable)
     }
 
     private fun spinnerAdapterMaker (spinner: Spinner, elements: Array<String>, viewModelElement: String){

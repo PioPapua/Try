@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Ingredient::class], // Define every table on the Database
-    version = 12,
+@Database(
+    entities = [Ingredient::class, Label::class], // Define every table on the Database
+    version = 15,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {
 
-    abstract val ingredientDatabaseDao: IngredientDatabaseDao
+    abstract val ingredientDao: IngredientDao
+    abstract val labelDao: LabelDao
 
     companion object {
 

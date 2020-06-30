@@ -3,11 +3,11 @@ package com.example.atry.ingredientsTable
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.atry.database.IngredientDatabaseDao
+import com.example.atry.database.IngredientDao
 
-// Provides the IngredientDatabaseDao and context to the ViewModel.
+// Provides the IngredientDao and context to the ViewModel.
 class IngredientsTableViewModelFactory(
-    private val dataSource: IngredientDatabaseDao,
+    private val dataSource: IngredientDao,
     private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -1,14 +1,14 @@
-package com.example.atry.ingredientsTable
+package com.example.atry.labelsTable
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.atry.database.IngredientDao
-import com.example.atry.database.Ingredient
+import com.example.atry.database.Label
+import com.example.atry.database.LabelDao
 import kotlinx.coroutines.*
 
-class IngredientsTableViewModel (val database: IngredientDao, application: Application) : AndroidViewModel(application) {
+class LabelsTableViewModel (val database: LabelDao, application: Application) : AndroidViewModel(application) {
 
     private val _onNextButtonClicked = MutableLiveData<Boolean>()
     val onNextButtonClicked: LiveData<Boolean>
@@ -19,7 +19,7 @@ class IngredientsTableViewModel (val database: IngredientDao, application: Appli
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    var ingredients : LiveData<List<Ingredient>> = database.getAllIngredients()
+    var labels : LiveData<List<Label>> = database.getAllLabels()
 
     init {
         _onNextButtonClicked.value = false

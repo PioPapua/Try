@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_ingredientsTable_to_ingredientAdd"
             app:destination="@id/ingredientAdd" />
+        <action
+            android:id="@+id/action_ingredientsTable_to_labelsTable"
+            app:destination="@id/labelsTable" />
     </fragment>
     <fragment
         android:id="@+id/ingredientAdd"
@@ -81,5 +84,23 @@
         <action
             android:id="@+id/action_ingredientAdd_to_ingredientsTable"
             app:destination="@id/ingredientsTable" />
+    </fragment>
+    <fragment
+        android:id="@+id/labelsTable"
+        android:name="com.example.atry.labelsTable.LabelsTable"
+        android:label="LabelsTable"
+        tools:layout="@layout/fragment_labels_table">
+        <action
+            android:id="@+id/action_labelsTable_to_labelAdd"
+            app:destination="@id/labelAdd" />
+    </fragment>
+    <fragment
+        android:id="@+id/labelAdd"
+        android:name="com.example.atry.labelAdd.LabelAdd"
+        android:label="LabelAdd"
+        tools:layout="@layout/fragment_label_add">
+        <action
+            android:id="@+id/action_labelAdd_to_labelsTable"
+            app:destination="@id/labelsTable" />
     </fragment>
 </navigation>
