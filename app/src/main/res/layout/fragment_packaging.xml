@@ -53,7 +53,7 @@
 
 
                 <TextView
-                    android:id="@+id/text_description"
+                    android:id="@+id/text_carbohydrate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/description"

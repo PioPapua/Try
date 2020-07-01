@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
-// Defines methods for using the Ingredient class with Room.
+// Defines methods for using the Label class with Room.
 
 @Dao
 interface LabelDao {

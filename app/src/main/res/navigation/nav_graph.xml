@@ -34,8 +34,8 @@
             app:argType="string"
             android:defaultValue="0" />
         <action
-            android:id="@+id/action_product_to_packaging"
-            app:destination="@id/packaging" />
+            android:id="@+id/action_product_to_nutritionFacts"
+            app:destination="@id/nutritionFacts" />
     </fragment>
     <fragment
         android:id="@+id/packaging"
@@ -102,5 +102,38 @@
         <action
             android:id="@+id/action_labelAdd_to_labelsTable"
             app:destination="@id/labelsTable" />
+    </fragment>
+    <fragment
+        android:id="@+id/nutritionFacts"
+        android:name="com.example.atry.nutritionFacts.NutritionFacts"
+        android:label="NutritionFacts"
+        tools:layout="@layout/fragment_nutrition_facts">
+        <action
+            android:id="@+id/action_nutritionFacts_to_nutritionFactsTable"
+            app:destination="@id/nutritionFactsTable" />
+        <action
+            android:id="@+id/action_nutritionFacts_to_packaging"
+            app:destination="@id/packaging" />
+    </fragment>
+    <fragment
+        android:id="@+id/nutritionFactsTable"
+        android:name="com.example.atry.nutritionFactsTable.NutritionFactsTable"
+        android:label="NutritionFactsTable"
+        tools:layout="@layout/fragment_nutrition_facts_table">
+        <action
+            android:id="@+id/action_nutritionFactsTable_to_nutritionFactsAdd"
+            app:destination="@id/nutritionFactsAdd" />
+        <action
+            android:id="@+id/action_nutritionFactsTable_to_nutritionFacts"
+            app:destination="@id/nutritionFacts" />
+    </fragment>
+    <fragment
+        android:id="@+id/nutritionFactsAdd"
+        android:name="com.example.atry.nutritionFactsAdd.NutritionFactsAdd"
+        android:label="NutritionFactsAdd"
+        tools:layout="@layout/fragment_nutrition_facts_add">
+        <action
+            android:id="@+id/action_nutritionFactsAdd_to_nutritionFactsTable"
+            app:destination="@id/nutritionFactsTable" />
     </fragment>
 </navigation>

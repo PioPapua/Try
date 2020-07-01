@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="NutritionFactsViewModel"
+            type="com.example.atry.nutritionFacts.NutritionFactsViewModel" />
+        <variable
+            name="NutritionFactsBinding"
+            type="com.example.atry.nutritionFacts.NutritionFacts" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <androidx.core.widget.NestedScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".NutritionFacts">
+
+                <TextView
+                    android:id="@+id/text_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/nutrition_facts"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/divider6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_ingredients" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_add_nutrition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:onClick="@{() -> NutritionFactsViewModel.onAddNutritionFactsClicked()}"
+                    android:text="@string/other_nutrition_facts"
+                    app:layout_constraintBottom_toTopOf="@id/relativeLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider6" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_add_nutrition">
+
+                    <ScrollView
+                        android:id="@+id/scrollTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableLayout
+                            android:id="@+id/tableHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*">
+
+                            <TableRow
+                                android:id="@+id/caloriesRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_calories"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/calories"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_calories"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_carbohydrate" />
+
+                                <EditText
+                                    android:id="@+id/edit_calories"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.calories)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onCaloriesChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_carbohydrate"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_calories_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_carbohydrate"
+                                    app:layout_constraintTop_toBottomOf="@+id/divider6" />
+
+                                <TextView
+                                    android:id="@+id/text_calories_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="kcal"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_carbohydrates"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="@+id/edit_calories"
+                                    app:layout_constraintVertical_chainStyle="spread_inside" />
+                                </TableRow>
+
+                            <TableRow
+                                android:id="@+id/carbohydratesRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_carbohydrate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/carbohydrate"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_proteins"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_proteins" />
+
+                                <EditText
+                                    android:id="@+id/edit_carbohydrate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.carbohydrates)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onCarbohydratesChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_proteins"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_carbohydrates_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_proteins"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_calories" />
+
+                                <TextView
+                                    android:id="@+id/text_carbohydrates_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_proteins"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_calories" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/proteinsRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_proteins"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/proteins"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_fat_total"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_fat_total"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_carbohydrate" />
+
+                                <EditText
+                                    android:id="@+id/edit_proteins"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onProteinsChange(e)}"
+                                    android:ems="10"
+                                    android:inputType="number"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.proteins)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_fat_total"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_proteins_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_fat_total"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_carbohydrate" />
+
+                                <TextView
+                                    android:id="@+id/text_proteins_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_fat_total"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_carbohydrates" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/fatTotalRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_fat_total"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fat_total"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_fat_saturated"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_fat_saturated"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_proteins" />
+
+                                <EditText
+                                    android:id="@+id/edit_fat_total"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onFatTotalChange(e)}"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.fatTotal)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_fat_saturated"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_fat_total_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_fat_saturated"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_proteins" />
+
+                                <TextView
+                                    android:id="@+id/text_fat_total_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_fat_saturated"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_proteins" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/fatSaturatedRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_fat_saturated"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fat_saturated"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_fat_trans"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_fat_trans"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_fat_total" />
+
+                                <EditText
+                                    android:id="@+id/edit_fat_saturated"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.fatSaturated)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onFatSaturatedChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_fat_trans"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_fat_saturated_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_fat_trans"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_fat_total" />
+
+                                <TextView
+                                    android:id="@+id/text_fat_saturated_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_fat_trans"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_fat_total" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/fatTransRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_fat_trans"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fat_trans"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_fiber"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_fiber"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_fat_saturated" />
+
+                                <EditText
+                                    android:id="@+id/edit_fat_trans"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.fatTrans)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onFatTransChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_fiber"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_fat_trans_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_fiber"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_fat_saturated" />
+
+                                <TextView
+                                    android:id="@+id/text_fat_trans_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_fiber"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_fat_saturated" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/fiberRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_fiber"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fibre"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/text_sodium"
+                                    app:layout_constraintEnd_toEndOf="@+id/text_sodium"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_fat_trans" />
+
+                                <EditText
+                                    android:id="@+id/edit_fiber"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.fiber)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onFiberChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/edit_sodium"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_fiber_value"
+                                    app:layout_constraintStart_toStartOf="@+id/edit_sodium"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_fat_trans" />
+
+                                <TextView
+                                    android:id="@+id/text_fiber_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="g"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/spinner_sodium"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_fat_trans" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/sodiumRow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/table_border"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/text_sodium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="60dp"
+                                    android:text="@string/sodium"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_sodium"
+                                    app:layout_constraintBottom_toTopOf="@+id/button_add_nutrition"
+                                    app:layout_constraintEnd_toEndOf="@+id/button_add_nutrition"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/text_fiber" />
+
+                                <EditText
+                                    android:id="@+id/edit_sodium"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="@{String.valueOf(NutritionFactsViewModel.sodium)}"
+                                    android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onSodiumChange(e)}"
+                                    android:textAlignment="center"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toTopOf="@+id/button_add_nutrition"
+                                    app:layout_constraintEnd_toStartOf="@+id/text_sodium_value"
+                                    app:layout_constraintStart_toEndOf="@+id/text_sodium"
+                                    app:layout_constraintTop_toBottomOf="@+id/edit_fiber" />
+
+                                <TextView
+                                    android:id="@+id/text_sodium_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="mg"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/edit_sodium"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/spinner_fiber" />
+                            </TableRow>
+                        </TableLayout>
+                    </ScrollView>
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> NutritionFactsViewModel.onNextButtonClicked()}"
+            android:src="@drawable/ic_navigate_next_24px"
+            android:text="@string/next" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

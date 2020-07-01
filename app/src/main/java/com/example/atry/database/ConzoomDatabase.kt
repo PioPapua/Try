@@ -6,14 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [Ingredient::class, Label::class], // Define every table on the Database
-    version = 15,
+    entities = [Ingredient::class, Label::class, NutritionFact::class, AssociatedNutrition::class], // Define every table on the Database
+    version = 16,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {
 
     abstract val ingredientDao: IngredientDao
     abstract val labelDao: LabelDao
+    abstract val nutritionFactDao: NutritionFactDao
+    abstract val associatedNutritionDao: AssociatedNutritionDao
 
     companion object {
 
