@@ -89,8 +89,7 @@
                                 android:id="@+id/caloriesRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_calories"
@@ -106,9 +105,6 @@
                                     android:id="@+id/edit_calories"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.calories)}"
@@ -124,7 +120,6 @@
                                     android:id="@+id/text_calories_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="kcal"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_carbohydrates"
@@ -137,8 +132,7 @@
                                 android:id="@+id/carbohydratesRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_carbohydrate"
@@ -154,9 +148,6 @@
                                     android:id="@+id/edit_carbohydrate"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.carbohydrates)}"
@@ -172,7 +163,6 @@
                                     android:id="@+id/text_carbohydrates_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_proteins"
@@ -184,8 +174,7 @@
                                 android:id="@+id/proteinsRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_proteins"
@@ -202,9 +191,6 @@
                                     android:id="@+id/edit_proteins"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onProteinsChange(e)}"
                                     android:ems="10"
                                     android:inputType="number"
@@ -220,7 +206,6 @@
                                     android:id="@+id/text_proteins_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_fat_total"
@@ -232,8 +217,7 @@
                                 android:id="@+id/fatTotalRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_fat_total"
@@ -250,9 +234,6 @@
                                     android:id="@+id/edit_fat_total"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:afterTextChanged="@{(e) -> NutritionFactsViewModel.onFatTotalChange(e)}"
                                     android:ems="10"
                                     android:inputType="textPersonName"
@@ -268,7 +249,6 @@
                                     android:id="@+id/text_fat_total_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_fat_saturated"
@@ -280,8 +260,7 @@
                                 android:id="@+id/fatSaturatedRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_fat_saturated"
@@ -298,9 +277,6 @@
                                     android:id="@+id/edit_fat_saturated"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.fatSaturated)}"
@@ -316,7 +292,6 @@
                                     android:id="@+id/text_fat_saturated_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_fat_trans"
@@ -328,8 +303,7 @@
                                 android:id="@+id/fatTransRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_fat_trans"
@@ -346,9 +320,6 @@
                                     android:id="@+id/edit_fat_trans"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.fatTrans)}"
@@ -364,7 +335,6 @@
                                     android:id="@+id/text_fat_trans_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_fiber"
@@ -376,8 +346,7 @@
                                 android:id="@+id/fiberRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_fiber"
@@ -394,9 +363,6 @@
                                     android:id="@+id/edit_fiber"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginBottom="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.fiber)}"
@@ -412,7 +378,6 @@
                                     android:id="@+id/text_fiber_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="g"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toTopOf="@+id/spinner_sodium"
@@ -424,14 +389,12 @@
                                 android:id="@+id/sodiumRow"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/table_border"
-                                android:padding="5dp">
+                                android:background="@drawable/table_border">
 
                                 <TextView
                                     android:id="@+id/text_sodium"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="60dp"
                                     android:text="@string/sodium"
                                     android:textAlignment="viewEnd"
                                     android:textSize="18sp"
@@ -445,8 +408,6 @@
                                     android:id="@+id/edit_sodium"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
                                     android:ems="10"
                                     android:inputType="textPersonName"
                                     android:text="@{String.valueOf(NutritionFactsViewModel.sodium)}"
@@ -462,7 +423,6 @@
                                     android:id="@+id/text_sodium_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="16dp"
                                     android:text="mg"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="@+id/edit_sodium"

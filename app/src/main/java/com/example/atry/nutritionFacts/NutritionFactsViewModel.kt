@@ -5,11 +5,10 @@ import android.text.Editable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.atry.database.NutritionFact
-import com.example.atry.database.NutritionFactDao
+import com.example.atry.database.*
 import kotlinx.coroutines.*
 
-class NutritionFactsViewModel (val database: NutritionFactDao, application: Application) : AndroidViewModel(application) {
+class NutritionFactsViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
     // Define parameters to communicate with NutritionFacts Fragment/Layout
     private val _calories = MutableLiveData<Int>()
     val calories: LiveData<Int>
@@ -46,8 +45,14 @@ class NutritionFactsViewModel (val database: NutritionFactDao, application: Appl
     val onAddNutritionFacts: LiveData<Boolean>
         get() = _onAddNutritionFacts
 
+    // Empty the NutritionFactAssignment table on creating the view, so the user has to pick the values to be added.
+    private val _onClearTable = MutableLiveData<Boolean>()
+    val onClearTable: LiveData<Boolean>
+        get() = _onClearTable
+
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    var nutritionFacts: LiveData<List<NutritionFactAssignment>> = database.nutritionFactAssignmentDao.getAllNutritionFacts()
 
     init {
         _onAddNutritionFacts.value = false
@@ -60,22 +65,12 @@ class NutritionFactsViewModel (val database: NutritionFactDao, application: Appl
         _fatTrans.value = 0
         _fiber.value = 0
         _sodium.value = 0
+        _onClearTable.value = false
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
-    }
-
-    private suspend fun insert(fact: NutritionFact) {
-        withContext(Dispatchers.IO) {
-            database.insert(fact)
-        }
-    }
-    private suspend fun update(fact: NutritionFact) {
-        withContext(Dispatchers.IO) {
-            database.update(fact)
-        }
     }
 
     fun onCaloriesChange(e: Editable?){
@@ -105,6 +100,7 @@ class NutritionFactsViewModel (val database: NutritionFactDao, application: Appl
 
     fun onNavigationCompleted(){
         _onNextButtonClicked.value = false
+        _onClearTable.value = false
     }
 
     fun onAddNutritionFactsClicked(){
@@ -113,6 +109,34 @@ class NutritionFactsViewModel (val database: NutritionFactDao, application: Appl
 
     fun onAddNutritionFactsCompleted(){
         _onAddNutritionFacts.value = false
+    }
+
+    fun onClearTable() {
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                database.nutritionFactAssignmentDao.clear()
+                _onClearTable.postValue(true)
+            }
+        }
+    }
+
+    fun onCustomValueChange(idNutritionFact: Int, text: String, idProduct: Int){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val currentValue = database.associatedNutritionDao.get(idProduct, idNutritionFact).value
+                if (currentValue != null) {
+                    database.associatedNutritionDao.update(currentValue)
+                } else {
+                    if (text != "") {
+                        val newValue = AssociatedNutrition()
+                        newValue.idNutritionFact = idNutritionFact
+                        newValue.idProduct = idProduct
+                        newValue.value = text.toFloat()
+                        database.associatedNutritionDao.insert(newValue)
+                    }
+                }
+            }
+        }
     }
 
     fun onNextButtonClicked() {

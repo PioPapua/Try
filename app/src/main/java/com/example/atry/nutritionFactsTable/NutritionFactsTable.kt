@@ -1,14 +1,14 @@
 package com.example.atry.nutritionFactsTable
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -33,7 +33,7 @@ class NutritionFactsTable : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = ConzoomDatabase.getInstance(application).nutritionFactDao
+        val dataSource = ConzoomDatabase.getInstance(application)
         val viewModelFactory =
             NutritionFactsTableViewModelFactory(
                 dataSource,
@@ -60,16 +60,24 @@ class NutritionFactsTable : Fragment() {
 
         viewModel.nutritionFacts.observe(this, Observer { nutritionFacts ->
             val rowParams = TableRow.LayoutParams()
-            Log.d("TAG: ", "Parametros de fila: $rowParams")
-            // TODO Build the table with labels
             for ((index, item) in nutritionFacts.withIndex()) {
 
                 val labelRow = TableRow(requireContext())
 
+                val selected = CheckBox(requireContext())
+                selected.id = nutritionFacts.elementAt(index).id
+                selected.isChecked = false
+                val checkBoxListener = View.OnClickListener { view ->
+                    viewModel.onNutritionFactClicked(selected.id, selected.isChecked)
+                    }
+                selected.setOnClickListener(checkBoxListener)
+
                 val id = TextView(requireContext())
-                id.text = nutritionFacts.elementAt(index).id.toString()
+                id.id = nutritionFacts.elementAt(index).id
+                id.text = id.id.toString()
 
                 val name = TextView(requireContext())
+                name.id = nutritionFacts.elementAt(index).id
                 name.text = nutritionFacts.elementAt(index).name
 
                 val description = TextView(requireContext())
@@ -80,11 +88,14 @@ class NutritionFactsTable : Fragment() {
                 dairyRecommendation.text = nutritionFacts.elementAt(index).dairyRecommendation.toString()
 
                 val portionType = TextView(requireContext())
+                portionType.id = nutritionFacts.elementAt(index).id
                 portionType.text = nutritionFacts.elementAt(index).portionType
 
                 val informationLink = TextView(requireContext())
                 informationLink.text = nutritionFacts.elementAt(index).informationLink
+                if (informationLink.text == "null") {informationLink.text = "  -  "}
 
+                labelRow.addView(selected)
                 labelRow.addView(id)
                 labelRow.addView(name)
                 labelRow.addView(description)
@@ -98,7 +109,6 @@ class NutritionFactsTable : Fragment() {
                 tableHeader.addView(labelRow)
             }
         })
-
         return binding.root
     }
 
@@ -107,7 +117,6 @@ class NutritionFactsTable : Fragment() {
     }
 
     private fun navigationClicked () {
-        // TODO Check args to be send to NutritionFacts Fragment - Use SafeArgs.
         view?.findNavController()?.navigate(R.id.action_nutritionFactsTable_to_nutritionFacts)
     }
 }

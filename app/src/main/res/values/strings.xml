@@ -45,7 +45,7 @@
     <string name="labels">Etiquetas</string>
     <string name="label">Etiqueta</string>
     <string name="logo_url">Url de logo</string>
-    <string name="dairy_recommendation">Recomendable diario</string>
+    <string name="dairy_recommendation">Valor diario</string>
     <string name="nutrition_facts">Información nutricional</string>
     <string name="calories">Valor energético</string>
     <string name="carbohydrate">Carbohidratos</string>
@@ -58,6 +58,8 @@
     <string name="other_nutrition_facts">Otros nutrientes</string>
     <string name="nutrients">Nutrientes</string>
     <string name="nutrient">Nutriente</string>
+    <string name="selection">Selección</string>
+    <string name="delete">Eliminar</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>

@@ -92,41 +92,67 @@
                                 android:padding="5dp">
 
                                 <TextView
+                                    android:id="@+id/text_selected"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:text="@string/selection"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <TextView
                                     android:id="@+id/text_id"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/id" />
+                                    android:layout_weight="0"
+                                    android:text="@string/id"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/text_name"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/name" />
+                                    android:text="@string/name"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/text_description"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/description" />
+                                    android:layout_weight="1.5"
+                                    android:text="@string/description"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/text_dairy_recommendation"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/dairy_recommendation" />
+                                    android:text="@string/dairy_recommendation"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/text_portion_type"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/portion_type" />
+                                    android:text="@string/portion_type"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/text_information_link"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="@string/information_link" />
+                                    android:text="@string/information_link"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
                     </ScrollView>
