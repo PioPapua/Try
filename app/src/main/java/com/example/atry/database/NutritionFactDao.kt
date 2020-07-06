@@ -20,6 +20,9 @@ interface NutritionFactDao {
     @Query("SELECT * from nutrition_fact_table WHERE id = :key")
     fun get(key: Int): NutritionFact?
 
+    @Query("SELECT id from nutrition_fact_table WHERE name = :key ORDER BY id DESC LIMIT 1")
+    fun getNutritionFactIdByName(key: String): Int?
+
     @Query("SELECT portionType from nutrition_fact_table WHERE id = :key")
     fun getPortionType(key: Int): String?
 

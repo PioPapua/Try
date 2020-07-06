@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
         NutritionFact::class,
         AssociatedNutrition::class,
         NutritionFactAssignment::class],
-    version = 20,
+    version = 21,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {

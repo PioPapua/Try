@@ -53,7 +53,7 @@
     <string name="fat_total">Grasas totales</string>
     <string name="fat_saturated">Grasas saturadas</string>
     <string name="fat_trans">Grasas trans</string>
-    <string name="fibre">Fibra Alimentaria</string>
+    <string name="fiber">Fibra Alimentaria</string>
     <string name="sodium">Sodio</string>
     <string name="other_nutrition_facts">Otros nutrientes</string>
     <string name="nutrients">Nutrientes</string>
@@ -102,5 +102,6 @@
         <item>mg</item>
         <item>l</item>
         <item>ml</item>
+        <item>kcal</item>
     </string-array>
 </resources>

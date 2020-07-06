@@ -17,6 +17,9 @@ interface AssociatedNutritionDao {
     @Update
     fun update(fact: AssociatedNutrition)
 
+    @Query("SELECT * from associated_nutrition_table")
+    fun getAll(): LiveData<List<AssociatedNutrition>>
+
     @Query("SELECT * from associated_nutrition_table WHERE idProduct = :keyProduct AND idNutritionFact = :keyNutritionFact")
     fun get(keyProduct: Int, keyNutritionFact: Int): LiveData<AssociatedNutrition>
 

@@ -2,6 +2,7 @@ package com.example.atry.nutritionFacts
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -65,6 +66,20 @@ class NutritionFacts : Fragment() {
         // Add Button stores the values on the BD
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
+                viewModel.saveValues(idProduct,
+                    edit_calories.text.toString(),
+                    edit_carbohydrate.text.toString(),
+                    edit_proteins.text.toString(),
+                    edit_fat_total.text.toString(),
+                    edit_fat_saturated.text.toString(),
+                    edit_fat_trans.text.toString(),
+                    edit_fiber.text.toString(),
+                    edit_sodium.text.toString())
+            }
+        })
+
+        viewModel.onSaveValuesComplete.observe(this, Observer {completed ->
+            if (completed) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
@@ -89,7 +104,7 @@ class NutritionFacts : Fragment() {
                 value.text = "0".toEditable()
                 value.textSize = 18F
                 value.gravity = Gravity.CENTER_HORIZONTAL
-                value.doAfterTextChanged { viewModel.onCustomValueChange(value.id, value.text.toString(), idProduct)}
+                value.doAfterTextChanged { viewModel.onValueChange(value.id, value.text.toString(), idProduct)}
 
                 val portionType = TextView(requireContext())
                 portionType.id = nutritionFacts.elementAt(index).id
@@ -106,6 +121,10 @@ class NutritionFacts : Fragment() {
 
                 tableHeader.addView(labelRow)
             }
+
+            viewModel.associatedNutritionFacts.observe(this, Observer { associatedNutritions ->
+                Log.d("Tag: ", "Associated Nutritions: ${associatedNutritions}")
+            })
         })
         return binding.root
     }
@@ -115,7 +134,6 @@ class NutritionFacts : Fragment() {
     // Allows us to manually add optional Nutrition Facts that are not listed by default.
     private fun onAddNutritionFactsClicked () {
         view?.findNavController()?.navigate(R.id.action_nutritionFacts_to_nutritionFactsTable)
-
     }
 
     private fun navigationClicked () {

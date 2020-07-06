@@ -78,7 +78,7 @@
                 android:id="@+id/text_portion_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/category_type"
+                android:text="@string/portion_type"
                 app:layout_constraintBaseline_toBaselineOf="@+id/spinner_portion_type"
                 app:layout_constraintEnd_toEndOf="@+id/text_dairy_recommendation" />
 
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:entries="@array/category_types"
+                android:entries="@array/portion_types"
                 app:layout_constraintBottom_toTopOf="@+id/edit_information_link"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_portion_type"

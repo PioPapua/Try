@@ -2,9 +2,11 @@ package com.example.atry.nutritionFacts
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.atry.R
 import com.example.atry.database.*
 import kotlinx.coroutines.*
 
@@ -50,13 +52,19 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
     val onClearTable: LiveData<Boolean>
         get() = _onClearTable
 
+    private val _onSaveValuesComplete = MutableLiveData<Boolean>()
+    val onSaveValuesComplete: LiveData<Boolean>
+        get() = _onSaveValuesComplete
+
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     var nutritionFacts: LiveData<List<NutritionFactAssignment>> = database.nutritionFactAssignmentDao.getAllNutritionFacts()
+    var associatedNutritionFacts: LiveData<List<AssociatedNutrition>> = database.associatedNutritionDao.getAll()
 
     init {
         _onAddNutritionFacts.value = false
         _onNextButtonClicked.value = false
+        _onSaveValuesComplete.value = false
         _calories.value = 0
         _carbohydrates.value = 0
         _proteins.value = 0
@@ -100,7 +108,9 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
 
     fun onNavigationCompleted(){
         _onNextButtonClicked.value = false
+        _onSaveValuesComplete.value = false
         _onClearTable.value = false
+        Log.d("TAG: ", "Valores asociados en NavigationCompleted: ${database.associatedNutritionDao.getAll().value}")
     }
 
     fun onAddNutritionFactsClicked(){
@@ -120,7 +130,7 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
         }
     }
 
-    fun onCustomValueChange(idNutritionFact: Int, text: String, idProduct: Int){
+    fun onValueChange(idNutritionFact: Int, text: String, idProduct: Int){
         uiScope.launch {
             withContext(Dispatchers.IO){
                 val currentValue = database.associatedNutritionDao.get(idProduct, idNutritionFact).value
@@ -135,6 +145,38 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                         database.associatedNutritionDao.insert(newValue)
                     }
                 }
+            }
+        }
+    }
+
+    fun saveValues (idProduct: Int,
+                    textCalories: String,
+                    textCarbohydrates: String,
+                    textProteins: String,
+                    textTotalFat: String,
+                    textSaturatedFat: String,
+                    textTransFat: String,
+                    textFiber: String,
+                    textSodium: String){
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
+                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
+                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
+                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
+                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
+                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
+                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
+                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
+                onValueChange(idCalories, textCalories, idProduct)
+                onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
+                onValueChange(idProteins, textProteins, idProduct)
+                onValueChange(idTotalFat, textTotalFat, idProduct)
+                onValueChange(idSaturatedFat, textSaturatedFat, idProduct)
+                onValueChange(idTransFat, textTransFat, idProduct)
+                onValueChange(idFiber, textFiber, idProduct)
+                onValueChange(idSodium, textSodium, idProduct)
+                _onSaveValuesComplete.postValue(true)
             }
         }
     }
