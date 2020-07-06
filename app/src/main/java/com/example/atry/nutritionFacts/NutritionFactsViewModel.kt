@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.atry.R
 import com.example.atry.database.*
 import kotlinx.coroutines.*
 
@@ -160,22 +159,22 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                     textSodium: String){
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
-                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
-                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
-                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
-                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
-                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
-                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
-                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
-                onValueChange(idCalories, textCalories, idProduct)
-                onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
-                onValueChange(idProteins, textProteins, idProduct)
-                onValueChange(idTotalFat, textTotalFat, idProduct)
-                onValueChange(idSaturatedFat, textSaturatedFat, idProduct)
-                onValueChange(idTransFat, textTransFat, idProduct)
-                onValueChange(idFiber, textFiber, idProduct)
-                onValueChange(idSodium, textSodium, idProduct)
+//                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
+//                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
+//                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
+//                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
+//                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
+//                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
+//                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
+//                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
+//                onValueChange(idCalories, textCalories, idProduct)
+//                onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
+//                onValueChange(idProteins, textProteins, idProduct)
+//                onValueChange(idTotalFat, textTotalFat, idProduct)
+//                onValueChange(idSaturatedFat, textSaturatedFat, idProduct)
+//                onValueChange(idTransFat, textTransFat, idProduct)
+//                onValueChange(idFiber, textFiber, idProduct)
+//                onValueChange(idSodium, textSodium, idProduct)
                 _onSaveValuesComplete.postValue(true)
             }
         }

@@ -11,8 +11,9 @@ import androidx.room.RoomDatabase
         Label::class,
         NutritionFact::class,
         AssociatedNutrition::class,
-        NutritionFactAssignment::class],
-    version = 21,
+        NutritionFactAssignment::class,
+        Manufacturer::class],
+    version = 22,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {
@@ -22,6 +23,7 @@ abstract class ConzoomDatabase : RoomDatabase() {
     abstract val nutritionFactDao: NutritionFactDao
     abstract val associatedNutritionDao: AssociatedNutritionDao
     abstract val nutritionFactAssignmentDao: NutritionFactAssignmentDao
+    abstract val manufacturerDao: ManufacturerDao
 
     companion object {
 
