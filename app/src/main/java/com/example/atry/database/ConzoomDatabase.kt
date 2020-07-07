@@ -7,23 +7,37 @@ import androidx.room.RoomDatabase
 
 @Database(
     // Define every table on the Database
-    entities = [Ingredient::class,
+    entities = [Product::class,
+        Ingredient::class,
+        AssociatedIngredient::class,
         Label::class,
+        AssociatedLabel::class,
         NutritionFact::class,
         AssociatedNutrition::class,
+        Packaging::class,
+        PackagingCharacteristic::class,
+        AssociatedPackagingCharacteristic::class,
         NutritionFactAssignment::class,
-        Manufacturer::class],
-    version = 22,
+        Manufacturer::class,
+        User::class],
+    version = 24,
     exportSchema = false)
 
 abstract class ConzoomDatabase : RoomDatabase() {
 
+    abstract val productDao: ProductDao
     abstract val ingredientDao: IngredientDao
+    abstract val associatedIngredientDao: AssociatedIngredientDao
     abstract val labelDao: LabelDao
+    abstract val associatedLabelDao: AssociatedLabelDao
     abstract val nutritionFactDao: NutritionFactDao
     abstract val associatedNutritionDao: AssociatedNutritionDao
+    abstract val packagingDao: PackagingDao
+    abstract val packagingCharacteristic: PackagingCharacteristicDao
+    abstract val associatedPackagingCharacteristic: AssociatedPackagingCharacteristicDao
     abstract val nutritionFactAssignmentDao: NutritionFactAssignmentDao
     abstract val manufacturerDao: ManufacturerDao
+    abstract val userDao: UserDao
 
     companion object {
 

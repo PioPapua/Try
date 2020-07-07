@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ingredient_table")
 data class Ingredient(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    var id: Int = 0,
 
     @ColumnInfo(name = "name")
     var name: String = "name",
@@ -15,11 +15,14 @@ data class Ingredient(
     @ColumnInfo(name = "description")
     var description: String = "description",
 
-    @ColumnInfo(name = "informationLink")
-    var informationLink: String = "informationLink",
+    @ColumnInfo(name = "epaClassification")
+    var epaClassification: String = "epaClassification",
 
     @ColumnInfo(name = "warning")
     var warning: Boolean = false,
+
+    @ColumnInfo(name = "informationLink")
+    var informationLink: String = "informationLink",
 
     @ColumnInfo(name = "categoryType")
     var categoryType: String = "category type"
