@@ -26,7 +26,6 @@ typealias BarcodeListener = (barcode: String) -> Unit
 typealias TextListener = (text: String) -> Unit
 
 class CameraPicture : Fragment() {
-    private lateinit var viewModel: ProductViewModel
 
     private var preview: Preview? = null
     private var barcodeImageCapture: ImageCapture? = null
@@ -47,8 +46,12 @@ class CameraPicture : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val binding: FragmentCameraPictureBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_camera_picture, container, false)
-        viewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        val binding: FragmentCameraPictureBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_camera_picture,
+            container,
+            false
+        )
         return binding.root
     }
 

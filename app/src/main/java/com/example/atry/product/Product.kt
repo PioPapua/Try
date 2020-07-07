@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.atry.product.ProductArgs
 import com.example.atry.R
+import com.example.atry.database.ConzoomDatabase
 import com.example.atry.databinding.FragmentProductBinding
 
 
@@ -30,10 +31,18 @@ class Product : Fragment() {
             false
         )
 
+        val application = requireNotNull(this.activity).application
+        val dataSource = ConzoomDatabase.getInstance(application)
+        val viewModelFactory =
+            ProductViewModelFactory(
+                dataSource,
+                application
+            )
+
         val args =
             ProductArgs.fromBundle(requireArguments()) // Get the barcode string in args.barcode
 
-        viewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductViewModel::class.java)
         viewModel.onBarcodeReceived(args.barcode)
 
         binding.productViewModel = viewModel
