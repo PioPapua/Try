@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.atry.R
+import com.example.atry.database.ConzoomDatabase
 import com.example.atry.databinding.FragmentPackagingBinding
 
 class Packaging : Fragment() {
@@ -29,7 +30,15 @@ class Packaging : Fragment() {
             false
         )
 
-        viewModel = ViewModelProviders.of(this).get(PackagingViewModel::class.java)
+        val application = requireNotNull(this.activity).application
+        val dataSource = ConzoomDatabase.getInstance(application)
+        val viewModelFactory =
+            PackagingViewModelFactory(
+                dataSource,
+                application
+            )
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PackagingViewModel::class.java)
 
         binding.packagingViewModel = viewModel
         binding.setLifecycleOwner(this)

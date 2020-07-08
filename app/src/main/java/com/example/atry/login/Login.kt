@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.atry.R
+import com.example.atry.database.ConzoomDatabase
 import com.example.atry.databinding.FragmentLoginBinding
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -25,7 +26,15 @@ class Login : Fragment() {
             false
         )
 
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        val application = requireNotNull(this.activity).application
+        val dataSource = ConzoomDatabase.getInstance(application)
+        val viewModelFactory =
+            LoginViewModelFactory(
+                dataSource,
+                application
+            )
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 
         binding.buttonLogin.setOnClickListener {
             viewModel.onLogin(password.text.toString(), username.text.toString())

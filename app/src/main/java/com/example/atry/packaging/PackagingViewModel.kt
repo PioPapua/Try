@@ -1,11 +1,17 @@
 package com.example.atry.packaging
 
+import android.app.Application
 import android.text.Editable
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.atry.database.ConzoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 
-class PackagingViewModel: ViewModel() {
+class PackagingViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application)  {
 
     private val _description = MutableLiveData<String>()
     val description: LiveData<String>
@@ -32,6 +38,9 @@ class PackagingViewModel: ViewModel() {
     private val _onNextButtonClicked = MutableLiveData<Boolean>()
     val onNextButtonClicked: LiveData<Boolean>
         get() = _onNextButtonClicked
+
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
         _onNextButtonClicked.value = false

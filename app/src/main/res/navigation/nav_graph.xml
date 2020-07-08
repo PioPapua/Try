@@ -52,16 +52,7 @@
         android:label="Manufacturer"
         tools:layout="@layout/fragment_manufacturer" >
         <action
-            android:id="@+id/action_manufacturer_to_user"
-            app:destination="@id/user" />
-    </fragment>
-    <fragment
-        android:id="@+id/user"
-        android:name="com.example.atry.user.User"
-        android:label="User"
-        tools:layout="@layout/fragment_user" >
-        <action
-            android:id="@+id/action_user_to_ingredients"
+            android:id="@+id/action_manufacturer_to_ingredientsTable"
             app:destination="@id/ingredientsTable" />
     </fragment>
     <fragment

@@ -60,6 +60,6 @@ class Manufacturer : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_manufacturer_to_user)
+        view?.findNavController()?.navigate(R.id.action_manufacturer_to_ingredientsTable)
     }
 }
