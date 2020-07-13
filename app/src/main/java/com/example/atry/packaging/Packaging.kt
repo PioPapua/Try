@@ -18,6 +18,7 @@ import com.example.atry.databinding.FragmentPackagingBinding
 
 class Packaging : Fragment() {
     private lateinit var viewModel: PackagingViewModel
+    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +66,13 @@ class Packaging : Fragment() {
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
+                navigationClicked()
+                viewModel.saveValues(idProduct)
+            }
+        })
+
+        viewModel.onSaveValuesComplete.observe(this, Observer {completed ->
+            if (completed) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }

@@ -23,6 +23,15 @@ interface ProductDao {
     @Query("SELECT * from product_table WHERE id = :key")
     fun get(key: Int): LiveData<Product>
 
+    @Query("SELECT * from product_table WHERE barcode = :key")
+    fun getProductByBarcode(key: String): Product?
+
+    @Query("SELECT packaging from product_table WHERE id = :key")
+    fun getPackagingIdByProductId(key: Int): Int
+
+    @Query("SELECT ingredients from product_table WHERE id = :key")
+    fun getAllIngredientsByProductId(key: Int): List<String>
+
     @Query("DELETE FROM product_table")
     fun clear()
 }

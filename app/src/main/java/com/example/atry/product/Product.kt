@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.atry.product.ProductArgs
 import com.example.atry.R
 import com.example.atry.database.ConzoomDatabase
 import com.example.atry.databinding.FragmentProductBinding
@@ -56,12 +55,21 @@ class Product : Fragment() {
             resources.getStringArray(R.array.portion_types),
             "portionType")
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
-            if (nextClicked) {
-                navigationClicked()
+        viewModel.onSaveValuesCompleted.observe(this, Observer { saved ->
+            if (saved) {
+                navigationClicked(viewModel.id.value!!)
                 viewModel.onNavigationCompleted()
             }
         })
+
+        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
+                viewModel.saveValues()
+            }
+        })
+
+        viewModel.setInitialValues(args.barcode)
+
         return binding.root
     }
 
@@ -88,7 +96,7 @@ class Product : Fragment() {
         }
     }
 
-    private fun navigationClicked () {
+    private fun navigationClicked (idProduct: Int) {
         view?.findNavController()?.navigate(R.id.action_product_to_nutritionFacts)
     }
 }

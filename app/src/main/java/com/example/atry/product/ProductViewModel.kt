@@ -6,12 +6,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.ConzoomDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.example.atry.database.Product
+import kotlinx.coroutines.*
 
 class ProductViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
 
+    private val _id = MutableLiveData<Int>()
+    val id: LiveData<Int>
+        get() = _id
     private val _name = MutableLiveData<String>()
     val name: LiveData<String>
         get() = _name
@@ -49,13 +51,19 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
     private val _onNextButtonClicked = MutableLiveData<Boolean>()
     val onNextButtonClicked: LiveData<Boolean>
         get() = _onNextButtonClicked
+    private val _onSaveValuesCompleted = MutableLiveData<Boolean>()
+    val onSaveValuesCompleted: LiveData<Boolean>
+        get() = _onSaveValuesCompleted
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private var currentProduct = Product()
+
 
     init {
         _isFood.value = false
         _onNextButtonClicked.value = false
+        _onSaveValuesCompleted.value = false
     }
 
     fun onBarcodeReceived(barcode: String) {
@@ -99,10 +107,60 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
 
     fun onNavigationCompleted(){
         _onNextButtonClicked.value = false
+        _onSaveValuesCompleted.value = false
     }
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
         // TODO Keep values to update DB.
+    }
+
+    fun saveValues(){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                currentProduct.name = _name.value!!
+                currentProduct.barcode = _barcode.value!!
+                currentProduct.category = _category.value!!
+                currentProduct.categoryType = _categoryType.value!!
+                currentProduct.portion = _portion.value!!
+                currentProduct.portionType = _portionType.value!!
+                currentProduct.trademark = _trademark.value!!
+                currentProduct.netWeight = _netWeight.value!!
+                currentProduct.description = _description.value
+                currentProduct.imageUrl = _imageUrl.value
+                currentProduct.isFood = _isFood.value!!
+
+                if (database.productDao.get(currentProduct.id) == null){
+                    database.productDao.insert(currentProduct)
+                } else {
+                    database.productDao.update(currentProduct)
+                }
+                _id.postValue(currentProduct.id!!)
+                _onSaveValuesCompleted.postValue(true)
+            }
+        }
+    }
+
+    fun setInitialValues(barcode: String){
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                var previousProduct = database.productDao.getProductByBarcode(barcode)
+                if (previousProduct != null) {
+                    _name.postValue(previousProduct!!.name)
+                    _category.postValue(previousProduct!!.category)
+                    _categoryType.postValue(previousProduct!!.categoryType)
+                    _portion.postValue(previousProduct!!.portion)
+                    _portionType.postValue(previousProduct!!.portionType)
+                    _trademark.postValue(previousProduct!!.trademark)
+                    _netWeight.postValue(previousProduct!!.netWeight)
+                    _description.postValue(previousProduct?.description)
+                    _imageUrl.postValue(previousProduct?.imageUrl)
+                    _isFood.postValue(previousProduct!!.isFood)
+                } else {
+                    previousProduct = Product()
+                }
+                currentProduct = previousProduct!!
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 @Database(
     // Define every table on the Database
@@ -14,14 +15,15 @@ import androidx.room.RoomDatabase
         AssociatedLabel::class,
         NutritionFact::class,
         AssociatedNutrition::class,
-        Packaging::class,
+        PackagingDB::class,
         PackagingCharacteristic::class,
-        AssociatedPackagingCharacteristic::class,
         NutritionFactAssignment::class,
         Manufacturer::class,
         User::class],
-    version = 24,
+    version = 28,
     exportSchema = false)
+
+@TypeConverters(Converters::class)
 
 abstract class ConzoomDatabase : RoomDatabase() {
 
@@ -33,8 +35,7 @@ abstract class ConzoomDatabase : RoomDatabase() {
     abstract val nutritionFactDao: NutritionFactDao
     abstract val associatedNutritionDao: AssociatedNutritionDao
     abstract val packagingDao: PackagingDao
-    abstract val packagingCharacteristic: PackagingCharacteristicDao
-    abstract val associatedPackagingCharacteristic: AssociatedPackagingCharacteristicDao
+    abstract val packagingCharacteristicDao: PackagingCharacteristicDao
     abstract val nutritionFactAssignmentDao: NutritionFactAssignmentDao
     abstract val manufacturerDao: ManufacturerDao
     abstract val userDao: UserDao

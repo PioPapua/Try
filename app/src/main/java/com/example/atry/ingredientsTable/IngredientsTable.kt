@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_ingredients_table.*
 
 class IngredientsTable : Fragment() {
     private lateinit var viewModel: IngredientsTableViewModel
+    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +35,7 @@ class IngredientsTable : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = ConzoomDatabase.getInstance(application).ingredientDao
+        val dataSource = ConzoomDatabase.getInstance(application)
         val viewModelFactory =
             IngredientsTableViewModelFactory(
                 dataSource,
@@ -53,6 +55,12 @@ class IngredientsTable : Fragment() {
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
+                viewModel.onSaveValues(idProduct)
+            }
+        })
+
+        viewModel.onSaveValuesComplete.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
@@ -67,6 +75,13 @@ class IngredientsTable : Fragment() {
 
                 val ingredientRow = TableRow(requireContext())
 
+                val selected = CheckBox(requireContext())
+                selected.id = ingredients.elementAt(index).id
+                selected.isChecked = false
+                val checkBoxListener = View.OnClickListener { view ->
+                    viewModel.onIngredientClicked(selected.id, selected.isChecked, idProduct)
+                }
+                selected.setOnClickListener(checkBoxListener)
                 val id = TextView(requireContext())
                 id.text = ingredients.elementAt(index).id.toString()
 

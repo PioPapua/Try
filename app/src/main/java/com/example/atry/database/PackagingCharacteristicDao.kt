@@ -20,6 +20,9 @@ interface PackagingCharacteristicDao {
     @Query("SELECT * from packaging_characteristic_table")
     fun getAll(): LiveData<List<PackagingCharacteristic>>
 
+    @Query("SELECT * from packaging_characteristic_table WHERE category = :keyCategory AND description = :keyDescription")
+    fun getIdByCategoryAndDescription(keyCategory: String, keyDescription: String): Int
+
     @Query("SELECT * from packaging_characteristic_table WHERE id = :key")
     fun get(key: Int): LiveData<PackagingCharacteristic>
 

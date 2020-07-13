@@ -60,6 +60,7 @@
     <string name="nutrient">Nutriente</string>
     <string name="selection">Selección</string>
     <string name="delete">Eliminar</string>
+    <string name="packagingType">Código de tipo de envase</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>

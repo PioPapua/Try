@@ -12,16 +12,19 @@ import androidx.room.Update
 interface PackagingDao {
 
     @Insert
-    fun insert(packaging: Packaging)
+    fun insert(packagingDB: PackagingDB)
 
     @Update
-    fun update(packaging: Packaging)
+    fun update(packagingDB: PackagingDB)
 
     @Query("SELECT * from packaging_table")
-    fun getAll(): LiveData<List<Packaging>>
+    fun getAll(): LiveData<List<PackagingDB>>
 
     @Query("SELECT * from packaging_table WHERE id = :key")
-    fun get(key: Int): LiveData<Packaging>
+    fun get(key: Int): LiveData<PackagingDB>?
+
+    @Query("SELECT characteristics from packaging_table WHERE id = :key")
+    fun getAllCharacteristics(key: Int): List<String>
 
     @Query("DELETE FROM packaging_table")
     fun clear()

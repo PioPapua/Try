@@ -53,7 +53,7 @@
 
 
                 <TextView
-                    android:id="@+id/text_carbohydrate"
+                    android:id="@+id/text_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
@@ -73,10 +73,36 @@
                     android:hint="@string/description"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/spinner_returnable"
+                    app:layout_constraintBottom_toTopOf="@+id/edit_packaging_type"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/text_description"
-                    app:layout_constraintTop_toTopOf="@id/divider2" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+                <TextView
+                    android:id="@+id/text_packaging_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/packagingType"
+                    android:textAlignment="viewEnd"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edit_packaging_type"
+                    app:layout_constraintEnd_toEndOf="@+id/text_description" />
+
+                <EditText
+                    android:id="@+id/edit_packaging_type"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:afterTextChanged="@{(e) -> PackagingViewModel.onPackagingTypeChange(e)}"
+                    android:ems="10"
+                    android:hint="@string/packagingType"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/spinner_returnable"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_packaging_type"
+                    app:layout_constraintTop_toBottomOf="@id/edit_description" />
 
                 <TextView
                     android:id="@+id/text_returnable"
@@ -98,7 +124,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/spinner_reusable"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/text_returnable"
-                    app:layout_constraintTop_toBottomOf="@id/edit_description" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_packaging_type" />
 
                 <TextView
                     android:id="@+id/text_reusable"

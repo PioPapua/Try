@@ -2,7 +2,6 @@ package com.example.atry.nutritionFacts
 
 import android.app.Application
 import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -109,7 +108,6 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
         _onNextButtonClicked.value = false
         _onSaveValuesComplete.value = false
         _onClearTable.value = false
-        Log.d("TAG: ", "Valores asociados en NavigationCompleted: ${database.associatedNutritionDao.getAll().value}")
     }
 
     fun onAddNutritionFactsClicked(){
@@ -148,6 +146,7 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
         }
     }
 
+    // Associate all mandatory and non mandatory values to Product's table in Room before navigating to next fragment.
     fun saveValues (idProduct: Int,
                     textCalories: String,
                     textCarbohydrates: String,
@@ -175,13 +174,24 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
 //                onValueChange(idTransFat, textTransFat, idProduct)
 //                onValueChange(idFiber, textFiber, idProduct)
 //                onValueChange(idSodium, textSodium, idProduct)
+
+                val product = database.productDao.get(idProduct)
+                val currentNutrients = database.associatedNutritionDao.getAllByProduct(idProduct)
+                val nutrients = mutableListOf<String>()
+                if (currentNutrients.value != null) {
+                    for (item in currentNutrients.value!!) {
+                        nutrients.add(item.idNutritionFact.toString())
+                    }
+                }
+                // TODO Associate nutrients with Product.
+//                product.value!!.nutrients = nutrients
+//                database.productDao.update(product.value!!)
                 _onSaveValuesComplete.postValue(true)
             }
         }
     }
 
     fun onNextButtonClicked() {
-//        uiScope.launch TODO Associate with DB
         _onNextButtonClicked.value = true
     }
 }

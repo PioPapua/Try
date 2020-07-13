@@ -21,6 +21,9 @@ data class Product(
     @ColumnInfo(name = "isFood")
     var isFood: Boolean = true,
 
+    @ColumnInfo(name = "portion")
+    var portion: String = "portion",
+
     @ColumnInfo(name = "portionType")
     var portionType: String = "portionType",
 
@@ -37,10 +40,19 @@ data class Product(
     var netWeight: String = "netWeight",
 
     @ColumnInfo(name = "description")
-    var description: String = "description",
+    var description: String? = "description",
 
     @ColumnInfo(name = "categoryType")
     var categoryType: String = "categoryType",
+
+    @ColumnInfo(name = "imageUrl")
+    var imageUrl: String? = "imageUrl",
+
+    @ColumnInfo(name = "ingredients")
+    var ingredients: List<String> = listOf(), // Save only ingredients IDs
+
+    @ColumnInfo(name = "nutrients")
+    var nutrients: List<String> = listOf(), // Save only nutrients IDs
 
     @ColumnInfo(name = "user")
     var user: Int = 0,

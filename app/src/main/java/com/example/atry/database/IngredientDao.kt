@@ -18,7 +18,7 @@ interface IngredientDao {
     fun update(ingredient: Ingredient)
 
     @Query("SELECT * from ingredient_table WHERE id = :key")
-    fun get(key: Long): Ingredient?
+    fun get(key: Int): Ingredient?
 
     @Query("DELETE FROM ingredient_table")
     fun clear()
