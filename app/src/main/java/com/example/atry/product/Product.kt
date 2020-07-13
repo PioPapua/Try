@@ -19,6 +19,7 @@ import com.example.atry.databinding.FragmentProductBinding
 
 class Product : Fragment() {
     private lateinit var viewModel: ProductViewModel
+    private lateinit var args: ProductArgs
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle? ): View? {
@@ -30,6 +31,7 @@ class Product : Fragment() {
             false
         )
 
+        // Create and bind viewModel with Database through viewModelFactory.
         val application = requireNotNull(this.activity).application
         val dataSource = ConzoomDatabase.getInstance(application)
         val viewModelFactory =
@@ -38,8 +40,8 @@ class Product : Fragment() {
                 application
             )
 
-        val args =
-            ProductArgs.fromBundle(requireArguments()) // Get the barcode string in args.barcode
+        // Get safe arguments (barcode and textRecognized)
+        args = ProductArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductViewModel::class.java)
         viewModel.onBarcodeReceived(args.barcode)
@@ -68,7 +70,8 @@ class Product : Fragment() {
             }
         })
 
-        viewModel.setInitialValues(args.barcode)
+        viewModel.setInitialValues(args.barcode, args.textRecognized)
+        // TODO Call viewModel to process text from args.textRecognized to get Portion value and type when Product is new.
 
         return binding.root
     }
@@ -97,6 +100,7 @@ class Product : Fragment() {
     }
 
     private fun navigationClicked (idProduct: Int) {
-        view?.findNavController()?.navigate(R.id.action_product_to_nutritionFacts)
+        val action = ProductDirections.actionProductToNutritionFacts(idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 }

@@ -18,7 +18,7 @@ import com.example.atry.databinding.FragmentPackagingBinding
 
 class Packaging : Fragment() {
     private lateinit var viewModel: PackagingViewModel
-    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
+    private lateinit var args: PackagingArgs
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +38,9 @@ class Packaging : Fragment() {
                 dataSource,
                 application
             )
+
+        // Get safe arguments (idProduct)
+        args = PackagingArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PackagingViewModel::class.java)
 
@@ -67,7 +70,7 @@ class Packaging : Fragment() {
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
                 navigationClicked()
-                viewModel.saveValues(idProduct)
+                viewModel.saveValues(args.idProduct)
             }
         })
 
@@ -109,6 +112,7 @@ class Packaging : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_packaging_to_manufacturer)
+        val action = PackagingDirections.actionPackagingToManufacturer(args.idProduct)
+        view?.findNavController()?.navigate(action)
     }
 }

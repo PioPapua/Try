@@ -1,7 +1,6 @@
 package com.example.atry.ingredientsTable
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_ingredients_table.*
 
 class IngredientsTable : Fragment() {
     private lateinit var viewModel: IngredientsTableViewModel
-    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
+    private lateinit var args: IngredientsTableArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +41,9 @@ class IngredientsTable : Fragment() {
                 application
             )
 
+        // Get safe arguments (idProduct)
+        args = IngredientsTableArgs.fromBundle(requireArguments())
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(IngredientsTableViewModel::class.java)
         binding.ingredientsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
@@ -55,7 +57,7 @@ class IngredientsTable : Fragment() {
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
-                viewModel.onSaveValues(idProduct)
+                viewModel.onSaveValues(args.idProduct)
             }
         })
 
@@ -69,8 +71,6 @@ class IngredientsTable : Fragment() {
         viewModel.ingredients.observe(this, Observer { ingredients ->
             val rowParams = TableRow.LayoutParams()
             var textParams = text_id.layoutParams
-            Log.d("TAG: ", "Parametros de fila: $rowParams")
-            // TODO Build the table with ingredients
             for ((index, item) in ingredients.withIndex()) {
 
                 val ingredientRow = TableRow(requireContext())
@@ -79,7 +79,7 @@ class IngredientsTable : Fragment() {
                 selected.id = ingredients.elementAt(index).id
                 selected.isChecked = false
                 val checkBoxListener = View.OnClickListener { view ->
-                    viewModel.onIngredientClicked(selected.id, selected.isChecked, idProduct)
+                    viewModel.onIngredientClicked(selected.id, selected.isChecked, args.idProduct)
                 }
                 selected.setOnClickListener(checkBoxListener)
                 val id = TextView(requireContext())
@@ -123,6 +123,7 @@ class IngredientsTable : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_ingredientsTable_to_labelsTable)
+        val action = IngredientsTableDirections.actionIngredientsTableToLabelsTable(args.idProduct)
+        view?.findNavController()?.navigate(action)
     }
 }

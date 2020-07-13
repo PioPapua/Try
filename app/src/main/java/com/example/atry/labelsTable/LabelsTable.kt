@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_labels_table.*
 
 class LabelsTable : Fragment() {
     private lateinit var viewModel: LabelsTableViewModel
+    private lateinit var args: LabelsTableArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +41,9 @@ class LabelsTable : Fragment() {
                 application
             )
 
+        // Get safe arguments (idProduct)
+        args = LabelsTableArgs.fromBundle(requireArguments())
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LabelsTableViewModel::class.java)
         binding.labelsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
@@ -53,8 +57,6 @@ class LabelsTable : Fragment() {
 
         viewModel.labels.observe(this, Observer { labels ->
             val rowParams = TableRow.LayoutParams()
-            Log.d("TAG: ", "Parametros de fila: $rowParams")
-            // TODO Build the table with labels
             for ((index, item) in labels.withIndex()) {
 
                 val labelRow = TableRow(requireContext())
@@ -79,7 +81,7 @@ class LabelsTable : Fragment() {
                 tableHeader.addView(labelRow)
             }
         })
-
+        Log.d("TAG: ", "Current id: ${args.idProduct}")
         return binding.root
     }
 

@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_nutrition_facts.*
 
 class NutritionFacts : Fragment() {
     private lateinit var viewModel: NutritionFactsViewModel
-    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
+    private lateinit var args: NutritionFactsArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +44,9 @@ class NutritionFacts : Fragment() {
                 dataSource,
                 application
             )
+
+        // Get safe arguments (idProduct, textRecognized)
+        args = NutritionFactsArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NutritionFactsViewModel::class.java)
         binding.nutritionFactsViewModel = viewModel
@@ -66,7 +69,7 @@ class NutritionFacts : Fragment() {
         // Add Button stores the values on the BD
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
-                viewModel.saveValues(idProduct,
+                viewModel.saveValues(args.idProduct,
                     edit_calories.text.toString(),
                     edit_carbohydrate.text.toString(),
                     edit_proteins.text.toString(),
@@ -104,7 +107,7 @@ class NutritionFacts : Fragment() {
                 value.text = "0".toEditable()
                 value.textSize = 18F
                 value.gravity = Gravity.CENTER_HORIZONTAL
-                value.doAfterTextChanged { viewModel.onValueChange(value.id, value.text.toString(), idProduct)}
+                value.doAfterTextChanged { viewModel.onValueChange(value.id, value.text.toString(), args.idProduct)}
 
                 val portionType = TextView(requireContext())
                 portionType.id = nutritionFacts.elementAt(index).id
@@ -123,7 +126,7 @@ class NutritionFacts : Fragment() {
             }
 
             viewModel.associatedNutritionFacts.observe(this, Observer { associatedNutritions ->
-                Log.d("Tag: ", "Associated Nutritions: ${associatedNutritions}")
+                Log.d("Tag: ", "Associated Nutritions: $associatedNutritions")
             })
         })
         return binding.root
@@ -137,6 +140,7 @@ class NutritionFacts : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_nutritionFacts_to_packaging)
+        val action = NutritionFactsDirections.actionNutritionFactsToPackaging(args.idProduct)
+        view?.findNavController()?.navigate(action)
     }
 }

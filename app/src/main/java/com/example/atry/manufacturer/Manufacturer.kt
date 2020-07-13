@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_manufacturer.*
 
 class Manufacturer : Fragment() {
     private lateinit var viewModel: ManufacturerViewModel
-    private val idProduct: Int = 1 // This is supposed to arrive through safeArgs later.
+    private lateinit var args: ManufacturerArgs
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,13 +36,16 @@ class Manufacturer : Fragment() {
                 application
             )
 
+        // Get safe arguments (idProduct)
+        args = ManufacturerArgs.fromBundle(requireArguments())
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ManufacturerViewModel::class.java)
         binding.manufacturerViewModel = viewModel
         binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
 
         viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
-                viewModel.saveValues(idProduct, edit_business_name.text.toString())
+                viewModel.saveValues(args.idProduct, edit_business_name.text.toString())
             }
         })
 
@@ -60,6 +63,7 @@ class Manufacturer : Fragment() {
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_manufacturer_to_ingredientsTable)
+        val action = ManufacturerDirections.actionManufacturerToIngredientsTable(args.idProduct)
+        view?.findNavController()?.navigate(action)
     }
 }

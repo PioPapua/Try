@@ -141,7 +141,7 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
         }
     }
 
-    fun setInitialValues(barcode: String){
+    fun setInitialValues(barcode: String, textRecognized: String){
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 var previousProduct = database.productDao.getProductByBarcode(barcode)

@@ -36,6 +36,10 @@
         <action
             android:id="@+id/action_product_to_nutritionFacts"
             app:destination="@id/nutritionFacts" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/packaging"
@@ -45,6 +49,9 @@
         <action
             android:id="@+id/action_packaging_to_manufacturer"
             app:destination="@id/manufacturer" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/manufacturer"
@@ -54,6 +61,9 @@
         <action
             android:id="@+id/action_manufacturer_to_ingredientsTable"
             app:destination="@id/ingredientsTable" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/ingredientsTable"
@@ -66,6 +76,9 @@
         <action
             android:id="@+id/action_ingredientsTable_to_labelsTable"
             app:destination="@id/labelsTable" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/ingredientAdd"
@@ -84,6 +97,9 @@
         <action
             android:id="@+id/action_labelsTable_to_labelAdd"
             app:destination="@id/labelAdd" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/labelAdd"
@@ -105,6 +121,12 @@
         <action
             android:id="@+id/action_nutritionFacts_to_packaging"
             app:destination="@id/packaging" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/nutritionFactsTable"
