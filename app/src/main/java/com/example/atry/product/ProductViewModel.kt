@@ -2,12 +2,14 @@ package com.example.atry.product
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.ConzoomDatabase
 import com.example.atry.database.Product
 import kotlinx.coroutines.*
+import kotlin.math.absoluteValue
 
 class ProductViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
 
@@ -135,7 +137,7 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
                 } else {
                     database.productDao.update(currentProduct)
                 }
-                _id.postValue(currentProduct.id!!)
+                _id.postValue(currentProduct.id)
                 _onSaveValuesCompleted.postValue(true)
             }
         }
@@ -146,20 +148,20 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
             withContext(Dispatchers.IO) {
                 var previousProduct = database.productDao.getProductByBarcode(barcode)
                 if (previousProduct != null) {
-                    _name.postValue(previousProduct!!.name)
-                    _category.postValue(previousProduct!!.category)
-                    _categoryType.postValue(previousProduct!!.categoryType)
-                    _portion.postValue(previousProduct!!.portion)
-                    _portionType.postValue(previousProduct!!.portionType)
-                    _trademark.postValue(previousProduct!!.trademark)
-                    _netWeight.postValue(previousProduct!!.netWeight)
-                    _description.postValue(previousProduct?.description)
-                    _imageUrl.postValue(previousProduct?.imageUrl)
-                    _isFood.postValue(previousProduct!!.isFood)
+                    _name.postValue(previousProduct.name)
+                    _category.postValue(previousProduct.category)
+                    _categoryType.postValue(previousProduct.categoryType)
+                    _portion.postValue(previousProduct.portion)
+                    _portionType.postValue(previousProduct.portionType)
+                    _trademark.postValue(previousProduct.trademark)
+                    _netWeight.postValue(previousProduct.netWeight)
+                    _description.postValue(previousProduct.description)
+                    _imageUrl.postValue(previousProduct.imageUrl)
+                    _isFood.postValue(previousProduct.isFood)
                 } else {
                     previousProduct = Product()
                 }
-                currentProduct = previousProduct!!
+                currentProduct = previousProduct
             }
         }
     }

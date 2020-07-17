@@ -59,7 +59,7 @@ class Product : Fragment() {
 
         viewModel.onSaveValuesCompleted.observe(this, Observer { saved ->
             if (saved) {
-                navigationClicked(viewModel.id.value!!)
+                 navigationClicked(viewModel.id.value!!)
                 viewModel.onNavigationCompleted()
             }
         })
@@ -100,7 +100,7 @@ class Product : Fragment() {
     }
 
     private fun navigationClicked (idProduct: Int) {
-        val action = ProductDirections.actionProductToNutritionFacts(idProduct, args.textRecognized)
+         val action = ProductDirections.actionProductToNutritionFacts(idProduct, args.textRecognized)
         view?.findNavController()?.navigate(action)
     }
 }

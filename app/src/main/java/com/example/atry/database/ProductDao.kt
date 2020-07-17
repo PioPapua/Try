@@ -21,7 +21,7 @@ interface ProductDao {
     fun getAll(): LiveData<List<Product>>
 
     @Query("SELECT * from product_table WHERE id = :key")
-    fun get(key: Int): LiveData<Product>
+    fun get(key: Int): Product?
 
     @Query("SELECT * from product_table WHERE barcode = :key")
     fun getProductByBarcode(key: String): Product?
