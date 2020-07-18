@@ -127,18 +127,19 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
         }
     }
 
-    fun onValueChange(idNutritionFact: Int, text: String, idProduct: Int){
+    fun onValueChange(idNutritionFact: Int, textValue: String, idProduct: Int){
         uiScope.launch {
             withContext(Dispatchers.IO){
-                val currentValue = database.associatedNutritionDao.get(idProduct, idNutritionFact).value
+                val currentValue = database.associatedNutritionDao.get(idProduct, idNutritionFact)
                 if (currentValue != null) {
+                    currentValue.value = textValue.toFloat()
                     database.associatedNutritionDao.update(currentValue)
                 } else {
-                    if (text != "") {
+                    if (textValue != "") {
                         val newValue = AssociatedNutrition()
                         newValue.idNutritionFact = idNutritionFact
                         newValue.idProduct = idProduct
-                        newValue.value = text.toFloat()
+                        newValue.value = textValue.toFloat()
                         database.associatedNutritionDao.insert(newValue)
                     }
                 }
@@ -158,34 +159,41 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                     textSodium: String){
         uiScope.launch {
             withContext(Dispatchers.IO) {
-//                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
-//                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
-//                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
-//                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
-//                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
-//                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
-//                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
-//                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
-//                onValueChange(idCalories, textCalories, idProduct)
-//                onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
-//                onValueChange(idProteins, textProteins, idProduct)
-//                onValueChange(idTotalFat, textTotalFat, idProduct)
-//                onValueChange(idSaturatedFat, textSaturatedFat, idProduct)
-//                onValueChange(idTransFat, textTransFat, idProduct)
-//                onValueChange(idFiber, textFiber, idProduct)
-//                onValueChange(idSodium, textSodium, idProduct)
+                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
+                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
+                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
+                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
+                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
+                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
+                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
+                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
+                onValueChange(idCalories, textCalories, idProduct)
+                onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
+                onValueChange(idProteins, textProteins, idProduct)
+                onValueChange(idTotalFat, textTotalFat, idProduct)
+                onValueChange(idSaturatedFat, textSaturatedFat, idProduct)
+                onValueChange(idTransFat, textTransFat, idProduct)
+                onValueChange(idFiber, textFiber, idProduct)
+                onValueChange(idSodium, textSodium, idProduct)
 
-                val product = database.productDao.get(idProduct)
                 val currentNutrients = database.associatedNutritionDao.getAllByProduct(idProduct)
-                val nutrients = mutableListOf<String>()
-                if (currentNutrients.value != null) {
-                    for (item in currentNutrients.value!!) {
-                        nutrients.add(item.idNutritionFact.toString())
+                val nutrientsSet = mutableSetOf<AssociatedNutrition>()
+                if (currentNutrients != null) {
+                    for (item in currentNutrients!!) {
+                        nutrientsSet.add(item)
                     }
                 }
-                // TODO Associate nutrients with Product.
-//                product.value!!.nutrients = nutrients
-//                database.productDao.update(product.value!!)
+                val nutritionList = mutableListOf<String>()
+                for (item in nutrientsSet){
+                    val nutritionElement = NutritionListElement()
+                    nutritionElement.idValorEnergetico = item.idNutritionFact
+                    nutritionElement.valor = item.value
+                    nutritionList.add(nutritionElement.toString())
+                }
+
+                val product = database.productDao.get(idProduct)
+                product!!.nutrients = nutritionList.toList()
+                database.productDao.update(product)
                 _onSaveValuesComplete.postValue(true)
             }
         }
@@ -193,5 +201,15 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
+    }
+}
+
+class NutritionListElement {
+    var idValorEnergetico = 0
+    var valor = 0F
+
+    @Override
+    override fun toString(): String {
+        return ("{\"idValorEnergetico\": $idValorEnergetico, \"valor\": $valor}")
     }
 }
