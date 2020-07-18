@@ -28,10 +28,10 @@ data class Product(
     var portionType: String = "portionType",
 
     @ColumnInfo(name = "packaging")
-    var packaging: Int = 0,
+    var packaging: String = "packaging", // String with the values corresponding to the packaging
 
     @ColumnInfo(name = "manufacturer")
-    var manufacturer: Int = 0,
+    var manufacturer: String = "", // String that contains the name of the manufacturer
 
     @ColumnInfo(name = "trademark")
     var trademark: String = "trademark",

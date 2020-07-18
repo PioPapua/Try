@@ -2,6 +2,7 @@ package com.example.atry.packaging
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -82,7 +83,6 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
-        // TODO Keep values to update DB.
     }
     fun saveValues(idProduct: Int) {
         uiScope.launch {
@@ -121,12 +121,31 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
                     packaging.characteristics = characteristics.toList()
                     database.packagingDao.update(packaging)
                 }
-                // TODO Associate Packaging with Product
-//                val product = database.productDao.get(idProduct)
-//                product.value!!.packaging = packaging.id
-//                database.productDao.update(product.value!!)
-//                _onSaveValuesComplete.postValue(true)
+
+                val product = database.productDao.get(idProduct)
+                val packagingElement = PackagingElement()
+                packagingElement.descripcion = packaging.description ?: ""
+                packagingElement.codigoTipoEnvase = packaging.packagingType ?: ""
+                packagingElement.idsCaracteristicaEnvase = packaging.characteristics.toString()
+                product!!.packaging = packagingElement.toString()
+                database.productDao.update(product)
+                Log.d("TAG: ", "Product: ${database.productDao.get(idProduct)}")
+                _onSaveValuesComplete.postValue(true)
             }
         }
+    }
+}
+
+class PackagingElement {
+    var descripcion = ""
+    var codigoTipoEnvase = ""
+    var idsCaracteristicaEnvase = ""
+
+    @Override
+    override fun toString(): String {
+        return ("{\"descripcion\": $descripcion, " +
+                "\"codigoTipoEnvase\": $codigoTipoEnvase, " +
+                "\"idsCaracteristicaEnvase\": $idsCaracteristicaEnvase}"
+                )
     }
 }

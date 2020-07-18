@@ -136,11 +136,12 @@ class NutritionFacts : Fragment() {
 
     // Allows us to manually add optional Nutrition Facts that are not listed by default.
     private fun onAddNutritionFactsClicked () {
-        view?.findNavController()?.navigate(R.id.action_nutritionFacts_to_nutritionFactsTable)
+        val action = NutritionFactsDirections.actionNutritionFactsToNutritionFactsTable(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun navigationClicked () {
-        val action = NutritionFactsDirections.actionNutritionFactsToPackaging(args.idProduct)
+        val action = NutritionFactsDirections.actionNutritionFactsToPackaging(args.idProduct, args.textRecognized)
         view?.findNavController()?.navigate(action)
     }
 }

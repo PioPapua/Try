@@ -19,6 +19,7 @@ import com.example.atry.databinding.FragmentNutritionFactsAddBinding
 
 class NutritionFactsAdd : Fragment() {
     private lateinit var viewModel: NutritionFactsAddViewModel
+    private lateinit var args: NutritionFactsAddArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +41,9 @@ class NutritionFactsAdd : Fragment() {
                 application
             )
 
+        // Get safe arguments (idProduct and textRecognized)
+        args = NutritionFactsAddArgs.fromBundle(requireArguments())
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NutritionFactsAddViewModel::class.java)
         binding.nutritionFactsAddViewModel = viewModel
         binding.setLifecycleOwner(this)
@@ -58,7 +62,8 @@ class NutritionFactsAdd : Fragment() {
         return binding.root
     }
     private fun onAddButtonClicked () {
-        view?.findNavController()?.navigate(R.id.action_nutritionFactsAdd_to_nutritionFactsTable)
+        val action = NutritionFactsAddDirections.actionNutritionFactsAddToNutritionFactsTable(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun spinnerAdapterMaker (spinner: Spinner, elements: Array<String>, viewModelElement: String){

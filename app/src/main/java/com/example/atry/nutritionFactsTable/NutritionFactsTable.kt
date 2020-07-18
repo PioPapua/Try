@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_labels_table.*
 
 class NutritionFactsTable : Fragment() {
     private lateinit var viewModel: NutritionFactsTableViewModel
+    private lateinit var args: NutritionFactsTableArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +40,9 @@ class NutritionFactsTable : Fragment() {
                 dataSource,
                 application
             )
+
+        // Get safe arguments (idProduct and textRecognized)
+        args = NutritionFactsTableArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(NutritionFactsTableViewModel::class.java)
         binding.nutritionFactsTableViewModel = viewModel
@@ -113,10 +117,12 @@ class NutritionFactsTable : Fragment() {
     }
 
     private fun additionClicked () {
-        view?.findNavController()?.navigate(R.id.action_nutritionFactsTable_to_nutritionFactsAdd)
+        val action = NutritionFactsTableDirections.actionNutritionFactsTableToNutritionFactsAdd(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun navigationClicked () {
-        view?.findNavController()?.navigate(R.id.action_nutritionFactsTable_to_nutritionFacts)
+        val action = NutritionFactsTableDirections.actionNutritionFactsTableToNutritionFacts(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 }

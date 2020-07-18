@@ -1,6 +1,7 @@
 package com.example.atry.manufacturer
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,16 +44,17 @@ class ManufacturerViewModel (val database: ConzoomDatabase, application: Applica
     fun saveValues(idProduct: Int, businessName: String) {
         uiScope.launch {
             withContext(Dispatchers.IO){
-                val manufacturer = database.manufacturerDao.getIdByName(businessName)
+                var manufacturer = database.manufacturerDao.getIdByName(businessName)
                 if (manufacturer == null) {
-                    val manufacturer = Manufacturer()
+                    manufacturer = Manufacturer()
                     manufacturer.name = businessName
                     database.manufacturerDao.insert(manufacturer)
                 }
-                // TODO Associate Manufacturer with Product
-//                val product = database.product.get(idProduct)
-//                product.manufacturer = manufacturer!!.id
-//                database.product.update(product)
+
+                val product = database.productDao.get(idProduct)
+                product!!.manufacturer = manufacturer.name
+                database.productDao.update(product)
+                Log.d("TAG: ", "Current product: ${database.productDao.get(idProduct)}")
                 _onSaveValuesComplete.postValue(true)
             }
         }

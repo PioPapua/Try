@@ -52,6 +52,9 @@
         <argument
             android:name="idProduct"
             app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/manufacturer"
@@ -139,6 +142,11 @@
         <action
             android:id="@+id/action_nutritionFactsTable_to_nutritionFacts"
             app:destination="@id/nutritionFacts" />
+        <argument android:name="idProduct"
+            app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/nutritionFactsAdd"
@@ -148,5 +156,11 @@
         <action
             android:id="@+id/action_nutritionFactsAdd_to_nutritionFactsTable"
             app:destination="@id/nutritionFactsTable" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string" />
     </fragment>
 </navigation>
