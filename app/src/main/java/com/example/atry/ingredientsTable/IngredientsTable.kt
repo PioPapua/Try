@@ -41,7 +41,7 @@ class IngredientsTable : Fragment() {
                 application
             )
 
-        // Get safe arguments (idProduct)
+        // Get safe arguments (idProduct, textRecognized)
         args = IngredientsTableArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(IngredientsTableViewModel::class.java)
@@ -79,9 +79,10 @@ class IngredientsTable : Fragment() {
                 selected.id = ingredients.elementAt(index).id
                 selected.isChecked = false
                 val checkBoxListener = View.OnClickListener { view ->
-                    viewModel.onIngredientClicked(selected.id, selected.isChecked, args.idProduct)
+                    viewModel.onIngredientClicked(selected.id, selected.isChecked)
                 }
                 selected.setOnClickListener(checkBoxListener)
+
                 val id = TextView(requireContext())
                 id.text = ingredients.elementAt(index).id.toString()
 
@@ -102,6 +103,7 @@ class IngredientsTable : Fragment() {
                 val categoryType = TextView(requireContext())
                 categoryType.text = ingredients.elementAt(index).categoryType
 
+                ingredientRow.addView(selected)
                 ingredientRow.addView(id)
                 ingredientRow.addView(name)
                 ingredientRow.addView(description)
@@ -119,11 +121,12 @@ class IngredientsTable : Fragment() {
     }
 
     private fun additionClicked () {
-        view?.findNavController()?.navigate(R.id.action_ingredientsTable_to_ingredientAdd)
+        val action = IngredientsTableDirections.actionIngredientsTableToIngredientAdd(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun navigationClicked () {
-        val action = IngredientsTableDirections.actionIngredientsTableToLabelsTable(args.idProduct)
+        val action = IngredientsTableDirections.actionIngredientsTableToLabelsTable(args.idProduct, args.textRecognized)
         view?.findNavController()?.navigate(action)
     }
 }

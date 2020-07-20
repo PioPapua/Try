@@ -112,7 +112,7 @@ class Packaging : Fragment() {
     }
 
     private fun navigationClicked () {
-        val action = PackagingDirections.actionPackagingToManufacturer(args.idProduct)
+        val action = PackagingDirections.actionPackagingToManufacturer(args.idProduct, args.textRecognized)
         view?.findNavController()?.navigate(action)
     }
 }

@@ -24,7 +24,7 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     var ingredients : LiveData<List<Ingredient>> = database.ingredientDao.getAllIngredients()
-    private val currentIngredients = mutableSetOf<String>()
+    private var currentIngredients = mutableSetOf<String>()
 
     init {
         _onNextButtonClicked.value = false
@@ -46,7 +46,6 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
     }
 
     fun onNavigationCompleted(){
-        // TODO Save values
         _onNextButtonClicked.value = false
         _onSaveValuesComplete.value = false
     }
@@ -55,7 +54,7 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
         _onNextButtonClicked.value = true
     }
 
-    fun onIngredientClicked(id: Int, isChecked: Boolean, idProduct: Int) {
+    fun onIngredientClicked(id: Int, isChecked: Boolean) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 val ingredient = database.ingredientDao.get(id)
@@ -73,16 +72,22 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
             withContext(Dispatchers.IO) {
                 val product = database.productDao.get(idProduct)
                 val previousIngredients = database.productDao.getAllIngredientsByProductId(idProduct)
-                val ingredients = mutableListOf<String>()
+                val ingredients = mutableSetOf<String>()
 
-                currentIngredients.addAll(previousIngredients)
-                for (item in currentIngredients!!){
-                    ingredients.add(item)
+                val listValues: List<String> = previousIngredients.toString().split(",").map { it -> it.trim() }
+                listValues.forEach { it ->
+                    currentIngredients.add(it)
                 }
 
-                // TODO Associate ingredients with Product
-//                product.value!!.ingredients = ingredients
-//                database.productDao.update(product.value!!)
+                var newIngredient: String
+                for (item in currentIngredients){
+                    newIngredient = item.replace("[", "")
+                    newIngredient = newIngredient.replace("]","")
+                    ingredients.add(newIngredient)
+                }
+
+                product!!.ingredients = ingredients.toList()
+                database.productDao.update(product)
                 _onSaveValuesComplete.postValue(true)
             }
         }

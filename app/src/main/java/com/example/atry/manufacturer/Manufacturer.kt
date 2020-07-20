@@ -36,7 +36,7 @@ class Manufacturer : Fragment() {
                 application
             )
 
-        // Get safe arguments (idProduct)
+        // Get safe arguments (idProduct, textRecognized)
         args = ManufacturerArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ManufacturerViewModel::class.java)
@@ -63,7 +63,7 @@ class Manufacturer : Fragment() {
     }
 
     private fun navigationClicked () {
-        val action = ManufacturerDirections.actionManufacturerToIngredientsTable(args.idProduct)
+        val action = ManufacturerDirections.actionManufacturerToIngredientsTable(args.idProduct, args.textRecognized)
         view?.findNavController()?.navigate(action)
     }
 }
