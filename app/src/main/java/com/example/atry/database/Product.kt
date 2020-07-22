@@ -54,6 +54,9 @@ data class Product(
     @ColumnInfo(name = "nutrients")
     var nutrients: List<String> = listOf(), // Save only nutrients IDs
 
+    @ColumnInfo(name = "labels")
+    var labels: List<String> = listOf(), // Save only labels IDs
+
     @ColumnInfo(name = "user")
     var user: Int = 0,
 

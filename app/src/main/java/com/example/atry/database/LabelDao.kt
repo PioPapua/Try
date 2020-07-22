@@ -26,7 +26,4 @@ interface LabelDao {
     @Query("SELECT * FROM label_table")
     fun getAllLabels(): LiveData<List<Label>>
 
-    @Query("SELECT * FROM label_table ORDER BY id DESC LIMIT 1")
-    fun getLastLabel(): Label?
-
 }

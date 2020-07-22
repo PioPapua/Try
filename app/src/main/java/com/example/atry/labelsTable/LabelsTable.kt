@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -34,14 +35,14 @@ class LabelsTable : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val dataSource = ConzoomDatabase.getInstance(application).labelDao
+        val dataSource = ConzoomDatabase.getInstance(application)
         val viewModelFactory =
             LabelsTableViewModelFactory(
                 dataSource,
                 application
             )
 
-        // Get safe arguments (idProduct)
+        // Get safe arguments (idProduct, textRecognized)
         args = LabelsTableArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LabelsTableViewModel::class.java)
@@ -55,12 +56,33 @@ class LabelsTable : Fragment() {
             }
         })
 
+        viewModel.onSaveValuesComplete.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
+                navigationClicked()
+                viewModel.onNavigationCompleted()
+            }
+        })
+
+        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+            if (nextClicked) {
+                viewModel.onSaveValues(args.idProduct)
+            }
+        })
+
         viewModel.labels.observe(this, Observer { labels ->
             val rowParams = TableRow.LayoutParams()
             for ((index, item) in labels.withIndex()) {
 
                 val labelRow = TableRow(requireContext())
 
+                val selected = CheckBox(requireContext())
+                selected.id = labels.elementAt(index).id
+                selected.isChecked = false
+                val checkBoxListener = View.OnClickListener { view ->
+                    viewModel.onLabelClicked(selected.id, selected.isChecked)
+                }
+
+                selected.setOnClickListener(checkBoxListener)
                 val id = TextView(requireContext())
                 id.text = labels.elementAt(index).id.toString()
 
@@ -71,6 +93,7 @@ class LabelsTable : Fragment() {
                 val categoryType = TextView(requireContext())
                 categoryType.text = labels.elementAt(index).categoryType
 
+                labelRow.addView(selected)
                 labelRow.addView(id)
                 labelRow.addView(description)
                 labelRow.addView(categoryType)
@@ -81,15 +104,16 @@ class LabelsTable : Fragment() {
                 tableHeader.addView(labelRow)
             }
         })
-        Log.d("TAG: ", "Current id: ${args.idProduct}")
         return binding.root
     }
 
     private fun additionClicked () {
-        view?.findNavController()?.navigate(R.id.action_labelsTable_to_labelAdd)
+        val action = LabelsTableDirections.actionLabelsTableToLabelAdd(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 
     private fun navigationClicked () {
+        Log.d("TAG: ", "Navigation completed")
 //        view?.findNavController()?.navigate(R.id.action_labelsTable_to_Home)
     }
 }

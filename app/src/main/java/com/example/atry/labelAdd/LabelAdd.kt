@@ -19,6 +19,7 @@ import com.example.atry.databinding.FragmentLabelAddBinding
 
 class LabelAdd : Fragment() {
     private lateinit var viewModel: LabelAddViewModel
+    private lateinit var args: LabelAddArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +40,9 @@ class LabelAdd : Fragment() {
                 dataSource,
                 application
             )
+
+        // Get safe arguments (idProduct, textRecognized)
+        args = LabelAddArgs.fromBundle(requireArguments())
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LabelAddViewModel::class.java)
         binding.labelAddViewModel = viewModel

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "label_table")
 data class Label(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    var id: Int = 0,
 
     @ColumnInfo(name = "description")
     var description: String = "description",

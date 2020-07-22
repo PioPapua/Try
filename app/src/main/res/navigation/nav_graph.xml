@@ -131,6 +131,13 @@
         <action
             android:id="@+id/action_labelAdd_to_labelsTable"
             app:destination="@id/labelsTable" />
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nutritionFacts"

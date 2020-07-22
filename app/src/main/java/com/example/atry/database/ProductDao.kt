@@ -32,6 +32,9 @@ interface ProductDao {
     @Query("SELECT ingredients from product_table WHERE id = :key")
     fun getAllIngredientsByProductId(key: Int): List<String>
 
+    @Query("SELECT labels from product_table WHERE id = :key")
+    fun getAllLabelsByProductId(key: Int): List<String>
+
     @Query("DELETE FROM product_table")
     fun clear()
 }
