@@ -114,6 +114,7 @@ class LabelsTable : Fragment() {
 
     private fun navigationClicked () {
         Log.d("TAG: ", "Navigation completed")
-//        view?.findNavController()?.navigate(R.id.action_labelsTable_to_Home)
+        val action = LabelsTableDirections.actionLabelsTableToProductsTable(args.idProduct, args.textRecognized)
+        view?.findNavController()?.navigate(action)
     }
 }

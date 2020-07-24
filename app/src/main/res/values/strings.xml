@@ -61,6 +61,8 @@
     <string name="selection">Selección</string>
     <string name="delete">Eliminar</string>
     <string name="packagingType">Código de tipo de envase</string>
+    <string name="products">Productos</string>
+    <string name="actions">Acciones</string>
 
     <string-array name="category_types">
         <item>Alimentación</item>

@@ -122,6 +122,9 @@
             android:name="textRecognized"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_labelsTable_to_productsTable"
+            app:destination="@id/productsTable" />
     </fragment>
     <fragment
         android:id="@+id/labelAdd"
@@ -188,5 +191,18 @@
         <argument
             android:name="textRecognized"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/productsTable"
+        android:name="com.example.atry.productsTable.ProductsTable"
+        android:label="ProductsTable"
+        tools:layout="@layout/fragment_products_table">
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
+        <argument
+            android:name="textRecognized"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
