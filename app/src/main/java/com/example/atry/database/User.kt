@@ -13,5 +13,5 @@ data class User(
     var username: String = "username",
 
     @ColumnInfo(name = "password")
-    var password: String = "password"
+    var password: String? = "password"
 )

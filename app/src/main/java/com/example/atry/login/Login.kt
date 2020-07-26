@@ -50,8 +50,9 @@ class Login : Fragment() {
         return binding.root
     }
 
-    fun loggedIn(){
+    private fun loggedIn(){
         // Navigate to next screen
         view?.findNavController()?.navigate(R.id.action_login_to_cameraPicture)
     }
+
 }

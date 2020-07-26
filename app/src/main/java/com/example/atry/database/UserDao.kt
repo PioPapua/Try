@@ -24,7 +24,10 @@ interface UserDao {
     fun clear()
 
     @Query("SELECT * FROM user_table")
-    fun getAllUsers(): LiveData<List<User>>
+    fun getAllUsers(): List<User>
+
+    @Query("SELECT * FROM user_table WHERE username = :key")
+    fun getUserByUsername(key: String): User?
 
     @Query("SELECT * FROM user_table ORDER BY id DESC LIMIT 1")
     fun getLastUser(): User?
