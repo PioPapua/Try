@@ -20,7 +20,7 @@ import androidx.room.TypeConverters
         NutritionFactAssignment::class,
         Manufacturer::class,
         User::class],
-    version = 35,
+    version = 36,
     exportSchema = false)
 
 @TypeConverters(Converters::class)

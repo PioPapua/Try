@@ -24,7 +24,7 @@ interface PackagingCharacteristicDao {
     fun getIdByCategoryAndDescription(keyCategory: String, keyDescription: String): Int
 
     @Query("SELECT * from packaging_characteristic_table WHERE id = :key")
-    fun get(key: Int): LiveData<PackagingCharacteristic>
+    fun get(key: Int): LiveData<PackagingCharacteristic>?
 
     @Query("DELETE FROM packaging_characteristic_table")
     fun clear()

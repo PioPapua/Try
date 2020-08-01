@@ -67,6 +67,7 @@
     <string name="cancel">Cancel</string>
     <string name="confirmUpdate">¿Está seguro de que desea actualizar este producto?</string>
 
+
     <string-array name="category_types">
         <item>Alimentación</item>
         <item>Cosmética</item>

@@ -18,7 +18,7 @@ interface LabelDao {
     fun update(label: Label)
 
     @Query("SELECT * from label_table WHERE id = :key")
-    fun get(key: Long): Label?
+    fun get(key: Int): Label?
 
     @Query("DELETE FROM label_table")
     fun clear()

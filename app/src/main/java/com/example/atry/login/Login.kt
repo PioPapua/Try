@@ -40,6 +40,13 @@ class Login : Fragment() {
             viewModel.onLogin(password.text.toString(), username.text.toString())
         }
 
+        // Load values from Remote DB to Room
+        viewModel.loadProducts()
+        viewModel.loadNutritionFacts()
+        viewModel.loadIngredients()
+        viewModel.loadPackagingCharacteristics()
+        viewModel.loadLabels()
+
         // Setting up LiveData observation relationship
         viewModel.eventLogin.observe(this, Observer { isLoggedIn ->
             if (isLoggedIn) {

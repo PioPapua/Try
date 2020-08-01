@@ -25,8 +25,28 @@ private val retrofit = Retrofit.Builder()
 
 interface ConzoomApiService{
     @POST("usuarios/login")
-    fun getLoginProperties(@Body login: Login):
+    fun getLoginPropertiesAsync(@Body login: Login):
             Deferred<LoginResponse>
+
+    @GET ("productos")
+    fun getProductsPropertiesAsync():
+            Deferred<Products>
+
+    @GET ("valoresEnergeticos")
+    fun getNutritionFactsAsync():
+            Deferred<NutritionFacts>
+
+    @GET ("ingredientes")
+    fun getIngredientsAsync():
+            Deferred<Ingredients>
+
+    @GET ("caracteristicasEnvase")
+    fun getPackagingCharacteristicsAsync():
+            Deferred<PackagingCharacteristics>
+
+    @GET ("extras")
+    fun getLabelsAsync():
+            Deferred<Labels>
 }
 
 object ConzoomApi {
