@@ -67,20 +67,18 @@ class Packaging : Fragment() {
             resources.getStringArray(R.array.certificated),
             "certificated")
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
-                navigationClicked()
                 viewModel.saveValues(args.idProduct)
             }
         })
 
-        viewModel.onSaveValuesComplete.observe(this, Observer {completed ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer {completed ->
             if (completed) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
-
         return binding.root
     }
 

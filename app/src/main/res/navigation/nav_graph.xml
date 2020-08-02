@@ -54,7 +54,8 @@
             app:argType="integer" />
         <argument
             android:name="textRecognized"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/manufacturer"
@@ -158,7 +159,8 @@
             app:argType="integer" />
         <argument
             android:name="textRecognized"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nutritionFactsTable"
@@ -175,7 +177,8 @@
             app:argType="integer" />
         <argument
             android:name="textRecognized"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nutritionFactsAdd"
@@ -190,7 +193,8 @@
             app:argType="integer" />
         <argument
             android:name="textRecognized"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/productsTable"

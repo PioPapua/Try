@@ -48,27 +48,27 @@ class IngredientsTable : Fragment() {
         binding.ingredientsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onAddButtonClicked.observe(this, Observer { addClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { addClicked ->
             if (addClicked) {
                 additionClicked()
                 viewModel.onAdditionCompleted()
             }
         })
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.onSaveValues(args.idProduct)
             }
         })
 
-        viewModel.onSaveValuesComplete.observe(this, Observer { nextClicked ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.ingredients.observe(this, Observer { ingredients ->
+        viewModel.ingredients.observe(viewLifecycleOwner, Observer { ingredients ->
             val rowParams = TableRow.LayoutParams()
             var textParams = text_id.layoutParams
             for ((index, item) in ingredients.withIndex()) {

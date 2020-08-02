@@ -38,8 +38,6 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     nutritionFact.portionType = item.portionType
                     if (database.nutritionFactDao.getNutritionFactIdByName(nutritionFact.name) == null){
                         database.nutritionFactDao.insert(nutritionFact)
-                    } else {
-                        Log.d("TAG: ", "El nutriente ya existe")
                     }
                 }
             }
@@ -58,8 +56,6 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     label.categoryType = item.categoryType
                     if (database.labelDao.get(label.id) == null){
                         database.labelDao.insert(label)
-                    } else {
-                        Log.d("TAG: ", "La etiqueta o extra ya existe")
                     }
                 }
             }
@@ -78,8 +74,6 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     packagingCharacteristic.category = item.category
                     if (database.packagingCharacteristicDao.get(packagingCharacteristic.id) == null){
                         database.packagingCharacteristicDao.insert(packagingCharacteristic)
-                    } else {
-                        Log.d("TAG: ", "La característica de envase ya existe")
                     }
                 }
             }
@@ -100,8 +94,6 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     ingredient.categoryType = item.categoryType
                     if (database.ingredientDao.get(ingredient.id) == null){
                         database.ingredientDao.insert(ingredient)
-                    } else {
-                        Log.d("TAG: ", "El ingrediente ya existe")
                     }
                 }
             }
@@ -130,8 +122,6 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     product.packaging = item.packaging.idPackaging.toString()
                     if (database.productDao.getProductByBarcode(item.barcode) == null) {
                         database.productDao.insert(product)
-                    } else {
-                        Log.d("TAG: ", "El producto ya existe")
                     }
                 }
             }

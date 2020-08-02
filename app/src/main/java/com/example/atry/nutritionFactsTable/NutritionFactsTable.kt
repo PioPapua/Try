@@ -48,21 +48,21 @@ class NutritionFactsTable : Fragment() {
         binding.nutritionFactsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onAddButtonClicked.observe(this, Observer { addClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { addClicked ->
             if (addClicked) {
                 additionClicked()
                 viewModel.onAdditionCompleted()
             }
         })
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.nutritionFacts.observe(this, Observer { nutritionFacts ->
+        viewModel.nutritionFacts.observe(viewLifecycleOwner, Observer { nutritionFacts ->
             val rowParams = TableRow.LayoutParams()
             for ((index, item) in nutritionFacts.withIndex()) {
 

@@ -50,27 +50,27 @@ class LabelsTable : Fragment() {
         binding.labelsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onAddButtonClicked.observe(this, Observer { addClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { addClicked ->
             if (addClicked) {
                 additionClicked()
                 viewModel.onAdditionCompleted()
             }
         })
 
-        viewModel.onSaveValuesComplete.observe(this, Observer { nextClicked ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.onSaveValues(args.idProduct)
             }
         })
 
-        viewModel.labels.observe(this, Observer { labels ->
+        viewModel.labels.observe(viewLifecycleOwner, Observer { labels ->
             val rowParams = TableRow.LayoutParams()
             for ((index, item) in labels.withIndex()) {
 

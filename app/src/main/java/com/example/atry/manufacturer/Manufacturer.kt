@@ -1,7 +1,6 @@
 package com.example.atry.manufacturer
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,21 +42,16 @@ class Manufacturer : Fragment() {
         binding.manufacturerViewModel = viewModel
         binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.saveValues(args.idProduct, edit_business_name.text.toString())
             }
         })
-
-        viewModel.onSaveValuesComplete.observe(this, Observer {completed ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer {completed ->
             if (completed) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
-        })
-
-        viewModel.manufacturerLoaded.observe(this, Observer { manufacturer ->
-            Log.d("TAG: ", "Manufacturer loaded: $manufacturer")
         })
         return binding.root
     }

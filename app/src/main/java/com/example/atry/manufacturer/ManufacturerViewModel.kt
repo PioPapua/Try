@@ -11,10 +11,6 @@ import kotlinx.coroutines.*
 
 class ManufacturerViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
 
-    private val _businessName = MutableLiveData<String>()
-    val businessName: LiveData<String>
-        get() = _businessName
-
     private val _onNextButtonClicked = MutableLiveData<Boolean>()
     val onNextButtonClicked: LiveData<Boolean>
         get() = _onNextButtonClicked
@@ -24,12 +20,10 @@ class ManufacturerViewModel (val database: ConzoomDatabase, application: Applica
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    var manufacturerLoaded: LiveData<List<Manufacturer>> = database.manufacturerDao.getAll()
 
     init {
         _onNextButtonClicked.value = false
         _onSaveValuesComplete.value = false
-        _businessName.value = ""
     }
 
     fun onNavigationCompleted(){
@@ -54,7 +48,6 @@ class ManufacturerViewModel (val database: ConzoomDatabase, application: Applica
                 val product = database.productDao.get(idProduct)
                 product!!.manufacturer = manufacturer.name
                 database.productDao.update(product)
-                Log.d("TAG: ", "Current product: ${database.productDao.get(idProduct)}")
                 _onSaveValuesComplete.postValue(true)
             }
         }

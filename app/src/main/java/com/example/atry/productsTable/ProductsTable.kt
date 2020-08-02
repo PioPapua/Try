@@ -47,26 +47,26 @@ class ProductsTable : Fragment() {
         binding.productsTableViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onAddButtonClicked.observe(this, Observer { addClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { addClicked ->
             if (addClicked) {
                 viewModel.onAdditionCompleted()
             }
         })
 
-        viewModel.onSaveValuesComplete.observe(this, Observer { nextClicked ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.onSaveValues(args.idProduct)
             }
         })
 
-        viewModel.products.observe(this, Observer { products ->
+        viewModel.products.observe(viewLifecycleOwner, Observer { products ->
             val rowParams = TableRow.LayoutParams()
             for ((index, item) in products.withIndex()) {
 

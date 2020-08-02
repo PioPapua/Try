@@ -51,7 +51,7 @@ class NutritionFacts : Fragment() {
         binding.nutritionFactsViewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.onClearTable.observe(this, Observer { onClearClicked ->
+        viewModel.onClearTable.observe(viewLifecycleOwner, Observer { onClearClicked ->
             if (onClearClicked) {
                 onAddNutritionFactsClicked()
                 viewModel.onAddNutritionFactsCompleted()
@@ -59,14 +59,14 @@ class NutritionFacts : Fragment() {
         })
 
         // Add Nutrition Facts button allows us to navigate to Nutrition Facts table to add new entries to our list.
-        viewModel.onAddNutritionFacts.observe(this, Observer { addNutritionFactsClicked ->
+        viewModel.onAddNutritionFacts.observe(viewLifecycleOwner, Observer { addNutritionFactsClicked ->
             if (addNutritionFactsClicked) {
                 viewModel.onClearTable()
             }
         })
 
         // Add Button stores the values on the BD
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.saveValues(args.idProduct,
                     edit_calories.text.toString(),
@@ -80,14 +80,14 @@ class NutritionFacts : Fragment() {
             }
         })
 
-        viewModel.onSaveValuesComplete.observe(this, Observer {completed ->
+        viewModel.onSaveValuesComplete.observe(viewLifecycleOwner, Observer {completed ->
             if (completed) {
                 navigationClicked()
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.nutritionFacts.observe(this, Observer { nutritionFacts ->
+        viewModel.nutritionFacts.observe(viewLifecycleOwner, Observer { nutritionFacts ->
             val rowParams = TableRow.LayoutParams()
             rowParams.setMargins(16,0,16,0)
             for ((index, item) in nutritionFacts.withIndex()) {

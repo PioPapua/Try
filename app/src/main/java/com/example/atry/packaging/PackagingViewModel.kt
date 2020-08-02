@@ -79,6 +79,7 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
 
     fun onNavigationCompleted(){
         _onNextButtonClicked.value = false
+        _onSaveValuesComplete.value = false
     }
 
     fun onNextButtonClicked() {

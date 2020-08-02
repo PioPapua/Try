@@ -48,7 +48,7 @@ class Login : Fragment() {
         viewModel.loadLabels()
 
         // Setting up LiveData observation relationship
-        viewModel.eventLogin.observe(this, Observer { isLoggedIn ->
+        viewModel.eventLogin.observe(viewLifecycleOwner, Observer { isLoggedIn ->
             if (isLoggedIn) {
                 loggedIn()
                 viewModel.onLoginComplete() // It assures that the eventLogin is not triggered again on recreating the fragment by rotating the phone

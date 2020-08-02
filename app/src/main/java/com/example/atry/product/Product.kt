@@ -57,14 +57,14 @@ class Product : Fragment() {
             resources.getStringArray(R.array.portion_types),
             "portionType")
 
-        viewModel.onSaveValuesCompleted.observe(this, Observer { saved ->
+        viewModel.onSaveValuesCompleted.observe(viewLifecycleOwner, Observer { saved ->
             if (saved) {
                  navigationClicked(viewModel.id.value!!)
                 viewModel.onNavigationCompleted()
             }
         })
 
-        viewModel.onNextButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.saveValues()
             }

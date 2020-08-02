@@ -53,7 +53,7 @@ class NutritionFactsAdd : Fragment() {
             resources.getStringArray(R.array.portion_types),
             "portionType")
 
-        viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 onAddButtonClicked()
                 viewModel.onNavigationCompleted()
