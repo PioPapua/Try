@@ -159,14 +159,14 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                     textSodium: String){
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("Valor energético")!!
-                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("Carbohidratos")!!
-                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("Proteínas")!!
-                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas totales")!!
-                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas saturadas")!!
-                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("Grasas trans")!!
-                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("Fibra Alimentaria")!!
-                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("Sodio")!!
+                val idCalories = database.nutritionFactDao.getNutritionFactIdByName("calorias")!!
+                val idCarbohydrates = database.nutritionFactDao.getNutritionFactIdByName("carbohidratos")!!
+                val idProteins = database.nutritionFactDao.getNutritionFactIdByName("proteinas")!!
+                val idTotalFat = database.nutritionFactDao.getNutritionFactIdByName("grasas totales")!!
+                val idSaturatedFat = database.nutritionFactDao.getNutritionFactIdByName("grasas saturadas")!!
+                val idTransFat = database.nutritionFactDao.getNutritionFactIdByName("grasas trans")!!
+                val idFiber = database.nutritionFactDao.getNutritionFactIdByName("fibra alimentaria")!!
+                val idSodium = database.nutritionFactDao.getNutritionFactIdByName("sodio")!!
                 onValueChange(idCalories, textCalories, idProduct)
                 onValueChange(idCarbohydrates, textCarbohydrates, idProduct)
                 onValueChange(idProteins, textProteins, idProduct)

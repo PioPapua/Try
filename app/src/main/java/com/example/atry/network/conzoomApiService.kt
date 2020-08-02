@@ -28,6 +28,22 @@ interface ConzoomApiService{
     fun getLoginPropertiesAsync(@Body login: Login):
             Deferred<LoginResponse>
 
+    @POST("ingredientes/create")
+    fun postIngredientAsync(@Body ingredient: IngredientData):
+            Deferred<IngredientData>
+
+    @POST("productos/create")
+    fun postProductAsync(@Body product: ProductData):
+            Deferred<ProductData>
+
+    @POST("valoresEnergeticos/create")
+    fun postNutritionFactAsync(@Body nutritionFact: NutritionFactData):
+            Deferred<NutritionFactData>
+
+    @POST("extras/create")
+    fun postLabelAsync(@Body ingredient: LabelData):
+            Deferred<LabelData>
+
     @GET ("productos")
     fun getProductsPropertiesAsync():
             Deferred<Products>

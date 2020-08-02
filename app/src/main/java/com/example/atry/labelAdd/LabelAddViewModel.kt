@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.Label
 import com.example.atry.database.LabelDao
+import com.example.atry.network.ConzoomApi
+import com.example.atry.network.LabelData
 import kotlinx.coroutines.*
 
 class LabelAddViewModel (val database: LabelDao, application: Application) : AndroidViewModel(application) {
@@ -41,6 +43,13 @@ class LabelAddViewModel (val database: LabelDao, application: Application) : And
     private suspend fun insert(label: Label) {
         withContext(Dispatchers.IO) {
             database.insert(label)
+            val labelData = LabelData(
+                categoryType = label.categoryType,
+                logoUrl = label.logoUrl,
+                description = label.description,
+                id = label.id
+            )
+            val deferredLabelData = ConzoomApi.retrofitService.postLabelAsync(labelData)
         }
     }
     private suspend fun update(label: Label) {

@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.Ingredient
 import com.example.atry.database.IngredientDao
+import com.example.atry.network.ConzoomApi
+import com.example.atry.network.IngredientData
+import com.example.atry.network.Login
 import kotlinx.coroutines.*
 
 class IngredientAddViewModel (val database: IngredientDao, application: Application) : AndroidViewModel(application) {
@@ -26,6 +29,9 @@ class IngredientAddViewModel (val database: IngredientDao, application: Applicat
     private val _warning = MutableLiveData<Boolean>()
     val warning: LiveData<Boolean>
         get() = _warning
+    private val _epaClassification = MutableLiveData<String>()
+    val epaClassification: LiveData<String>
+        get() = _epaClassification
     private val _onAddButtonClicked = MutableLiveData<Boolean>()
     val onAddButtonClicked: LiveData<Boolean>
         get() = _onAddButtonClicked
@@ -46,6 +52,16 @@ class IngredientAddViewModel (val database: IngredientDao, application: Applicat
     private suspend fun insert(ingredient: Ingredient) {
         withContext(Dispatchers.IO) {
             database.insert(ingredient)
+            val ingredientData = IngredientData(
+                name = ingredient.name,
+                description = ingredient.description,
+                informationLink = ingredient.informationLink,
+                categoryType = ingredient.categoryType,
+                warning = ingredient.warning,
+                epaClassification = ingredient.epaClassification,
+                id = ingredient.id
+            )
+            val deferredIngredientData = ConzoomApi.retrofitService.postIngredientAsync(ingredientData)
         }
     }
     private suspend fun update(ingredient: Ingredient) {
@@ -62,6 +78,9 @@ class IngredientAddViewModel (val database: IngredientDao, application: Applicat
     }
     fun onInformationLinkChange(e: Editable?){
         _informationLink.value = e?.toString()
+    }
+    fun onEpaClassificationChange(item: String){
+        _epaClassification.value = item
     }
     fun onCategoryTypeChange(item: String) {
         _categoryType.value = item
@@ -80,6 +99,7 @@ class IngredientAddViewModel (val database: IngredientDao, application: Applicat
             newIngredient.name = _name.value.toString()
             newIngredient.description = _description.value.toString()
             newIngredient.informationLink = _informationLink.value.toString()
+            newIngredient.epaClassification = _epaClassification.value.toString()
             newIngredient.warning = _warning.value!!
             newIngredient.categoryType = _categoryType.value.toString()
             insert(newIngredient)

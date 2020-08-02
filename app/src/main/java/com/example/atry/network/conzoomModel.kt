@@ -84,11 +84,11 @@ data class NutritionFactData (
 @Parcelize
 data class Ingredients(
     val status: String,
-    val data: List<Ingredient>
+    val data: List<IngredientData>
 ): Parcelable
 
 @Parcelize
-data class Ingredient (
+data class IngredientData (
     @Json(name="nombre") val name: String,
     @Json(name="descripcion") val description: String,
     @Json(name="linkInformacionExtra") val informationLink: String,
@@ -117,11 +117,11 @@ data class PackagingCharacteristic (
 @Parcelize
 data class Labels(
     val status: String,
-    val data: List<Label>
+    val data: List<LabelData>
 ): Parcelable
 
 @Parcelize
-data class Label (
+data class LabelData (
     @Json(name="urlLogo") val logoUrl: String,
     @Json(name="descripcion") val description: String,
     @Json(name="tipoRubro") val categoryType: String,

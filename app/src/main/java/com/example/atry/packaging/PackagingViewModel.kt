@@ -93,8 +93,8 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
                 val reusableId = characteristicDao.getIdByCategoryAndDescription("Reutilizable", _reusable.value!!)
                 val recyclableId = characteristicDao.getIdByCategoryAndDescription("Reciclable", _recyclable.value!!)
                 val compostableId = characteristicDao.getIdByCategoryAndDescription("Compostable", _compostable.value!!)
-                val rawMaterialsRecycledId = characteristicDao.getIdByCategoryAndDescription("Materias primas recicladas", _rawMaterialsRecycled.value!!)
-                val certificatedId = characteristicDao.getIdByCategoryAndDescription("Certificacion origen materias primas", _certificated.value!!)
+                val rawMaterialsRecycledId = characteristicDao.getIdByCategoryAndDescription("Materias Primas Recicladas", _rawMaterialsRecycled.value!!)
+                val certificatedId = characteristicDao.getIdByCategoryAndDescription("Certificacion Origen Materias Primas", _certificated.value!!)
 
                 // Get current Package
                 val packagingId = database.productDao.getPackagingIdByProductId(idProduct)
@@ -124,9 +124,9 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
 
                 val product = database.productDao.get(idProduct)
                 val packagingElement = PackagingElement()
-                packagingElement.descripcion = packaging.description ?: ""
-                packagingElement.codigoTipoEnvase = packaging.packagingType ?: ""
-                packagingElement.idsCaracteristicaEnvase = packaging.characteristics.toString()
+                packagingElement.description = packaging.description ?: ""
+                packagingElement.packagingType = packaging.packagingType ?: ""
+                packagingElement.characteristics = packaging.characteristics.toString()
                 product!!.packaging = packagingElement.toString()
                 database.productDao.update(product)
                 Log.d("TAG: ", "Product: ${database.productDao.get(idProduct)}")
@@ -137,15 +137,15 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
 }
 
 class PackagingElement {
-    var descripcion = ""
-    var codigoTipoEnvase = ""
-    var idsCaracteristicaEnvase = ""
+    var description = ""
+    var packagingType = ""
+    var characteristics = ""
 
     @Override
     override fun toString(): String {
-        return ("{\"descripcion\": $descripcion, " +
-                "\"codigoTipoEnvase\": $codigoTipoEnvase, " +
-                "\"idsCaracteristicaEnvase\": $idsCaracteristicaEnvase}"
+        return ("{\"descripcion\": $description, " +
+                "\"codigoTipoEnvase\": $packagingType, " +
+                "\"idsCaracteristicaEnvase\": $characteristics}"
                 )
     }
 }

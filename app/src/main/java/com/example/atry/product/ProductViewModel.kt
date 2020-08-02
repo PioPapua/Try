@@ -114,7 +114,6 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
-        // TODO Keep values to update DB.
     }
 
     fun saveValues(){

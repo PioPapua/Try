@@ -66,6 +66,7 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="confirmUpdate">¿Está seguro de que desea actualizar este producto?</string>
+    <string name="epaClassification">Clasificación EPA</string>
 
 
     <string-array name="category_types">
@@ -103,12 +104,17 @@
         <item>Certificada</item>
         <item>No certificada</item>
     </string-array>
-
     <string-array name="portion_types">
         <item>g</item>
         <item>mg</item>
         <item>l</item>
         <item>ml</item>
         <item>kcal</item>
+    </string-array>
+    <string-array name="epa_classifications">
+        <item>Green Circle</item>
+        <item>Green Half-circle</item>
+        <item>Yellow triangle</item>
+        <item>Gray square</item>
     </string-array>
 </resources>

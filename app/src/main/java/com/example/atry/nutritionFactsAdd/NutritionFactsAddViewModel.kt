@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.NutritionFact
 import com.example.atry.database.NutritionFactDao
+import com.example.atry.network.ConzoomApi
+import com.example.atry.network.NutritionFactData
 import kotlinx.coroutines.*
 
 class NutritionFactsAddViewModel (val database: NutritionFactDao, application: Application) : AndroidViewModel(application) {
@@ -46,6 +48,15 @@ class NutritionFactsAddViewModel (val database: NutritionFactDao, application: A
     private suspend fun insert(nutritionFact: NutritionFact) {
         withContext(Dispatchers.IO) {
             database.insert(nutritionFact)
+            val nutritionFactData = NutritionFactData(
+                name = nutritionFact.name,
+                description = nutritionFact.description,
+                dairyRecommendation = nutritionFact.dairyRecommendation,
+                portionType = nutritionFact.portionType,
+                informationLink = nutritionFact.informationLink,
+                id = nutritionFact.id
+            )
+            val deferredNutritionFactData = ConzoomApi.retrofitService.postNutritionFactAsync(nutritionFactData)
         }
     }
     private suspend fun update(nutritionFact: NutritionFact) {

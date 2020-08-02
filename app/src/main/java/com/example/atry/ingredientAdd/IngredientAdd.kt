@@ -52,6 +52,10 @@ class IngredientAdd : Fragment() {
         spinnerAdapterMaker(binding.spinnerCategoryType,
             resources.getStringArray(R.array.category_types),
             "categoryType")
+        spinnerAdapterMaker(binding.spinnerEpaClassification,
+            resources.getStringArray(R.array.epa_classifications),
+            "epaClassification")
+
         viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
             if (nextClicked) {
                 onAddButtonClicked()
@@ -82,6 +86,7 @@ class IngredientAdd : Fragment() {
             ) {
                 when (viewModelElement) {
                     "categoryType" -> viewModel.onCategoryTypeChange(elements.get(position))
+                    "epaClassification" -> viewModel.onEpaClassificationChange(elements.get(position))
                 }
             }
         }
