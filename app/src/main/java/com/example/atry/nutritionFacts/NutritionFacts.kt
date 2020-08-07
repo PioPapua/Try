@@ -51,6 +51,8 @@ class NutritionFacts : Fragment() {
         binding.nutritionFactsViewModel = viewModel
         binding.setLifecycleOwner(this)
 
+        viewModel.loadInitialValues(args.idProduct)
+
         viewModel.onClearTable.observe(viewLifecycleOwner, Observer { onClearClicked ->
             if (onClearClicked) {
                 onAddNutritionFactsClicked()

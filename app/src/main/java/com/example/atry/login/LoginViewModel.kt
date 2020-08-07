@@ -9,7 +9,6 @@ import com.example.atry.database.*
 import com.example.atry.network.ConzoomApi
 import com.example.atry.network.Login
 import kotlinx.coroutines.*
-import java.lang.Exception
 
 class LoginViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
 
@@ -119,7 +118,7 @@ class LoginViewModel (val database: ConzoomDatabase, application: Application) :
                     product.imageUrl = item.imageUrl
                     product.manufacturer = item.manufacturer.name
                     product.enabled = item.enabled
-                    product.packaging = item.packaging.idPackaging.toString()
+                    product.packaging = item.packaging.idPackaging
                     if (database.productDao.getProductByBarcode(item.barcode) == null) {
                         database.productDao.insert(product)
                     }

@@ -6,8 +6,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.atry.database.AssociatedNutrition
 import com.example.atry.database.ConzoomDatabase
 import com.example.atry.database.Product
+import com.example.atry.network.ConzoomApi
 import kotlinx.coroutines.*
 import kotlin.math.absoluteValue
 
@@ -147,6 +149,7 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
             withContext(Dispatchers.IO) {
                 var previousProduct = database.productDao.getProductByBarcode(barcode)
                 if (previousProduct != null) {
+                    _id.postValue(previousProduct.id)
                     _name.postValue(previousProduct.name)
                     _category.postValue(previousProduct.category)
                     _categoryType.postValue(previousProduct.categoryType)
@@ -159,8 +162,28 @@ class ProductViewModel (val database: ConzoomDatabase, application: Application)
                     _isFood.postValue(previousProduct.isFood)
                 } else {
                     previousProduct = Product()
+                    _id.postValue(previousProduct.id)
                 }
                 currentProduct = previousProduct
+            }
+        }
+    }
+
+    fun loadAssociatedNutritions(){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val fullProduct = ConzoomApi.retrofitService.getProductPropertiesAsync(currentProduct.id).await()
+                val nutrients = fullProduct.nutritionFacts
+                for (item in nutrients){
+                    val associatedNutrition = AssociatedNutrition()
+                    associatedNutrition.value = item.value
+                    associatedNutrition.idNutritionFact = item.nutritionFactData.id
+                    associatedNutrition.idProductNutrition = item.id
+                    associatedNutrition.idProduct = currentProduct.id
+                    if (database.associatedNutritionDao.get(currentProduct.id, item.nutritionFactData.id) == null) {
+                        database.associatedNutritionDao.insert(associatedNutrition)
+                    }
+                }
             }
         }
     }

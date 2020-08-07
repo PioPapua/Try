@@ -56,7 +56,7 @@ class IngredientAdd : Fragment() {
             resources.getStringArray(R.array.epa_classifications),
             "epaClassification")
 
-        viewModel.onAddButtonClicked.observe(this, Observer { nextClicked ->
+        viewModel.onAddButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 onAddButtonClicked()
                 viewModel.onNavigationCompleted()

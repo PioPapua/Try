@@ -42,6 +42,7 @@ class Manufacturer : Fragment() {
         binding.manufacturerViewModel = viewModel
         binding.setLifecycleOwner(this) // Allows to use LiveData to automatically update DataBinding layouts
 
+        viewModel.setInitialValues(args.idProduct)
         viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {
                 viewModel.saveValues(args.idProduct, edit_business_name.text.toString())

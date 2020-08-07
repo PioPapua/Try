@@ -71,6 +71,7 @@ class Product : Fragment() {
         })
 
         viewModel.setInitialValues(args.barcode, args.textRecognized)
+        viewModel.loadAssociatedNutritions()
         // TODO Call viewModel to process text from args.textRecognized to get Portion value and type when Product is new.
 
         return binding.root

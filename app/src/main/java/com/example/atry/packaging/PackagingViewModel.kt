@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.ConzoomDatabase
 import com.example.atry.database.PackagingDB
+import com.example.atry.network.ConzoomApi
 import kotlinx.coroutines.*
 
 class PackagingViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application)  {
@@ -85,6 +86,7 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
     }
+
     fun saveValues(idProduct: Int) {
         uiScope.launch {
             withContext(Dispatchers.IO){
@@ -97,9 +99,11 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
                 val rawMaterialsRecycledId = characteristicDao.getIdByCategoryAndDescription("Materias Primas Recicladas", _rawMaterialsRecycled.value!!)
                 val certificatedId = characteristicDao.getIdByCategoryAndDescription("Certificacion Origen Materias Primas", _certificated.value!!)
 
-                // Get current Package
-                val packagingId = database.productDao.getPackagingIdByProductId(idProduct)
-                var packaging = database.packagingDao.get(packagingId)!!.value
+                // Get current Packaging
+                val packagingId = database.productDao.getPackagingIdByProductId(idProduct) // Returns -1 if no packaging is associated
+                Log.d("TAG: ", "Packaging ID associated with current Product: $packagingId")
+                var packaging = database.packagingDao.get(packagingId)
+                Log.d("TAG: ", "Packaging associated with current Product: $packaging")
 
                 // Create a MutableList of selected characteristics
                 val characteristics = mutableListOf<String>()
@@ -110,43 +114,64 @@ class PackagingViewModel (val database: ConzoomDatabase, application: Applicatio
                 characteristics.add(rawMaterialsRecycledId.toString())
                 characteristics.add(certificatedId.toString())
 
+                // Create or update PackagingDB
                 if (packaging == null) {
                     packaging = PackagingDB()
                     packaging.description = _description.value
                     packaging.packagingType = _packagingType.value
                     packaging.characteristics = characteristics.toList()
                     database.packagingDao.insert(packaging)
+                    val newPackaging = database.packagingDao.get(packagingId)
+                    Log.d("TAG: ", "Packaging is new: $packaging")
+                    Log.d("TAG: ", "Packaging in database: ${newPackaging}")
                 } else {
                     packaging.description = _description.value!!
                     packaging.packagingType = _packagingType.value!!
                     packaging.characteristics = characteristics.toList()
                     database.packagingDao.update(packaging)
+                    Log.d("TAG: ", "Packaging already existed: $packaging")
+                    Log.d("TAG: ", "Packaging in database: ${database.packagingDao.get(0)}")
                 }
 
-                val product = database.productDao.get(idProduct)
-                val packagingElement = PackagingElement()
-                packagingElement.description = packaging.description ?: ""
-                packagingElement.packagingType = packaging.packagingType ?: ""
-                packagingElement.characteristics = packaging.characteristics.toString()
-                product!!.packaging = packagingElement.toString()
+                // Associate packagingId with Product
+                val product = database.productDao.get(idProduct)!!
+                Log.d("TAG: ", "Product in database: ${product}")
+                product.packaging = packaging.id
                 database.productDao.update(product)
                 Log.d("TAG: ", "Product: ${database.productDao.get(idProduct)}")
                 _onSaveValuesComplete.postValue(true)
             }
         }
     }
-}
 
-class PackagingElement {
-    var description = ""
-    var packagingType = ""
-    var characteristics = ""
+    fun setInitialValues(id: Int){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val product = database.productDao.get(id)!!
+                val packagingDB = database.packagingDao.get(product.packaging)
 
-    @Override
-    override fun toString(): String {
-        return ("{\"descripcion\": $description, " +
-                "\"codigoTipoEnvase\": $packagingType, " +
-                "\"idsCaracteristicaEnvase\": $characteristics}"
-                )
+                if (packagingDB != null) {
+                    _description.postValue(packagingDB.description)
+                    _packagingType.postValue(packagingDB.packagingType)
+                }
+                try {
+                    val packagingCharacteristic =
+                        ConzoomApi.retrofitService.getPackagingCharacteristicsByPackageIdAsync(product.packaging)
+                            .await()
+                    for (item in packagingCharacteristic.data) {
+                        when (item.category) {
+                            "Retornable" -> onReturnableChange(item.description)
+                            "Reutilizable" -> onReusableChange(item.description)
+                            "Reciclable" -> onRecyclableChange(item.description)
+                            "Compostable" -> onCompostableChange(item.description)
+                            "Materias Primas Recicladas" -> onRawMaterialsRecycledChange(item.description)
+                            "Certificacion Origen Materias Primas" -> _certificated.postValue(item.description)
+                        }
+                    }
+                } catch (e: Exception){
+                    Log.d("TAG: ", "Package not associated yet")
+                }
+            }
+        }
     }
 }

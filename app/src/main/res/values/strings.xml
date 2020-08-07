@@ -67,6 +67,7 @@
     <string name="cancel">Cancel</string>
     <string name="confirmUpdate">¿Está seguro de que desea actualizar este producto?</string>
     <string name="epaClassification">Clasificación EPA</string>
+    <string name="isChecked">Incluye</string>
 
 
     <string-array name="category_types">
@@ -75,34 +76,34 @@
         <item>Limpieza</item>
     </string-array>
     <string-array name="returnable">
-        <item>Retornable reutilizable</item>
-        <item>Retornable reciclable</item>
-        <item>Potencialmente retornable</item>
-        <item>No retornable</item>
+        <item>Retornable Reutilizable</item>
+        <item>Retornable Reciclable</item>
+        <item>Potencialmente Retornable</item>
+        <item>No Retornable</item>
     </string-array>
     <string-array name="reusable">
-        <item>Muy reutilizable</item>
-        <item>Poco reutilizable</item>
-        <item>No reutilizable o raramente reutilizable</item>
+        <item>Muy Reutilizable</item>
+        <item>Poco Reutilizable</item>
+        <item>No Reutilizable o raramente Reutilizable</item>
     </string-array>
     <string-array name="recyclable">
-        <item>Reciclable fácil</item>
-        <item>Reciclable difícil</item>
-        <item>No reciclable</item>
-        <item>Tratamiento especial</item>
+        <item>Reciclable Facil</item>
+        <item>Reciclable Dificil</item>
+        <item>No Reciclable</item>
+        <item>Tratamiento Especial</item>
     </string-array>
     <string-array name="compostable">
         <item>Compostable</item>
-        <item>No compostable</item>
+        <item>No Compostable</item>
     </string-array>
     <string-array name="rawMaterialsRecycled">
-        <item>Altamente recicladas</item>
-        <item>Recicladas parcialmente</item>
-        <item>No recicladas</item>
+        <item>Altamente Recicladas</item>
+        <item>Recicladas Parcialmente</item>
+        <item>No Recicladas</item>
     </string-array>
     <string-array name="certificated">
-        <item>Certificada</item>
-        <item>No certificada</item>
+        <item>Certificacion</item>
+        <item>No Certificadas</item>
     </string-array>
     <string-array name="portion_types">
         <item>g</item>

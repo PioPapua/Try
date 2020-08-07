@@ -1,6 +1,7 @@
 package com.example.atry.packaging
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,8 @@ class Packaging : Fragment() {
         spinnerAdapterMaker(binding.spinnerCertificated,
             resources.getStringArray(R.array.certificated),
             "certificated")
+
+        viewModel.setInitialValues(args.idProduct)
 
         viewModel.onNextButtonClicked.observe(viewLifecycleOwner, Observer { nextClicked ->
             if (nextClicked) {

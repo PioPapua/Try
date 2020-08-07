@@ -6,33 +6,35 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.atry.database.*
+import com.example.atry.network.ConzoomApi
+import com.example.atry.network.NutritionFactData
 import kotlinx.coroutines.*
 
 class NutritionFactsViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
     // Define parameters to communicate with NutritionFacts Fragment/Layout
-    private val _calories = MutableLiveData<Int>()
-    val calories: LiveData<Int>
+    private val _calories = MutableLiveData<Float>()
+    val calories: LiveData<Float>
         get() = _calories
-    private val _carbohydrates = MutableLiveData<Int>()
-    val carbohydrates: LiveData<Int>
+    private val _carbohydrates = MutableLiveData<Float>()
+    val carbohydrates: LiveData<Float>
         get() = _carbohydrates
-    private val _proteins = MutableLiveData<Int>()
-    val proteins: LiveData<Int>
+    private val _proteins = MutableLiveData<Float>()
+    val proteins: LiveData<Float>
         get() = _proteins
-    private val _fatTotal = MutableLiveData<Int>()
-    val fatTotal: LiveData<Int>
+    private val _fatTotal = MutableLiveData<Float>()
+    val fatTotal: LiveData<Float>
         get() = _fatTotal
-    private val _fatSaturated = MutableLiveData<Int>()
-    val fatSaturated: LiveData<Int>
+    private val _fatSaturated = MutableLiveData<Float>()
+    val fatSaturated: LiveData<Float>
         get() = _fatSaturated
-    private val _fatTrans = MutableLiveData<Int>()
-    val fatTrans: LiveData<Int>
+    private val _fatTrans = MutableLiveData<Float>()
+    val fatTrans: LiveData<Float>
         get() = _fatTrans
-    private val _fiber = MutableLiveData<Int>()
-    val fiber: LiveData<Int>
+    private val _fiber = MutableLiveData<Float>()
+    val fiber: LiveData<Float>
         get() = _fiber
-    private val _sodium = MutableLiveData<Int>()
-    val sodium: LiveData<Int>
+    private val _sodium = MutableLiveData<Float>()
+    val sodium: LiveData<Float>
         get() = _sodium
 
     // Buttons' functions
@@ -63,14 +65,14 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
         _onAddNutritionFacts.value = false
         _onNextButtonClicked.value = false
         _onSaveValuesComplete.value = false
-        _calories.value = 0
-        _carbohydrates.value = 0
-        _proteins.value = 0
-        _fatTotal.value = 0
-        _fatSaturated.value = 0
-        _fatTrans.value = 0
-        _fiber.value = 0
-        _sodium.value = 0
+        _calories.value = 0F
+        _carbohydrates.value = 0F
+        _proteins.value = 0F
+        _fatTotal.value = 0F
+        _fatSaturated.value = 0F
+        _fatTrans.value = 0F
+        _fiber.value = 0F
+        _sodium.value = 0F
         _onClearTable.value = false
     }
 
@@ -80,28 +82,28 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
     }
 
     fun onCaloriesChange(e: Editable?){
-        _calories.value = e?.toString()!!.toInt()
+        _calories.value = e?.toString()!!.toFloat()
     }
     fun onCarbohydratesChange(e: Editable?){
-        _carbohydrates.value = e?.toString()!!.toInt()
+        _carbohydrates.value = e?.toString()!!.toFloat()
     }
     fun onProteinsChange(e: Editable?){
-        _proteins.value = e?.toString()!!.toInt()
+        _proteins.value = e?.toString()!!.toFloat()
     }
     fun onFatTotalChange(e: Editable?){
-        _fatTotal.value = e?.toString()!!.toInt()
+        _fatTotal.value = e?.toString()!!.toFloat()
     }
     fun onFatSaturatedChange(e: Editable?){
-        _fatSaturated.value = e?.toString()!!.toInt()
+        _fatSaturated.value = e?.toString()!!.toFloat()
     }
     fun onFatTransChange(e: Editable?){
-        _fatTrans.value = e?.toString()!!.toInt()
+        _fatTrans.value = e?.toString()!!.toFloat()
     }
     fun onFiberChange(e: Editable?){
-        _fiber.value = e?.toString()!!.toInt()
+        _fiber.value = e?.toString()!!.toFloat()
     }
     fun onSodiumChange(e: Editable?){
-        _sodium.value = e?.toString()!!.toInt()
+        _sodium.value = e?.toString()!!.toFloat()
     }
 
     fun onNavigationCompleted(){
@@ -134,6 +136,12 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                 if (currentValue != null) {
                     currentValue.value = textValue.toFloat()
                     database.associatedNutritionDao.update(currentValue)
+                    val productNutritionFacts = ConzoomApi.retrofitService.getProductPropertiesAsync(idProduct).await().nutritionFacts
+                    for (item in productNutritionFacts){
+                        if (item.nutritionFactData.id == idNutritionFact){
+                            ConzoomApi.retrofitService.putAssociatedNutritionAsync(item.id, currentValue.value)
+                        }
+                    }
                 } else {
                     if (textValue != "") {
                         val newValue = AssociatedNutrition()
@@ -141,6 +149,38 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                         newValue.idProduct = idProduct
                         newValue.value = textValue.toFloat()
                         database.associatedNutritionDao.insert(newValue)
+                        val nutritionFact = database.nutritionFactDao.get(idNutritionFact)!!
+                        val nutritionFactData = NutritionFactData(
+                            id = nutritionFact.id,
+                            description = nutritionFact.description,
+                            dairyRecommendation = nutritionFact.dairyRecommendation,
+                            portionType = nutritionFact.portionType,
+                            informationLink = nutritionFact.informationLink,
+                            name = nutritionFact.name
+                        )
+                        ConzoomApi.retrofitService.postAssociatedNutritionAsync(nutritionFactData, newValue.value)
+                    }
+                }
+            }
+        }
+    }
+
+    fun loadInitialValues(idProduct: Int){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val nutritionFact = database.associatedNutritionDao.getAllByProduct(idProduct)
+                if (nutritionFact != null){
+                    for (item in nutritionFact){
+                        when (database.nutritionFactDao.get(item.idNutritionFact)!!.name) {
+                            "calorias" -> _calories.postValue(item.value)
+                            "carbohidratos" -> _carbohydrates.postValue(item.value)
+                            "proteinas" -> _proteins.postValue(item.value)
+                            "grasas totales" -> _fatTotal.postValue(item.value)
+                            "grasas saturadas" -> _fatSaturated.postValue(item.value)
+                            "trasas trans" -> _fatTrans.postValue(item.value)
+                            "fibra alimentaria" -> _fiber.postValue(item.value)
+                            "sodio" -> _sodium.postValue(item.value)
+                        }
                     }
                 }
             }
@@ -179,16 +219,13 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
                 val currentNutrients = database.associatedNutritionDao.getAllByProduct(idProduct)
                 val nutrientsSet = mutableSetOf<AssociatedNutrition>()
                 if (currentNutrients != null) {
-                    for (item in currentNutrients!!) {
+                    for (item in currentNutrients) {
                         nutrientsSet.add(item)
                     }
                 }
                 val nutritionList = mutableListOf<String>()
                 for (item in nutrientsSet){
-                    val nutritionElement = NutritionListElement()
-                    nutritionElement.idValorEnergetico = item.idNutritionFact
-                    nutritionElement.valor = item.value
-                    nutritionList.add(nutritionElement.toString())
+                    nutritionList.add(item.idNutritionFact.toString())
                 }
 
                 val product = database.productDao.get(idProduct)
@@ -201,15 +238,5 @@ class NutritionFactsViewModel (val database: ConzoomDatabase, application: Appli
 
     fun onNextButtonClicked() {
         _onNextButtonClicked.value = true
-    }
-}
-
-class NutritionListElement {
-    var idValorEnergetico = 0
-    var valor = 0F
-
-    @Override
-    override fun toString(): String {
-        return ("{\"idValorEnergetico\": $idValorEnergetico, \"valor\": $valor}")
     }
 }

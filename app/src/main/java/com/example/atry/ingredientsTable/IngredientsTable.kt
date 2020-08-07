@@ -70,14 +70,16 @@ class IngredientsTable : Fragment() {
 
         viewModel.ingredients.observe(viewLifecycleOwner, Observer { ingredients ->
             val rowParams = TableRow.LayoutParams()
-            var textParams = text_id.layoutParams
             for ((index, item) in ingredients.withIndex()) {
 
                 val ingredientRow = TableRow(requireContext())
 
                 val selected = CheckBox(requireContext())
                 selected.id = ingredients.elementAt(index).id
-                selected.isChecked = false
+                viewModel.ingredientIsChecked(item.id, args.idProduct)
+                viewModel.isChecked.observe(viewLifecycleOwner, Observer {isChecked ->
+                    selected.isChecked = isChecked
+                })
                 val checkBoxListener = View.OnClickListener { view ->
                     viewModel.onIngredientClicked(selected.id, selected.isChecked)
                 }

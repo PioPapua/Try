@@ -10,6 +10,9 @@ import kotlinx.coroutines.*
 
 class IngredientsTableViewModel (val database: ConzoomDatabase, application: Application) : AndroidViewModel(application) {
 
+    private val _isChecked = MutableLiveData<Boolean>()
+    val isChecked: LiveData<Boolean>
+        get() = _isChecked
     private val _onNextButtonClicked = MutableLiveData<Boolean>()
     val onNextButtonClicked: LiveData<Boolean>
         get() = _onNextButtonClicked
@@ -29,7 +32,6 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
     init {
         _onNextButtonClicked.value = false
         _onAddButtonClicked.value = false
-
     }
 
     override fun onCleared() {
@@ -63,6 +65,15 @@ class IngredientsTableViewModel (val database: ConzoomDatabase, application: App
                 } else {
                     currentIngredients.remove(ingredient!!.id.toString())
                 }
+            }
+        }
+    }
+
+    fun ingredientIsChecked(idIngredient: Int, idProduct: Int){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val productIngredients = database.productDao.getAllIngredientsByProductId(idProduct)
+                _isChecked.postValue(productIngredients.contains(idIngredient.toString()))
             }
         }
     }

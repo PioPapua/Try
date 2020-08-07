@@ -28,7 +28,7 @@ data class Product(
     var portionType: String = "portionType",
 
     @ColumnInfo(name = "packaging")
-    var packaging: String = "packaging", // String with the values corresponding to the packaging
+    var packaging: Int = -1, // Integer with the only ID corresponding to the packaging
 
     @ColumnInfo(name = "manufacturer")
     var manufacturer: String = "", // String that contains the name of the manufacturer

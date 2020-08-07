@@ -43,15 +43,66 @@ data class ProductData (
     @Json(name="descripcion") val description: String,
     @Json(name="tipoRubro") val categoryType: String,
     @Json(name="urlImagen") val imageUrl: String,
-    @Json(name="fabricante") val manufacturer: Manufacturer,
+    @Json(name="fabricante") val manufacturer: ManufacturerData,
     @Json(name="envase") val packaging: Packaging,
     @Json(name="habilitado") val enabled: Boolean,
     @Json(name="idProducto") val idProduct: Int
 ): Parcelable
 
 @Parcelize
+data class ProductCompleteData (
+    @Json(name="codigoBarra") val barcode: String,
+    @Json(name="nombreProducto") val name: String,
+    @Json(name="rubro") val category: String,
+    @Json(name="esAlimento") val isFood: Boolean,
+    @Json(name="porcion") val portion: Int,
+    @Json(name="tipoPorcion") val portionType: String,
+    @Json(name="marca") val trademark: String,
+    @Json(name="contenidoNeto") val netWeight: String,
+    @Json(name="descripcion") val description: String,
+    @Json(name="tipoRubro") val categoryType: String,
+    @Json(name="urlImagen") val imageUrl: String,
+    @Json(name="fabricante") val manufacturer: ManufacturerData,
+    @Json(name="envase") val packaging: CompletePackaging,
+    @Json(name="productosValorEnergetico") val nutritionFacts: List<ProductNutritionFacts>,
+    @Json(name="extras") val labels: List<LabelData>,
+    @Json(name="ingredientes") val ingredientsIds: List<IngredientData>
+): Parcelable
+
+@Parcelize
+data class ProductFinalData (
+    @Json(name="codigoBarra") val barcode: String,
+    @Json(name="nombreProducto") val name: String,
+    @Json(name="rubro") val category: String,
+    @Json(name="esAlimento") val isFood: Boolean,
+    @Json(name="porcion") val portion: Int,
+    @Json(name="tipoPorcion") val portionType: String,
+    @Json(name="marca") val trademark: String,
+    @Json(name="contenidoNeto") val netWeight: String,
+    @Json(name="descripcion") val description: String,
+    @Json(name="tipoRubro") val categoryType: String,
+    @Json(name="urlImagen") val imageUrl: String,
+    @Json(name="fabricante") val manufacturer: ManufacturerData,
+    @Json(name="envase") val packaging: CompletePackaging,
+    @Json(name="productosValorEnergetico") val nutritionFacts: List<ProductNutritionFactData>,
+    @Json(name="extras") val labels: List<LabelData>,
+    @Json(name="ingredientes") val ingredientsIds: List<IngredientData>
+): Parcelable
+
+@Parcelize
 data class Manufacturer(
-    @Json(name="idFabricante") val idManufacturer: Int,
+    val status: String,
+    val data: ManufacturerData
+): Parcelable
+
+@Parcelize
+data class ManufacturerData(
+    @Json(name="nombre") val name: String,
+    @Json(name="idFabricante") val idManufacturer: Int
+): Parcelable
+
+@Parcelize
+data class ManufacturerName(
     @Json(name="nombre") val name: String
 ): Parcelable
 
@@ -60,6 +111,14 @@ data class Packaging(
     @Json(name="idEnvase") val idPackaging: Int,
     @Json(name="descripcion") val description: String,
     @Json(name="codigoTipoEnvase") val packagingType: String
+): Parcelable
+
+@Parcelize
+data class CompletePackaging(
+    @Json(name="idEnvase") val idPackaging: Int,
+    @Json(name="descripcion") val description: String,
+    @Json(name="codigoTipoEnvase") val packagingType: String,
+    @Json(name="caracteristicasEnvase") val characteristicData: List<PackagingCharacteristicData>
 ): Parcelable
 
 
@@ -78,6 +137,19 @@ data class NutritionFactData (
     @Json(name="tipoPorcion") val portionType: String,
     @Json(name="linkInformacionExtra") val informationLink: String,
     @Json(name="idValorEnergetico") val id: Int
+): Parcelable
+
+@Parcelize
+data class ProductNutritionFacts (
+    @Json(name="idProductoValorEnergetico") val id: Int,
+    @Json(name="ValorEnergetico") val nutritionFactData: NutritionFactData,
+    @Json(name="valor") val value: Float
+): Parcelable
+
+@Parcelize
+data class ProductNutritionFactData (
+    @Json(name="ValorEnergetico") val nutritionFactData: NutritionFactData,
+    @Json(name="valor") val value: Float
 ): Parcelable
 
 // Ingredients
@@ -102,11 +174,11 @@ data class IngredientData (
 @Parcelize
 data class PackagingCharacteristics(
     val status: String,
-    val data: List<PackagingCharacteristic>
+    val data: List<PackagingCharacteristicData>
 ): Parcelable
 
 @Parcelize
-data class PackagingCharacteristic (
+data class PackagingCharacteristicData (
     @Json(name="categoria") val category: String,
     @Json(name="descripcion") val description: String,
     @Json(name="valor") val value: Int,

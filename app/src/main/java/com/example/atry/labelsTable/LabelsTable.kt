@@ -120,6 +120,7 @@ class LabelsTable : Fragment() {
             builder.apply {
                 setPositiveButton(R.string.accept,
                     DialogInterface.OnClickListener { dialog, id ->
+                        viewModel.onStoreProduct(args.idProduct)
                         val action = LabelsTableDirections.actionLabelsTableToProductsTable(args.idProduct, args.textRecognized)
                         view?.findNavController()?.navigate(action)
                     })
